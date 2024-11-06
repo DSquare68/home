@@ -4,7 +4,7 @@
 // You might want to change the configurations to fit your preferences
 // For more information about the configurations, please refer to http://www.typescriptlang.org/docs/handbook/tsconfig-json.html
 {
-  "_version": "9",
+  "_version": "9.1",
   "compilerOptions": {
     "sourceMap": true,
     "jsx": "react-jsx",
@@ -23,6 +23,8 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "baseUrl": "frontend",
+	"types": [ "node" ],
+	"typeRoots": [ "node_modules/@types" ],
     "paths": {
       "@vaadin/flow-frontend": ["generated/jar-resources"],
       "@vaadin/flow-frontend/*": ["generated/jar-resources/*"],

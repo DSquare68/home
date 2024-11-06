@@ -1,5 +1,7 @@
 package com.dsquare.home.page;
 
+import com.dsquare.view.CircleProgress;
+import com.dsquare.view.HomePage;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -18,7 +20,7 @@ import com.vaadin.flow.server.StreamResource;
 @PageTitle("Home")
 public class Home extends AppLayout {
 	
-	
+	private static final long serialVersionUID = 2216332923141238067L;
 
 	Home() {
 		this.setId("home");
@@ -30,6 +32,7 @@ public class Home extends AppLayout {
                 .set("margin", "0");
 		addToNavbar(toggle, title);
 		addToDrawer(scroller);
+		setContent(new HomePage());
 	}
 
 	private SideNav getSideNav() {
