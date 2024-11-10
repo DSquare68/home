@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
+import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.spring.annotation.EnableVaadin;
 import com.vaadin.flow.theme.Theme;
