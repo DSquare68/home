@@ -1,28 +1,34 @@
 package com.dsquare.view;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import org.springframework.data.geo.Circle;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.vaadin.addons.tatu.CircularProgressBar;
 
-import com.vaadin.flow.component.progressbar.ProgressBar;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.page.Push;
+import com.vaadin.flow.router.BeforeLeaveEvent;
+import com.vaadin.flow.router.BeforeLeaveObserver;
+import com.vaadin.flow.server.VaadinSession;
 
-public class CircleProgress  extends ProgressBar {
+import lombok.Getter;
 
+@Push
+public class CircleProgress  extends CircularProgressBar {
 	private static final long serialVersionUID = 3275850456945504655L;
-	private final long DAY_TIME = 86400;
-	public Thread timeThread;
+	@Getter
+	private Thread thread;
 	public CircleProgress(){
+	}
+	
+	public void setTaskBar(UI ui) {
+		//thread = new Thread(()-> {
+		//});
+	}
 
-	}
-	public void setTimeBar() {
-		
-	}
-	public void stopTimeThread() {
-		timeThread.interrupt();
-	}
-	public void setTaskBar() {
-		
-	}
 }

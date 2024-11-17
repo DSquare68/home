@@ -63,6 +63,10 @@
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc11</artifactId>
 		</dependency>
@@ -81,6 +85,11 @@
 		   <groupId>org.vaadin.addons.tatu</groupId>
 		   <artifactId>circular-progress-bar-flow</artifactId>
 		   <version>1.3.2</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.vaadin.addons</groupId>
+		   <artifactId>vaadinworker</artifactId>
+		   <version>0.0.6</version>
 		</dependency>
 	</dependencies>
 	<repositories>
