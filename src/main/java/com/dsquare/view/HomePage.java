@@ -36,8 +36,6 @@ import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.PostConstruct;
 
 @Route(layout = Home.class)
-@Theme("dark")
-@Push
 public class HomePage extends VerticalLayout {
 	
 	private Calendar cal = Calendar.getInstance();

@@ -26,11 +26,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.spring.annotation.UIScope;
 
 @Route("home")
 @PageTitle("Home")
 @UIScope
+@AnonymousAllowed
 public class Home extends AppLayout  {
 	
 	private static final long serialVersionUID = 2216332923141238067L;

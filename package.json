@@ -4,15 +4,15 @@
   "type": "module",
   "dependencies": {
     "@polymer/polymer": "3.5.2",
-    "@vaadin/bundles": "24.5.2",
+    "@vaadin/bundles": "24.5.3",
     "@vaadin/common-frontend": "0.0.19",
-    "@vaadin/polymer-legacy-adapter": "24.5.2",
-    "@vaadin/react-components": "24.5.2",
+    "@vaadin/polymer-legacy-adapter": "24.5.3",
+    "@vaadin/react-components": "24.5.3",
     "@vaadin/router": "2.0.0",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
-    "@vaadin/vaadin-lumo-styles": "24.5.2",
-    "@vaadin/vaadin-material-styles": "24.5.2",
-    "@vaadin/vaadin-themable-mixin": "24.5.2",
+    "@vaadin/vaadin-lumo-styles": "24.5.3",
+    "@vaadin/vaadin-material-styles": "24.5.3",
+    "@vaadin/vaadin-themable-mixin": "24.5.3",
     "@vaadin/vaadin-usage-statistics": "2.1.3",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
@@ -37,11 +37,11 @@
     "strip-css-comments": "5.0.0",
     "transform-ast": "2.4.4",
     "typescript": "5.6.3",
+    "vite": "5.4.9",
     "vite-plugin-checker": "0.8.0",
     "workbox-build": "7.1.1",
     "workbox-core": "7.3.0",
-    "workbox-precaching": "7.3.0",
-    "vite": "5.4.9"
+    "workbox-precaching": "7.3.0"
   },
   "overrides": {
     "typescript": "$typescript",
@@ -67,15 +67,15 @@
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.2",
-      "@vaadin/bundles": "24.5.2",
+      "@vaadin/bundles": "24.5.3",
       "@vaadin/common-frontend": "0.0.19",
-      "@vaadin/polymer-legacy-adapter": "24.5.2",
-      "@vaadin/react-components": "24.5.2",
+      "@vaadin/polymer-legacy-adapter": "24.5.3",
+      "@vaadin/react-components": "24.5.3",
       "@vaadin/router": "2.0.0",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
-      "@vaadin/vaadin-lumo-styles": "24.5.2",
-      "@vaadin/vaadin-material-styles": "24.5.2",
-      "@vaadin/vaadin-themable-mixin": "24.5.2",
+      "@vaadin/vaadin-lumo-styles": "24.5.3",
+      "@vaadin/vaadin-material-styles": "24.5.3",
+      "@vaadin/vaadin-themable-mixin": "24.5.3",
       "@vaadin/vaadin-usage-statistics": "2.1.3",
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
@@ -105,7 +105,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "f886cfd90716b3667b8481522cd7ec4b3f2351bd5bbc021c6a667399688dc2c9",
+    "hash": "a208e2ec9d86a488cf258d92801e95bd3e2a470d8c63b0761e7ebd298bf9fb85",
     "scripts": {
       "build": "./node_modules/typescript/bin/tsc"
     }
