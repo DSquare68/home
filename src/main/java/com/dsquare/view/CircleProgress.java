@@ -18,7 +18,6 @@ import com.vaadin.flow.server.VaadinSession;
 
 import lombok.Getter;
 
-@Push
 public class CircleProgress  extends CircularProgressBar {
 	private static final long serialVersionUID = 3275850456945504655L;
 	@Getter
