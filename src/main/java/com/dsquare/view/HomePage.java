@@ -12,7 +12,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 
 @Route(layout = Home.class)
-@Theme("dark")
 public class HomePage extends VerticalLayout {
 
 	private static final long serialVersionUID = -8852819231764919403L;
