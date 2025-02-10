@@ -131,20 +131,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- Clean build and startup time for Vaadin apps sometimes may exceed
-                     the default Spring Boot's 30sec timeout. 
-                     -->
-                <configuration>
-                    <wait>500</wait>
-                    <maxAttempts>240</maxAttempts>
-                </configuration> 
             </plugin>
-
-            <!--
-                Take care of synchronizing java dependencies and imports in
-                package.json and main.js files.
-                It also creates webpack.config.js if not exists yet.
-            -->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -164,7 +151,6 @@
     </build>
 	    <profiles>
         <profile>
-            <!-- Production mode is activated using -Pproduction -->
             <id>prod</id>
             <build>
                 <plugins>
@@ -190,14 +176,10 @@
         <profile>
             <id>dev</id>
             <build>
-  
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
-                    </plugin>
-               </plugins>
-                                  <!--
                         <executions>
                             <execution>
                                 <id>start-spring-boot</id>
@@ -215,8 +197,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
@@ -234,7 +214,7 @@
                         </configuration>
                     </plugin>
                 </plugins>
-                -->
+               
             </build>
         </profile>
 
