@@ -126,6 +126,11 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	        </resource>
+	    </resources>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>
@@ -144,6 +149,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                	<frontendDirectory>${project.basedir}/frontend</frontendDirectory>
 			       <frontendHotdeploy>false</frontendHotdeploy>
 			   </configuration>
             </plugin>
@@ -167,7 +173,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                        </configuration>
+                			<frontendDirectory>${project.basedir}/frontend</frontendDirectory>
+			   			</configuration>
                     </plugin>
                 </plugins>
             </build>
