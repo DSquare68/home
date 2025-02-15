@@ -1,6 +1,7 @@
 package com.dsquare;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -19,11 +20,12 @@ import com.vaadin.flow.theme.Theme;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class },scanBasePackages = {"com.dsquare.configuration","com.dsquare.service"})
 @PWA(name = "Home for activities developing recording simple day of life", shortName = "Home of Dsquare")
 @Theme(value = "dark")
+@SpringBootConfiguration
 public class Application implements AppShellConfigurator {
 
 	private static final long serialVersionUID = 6850028705495576466L;
 
 	public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-    }
+	}
 }
