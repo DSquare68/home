@@ -5,6 +5,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,7 +18,7 @@ import com.vaadin.flow.spring.annotation.EnableVaadin;
 import com.vaadin.flow.theme.Theme;
 
 @Push
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class },scanBasePackages = {"com.dsquare.configuration","com.dsquare.service"})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class,ErrorMvcAutoConfiguration.class },scanBasePackages = {"com.dsquare.configuration","com.dsquare.service"})
 @PWA(name = "Home for activities developing recording simple day of life", shortName = "Home of Dsquare")
 @Theme(value = "dark")
 @SpringBootConfiguration

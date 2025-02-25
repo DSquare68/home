@@ -36,6 +36,7 @@ import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.PostConstruct;
 
 @Route(layout = Home.class)
+@PreserveOnRefresh
 public class HomePage extends VerticalLayout {
 	
 	private Calendar cal = Calendar.getInstance();
@@ -48,10 +49,10 @@ public class HomePage extends VerticalLayout {
 		this.setSizeFull();
 		timeBar = new CircleProgress();
 		timeBar.setId("time-bar");
-		//timeBar.setClassName("bar-circle");
+		timeBar.setClassName("bar-circle");
 		CircleProgress stateBar = new CircleProgress();
 		stateBar.setId("state-bar");
-		//stateBar.setClassName("bar-circle");
+		stateBar.setClassName("bar-circle");
 		HorizontalLayout time = new HorizontalLayout();
 		time.setId("time-hl");
 		time.add(timeBar,stateBar);

@@ -20,7 +20,6 @@ public class CirclePThread extends Thread {
         @Override
         public void run() {
         	while(true) {
-				System.out.println("setTimeBar");
 			    cal.setTime(new Date());
 				int h = cal.get(Calendar.HOUR_OF_DAY);
 				int m = cal.get(Calendar.MINUTE);
@@ -41,9 +40,6 @@ public class CirclePThread extends Thread {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					 if (this.isInterrupted()) {
-					        this.interrupt();
-					 }
 				}
         	}
         }
