@@ -1,4 +1,4 @@
-package com.dsquare.home.page;
+package com.dsquare.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

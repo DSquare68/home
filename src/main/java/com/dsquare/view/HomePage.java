@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dsquare.home.page.Home;
+import com.dsquare.page.Home;
 import com.dsquare.threads.CirclePThread;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Composite;
