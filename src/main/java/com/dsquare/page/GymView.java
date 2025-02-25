@@ -1,4 +1,4 @@
-package com.dsquare.home.page;
+package com.dsquare.page;
 
 import com.dsquare.view.TrainingOverview;
 import com.dsquare.view.TrainingsPast;

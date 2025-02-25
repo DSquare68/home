@@ -8,7 +8,6 @@
     "@vaadin/common-frontend": "0.0.19",
     "@vaadin/polymer-legacy-adapter": "24.6.4",
     "@vaadin/react-components": "24.6.4",
-    "@vaadin/react-components-pro": "24.6.4",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
     "@vaadin/vaadin-lumo-styles": "24.6.4",
     "@vaadin/vaadin-material-styles": "24.6.4",
@@ -17,7 +16,6 @@
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
     "lit": "3.2.1",
-    "proj4": "2.12.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "6.29.0"
@@ -62,9 +60,7 @@
     "date-fns": "$date-fns",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
-    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
-    "@vaadin/react-components-pro": "$@vaadin/react-components-pro",
-    "proj4": "$proj4"
+    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles"
   },
   "vaadin": {
     "dependencies": {
@@ -73,7 +69,6 @@
       "@vaadin/common-frontend": "0.0.19",
       "@vaadin/polymer-legacy-adapter": "24.6.4",
       "@vaadin/react-components": "24.6.4",
-      "@vaadin/react-components-pro": "24.6.4",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
       "@vaadin/vaadin-lumo-styles": "24.6.4",
       "@vaadin/vaadin-material-styles": "24.6.4",
@@ -82,7 +77,6 @@
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
       "lit": "3.2.1",
-      "proj4": "2.12.1",
       "react": "18.3.1",
       "react-dom": "18.3.1",
       "react-router-dom": "6.29.0"
@@ -108,7 +102,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "afc825313c9e35653b8b138a2963f61e1038dd35f2bcff9acf50b959f1c435fa",
+    "hash": "ec494a6c26f6e12bf89d4221707cbc59617f5f45ee12c1d634d4861ee8f050cb",
     "scripts": {
       "build": "./node_modules/typescript/bin/tsc"
     }
