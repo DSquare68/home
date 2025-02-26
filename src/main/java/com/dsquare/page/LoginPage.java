@@ -7,14 +7,15 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("login")
 @PageTitle("Login")
 @AnonymousAllowed
 public class LoginPage extends VerticalLayout implements BeforeEnterObserver {
-
-    private LoginForm login = new LoginForm();
+	private static final long serialVersionUID = 4291311286579022657L;
+	private LoginForm login = new LoginForm();
 
     public LoginPage() {
         addClassName("login-view");
@@ -25,7 +26,7 @@ public class LoginPage extends VerticalLayout implements BeforeEnterObserver {
 
         login.setAction("login");
 
-        add(new H1("Please log in"), login);
+        add(new H1("Please log in"), login, new RouterLink("register", RegisterPage.class));
     }
 
     @Override
