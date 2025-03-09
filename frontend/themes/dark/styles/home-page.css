@@ -18,8 +18,19 @@ vaadin-app-layout::part(navbar) {
 	font-size: 80pt;	
 	color: #0000DD;
 }
-#main-vl{
+#top-main-page{
 	background-color: #555556;
+	height:10%;
+	width: 100%;
+	display: flex;
+}
+.barAndLabel-vl{
+	width: 50%;
+	font-size: 20pt;
+	color: #0000DD;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #time-hl{
 	margin: 0;
@@ -30,10 +41,14 @@ vaadin-app-layout::part(navbar) {
 	width: 100%;
 	background-color: #222200;
 }
-.bar-circle{
-	margin-top: 10px;
-	height: 60%;
-	width: 12.5%;
+.bar-label{
+	font-size: 40pt;
+	
+}
+.bar{
+	margin-top: 25px;
+	height: 10%;
+	width: 40%;
 	margin-left: 150px;
 	margin-right: 50px;
 }
