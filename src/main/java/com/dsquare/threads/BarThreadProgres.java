@@ -6,16 +6,17 @@ import java.util.Date;
 import com.dsquare.view.CircleProgress;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.page.Push;
+import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.server.VaadinSession;
 
-public class CirclePThread extends Thread {
+public class BarThreadProgres extends Thread {
 		private Calendar cal = Calendar.getInstance();
         private final UI ui;
-        private final CircleProgress timeBar;
+        private final ProgressBar timeBar;
 
-        public CirclePThread(UI ui, CircleProgress timeBar) {
+        public BarThreadProgres(UI ui, ProgressBar timeBar2) {
             this.ui = ui;
-            this.timeBar = timeBar;
+            this.timeBar = timeBar2;
         }
         @Override
         public void run() {
@@ -29,16 +30,12 @@ public class CirclePThread extends Thread {
 					return;
 				}
 				ui.access(()->{
-				//vs.lock();
-					timeBar.setPercent((h * 3600.0 + m * 60.0 + s) / (24 * 60 * 60.0));
-					timeBar.setCaption(h + ":" + m + ":" + s);
-				//vs.unlock();
-					//ui.push();
+					timeBar.setThemeName(h + ":" + m + ":" + s);
+					timeBar.setValue((h * 3600.0 + m * 60.0 + s) / (24 * 60 * 60.0));
 				});
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         	}

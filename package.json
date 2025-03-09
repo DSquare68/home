@@ -4,14 +4,14 @@
   "type": "module",
   "dependencies": {
     "@polymer/polymer": "3.5.2",
-    "@vaadin/bundles": "24.6.4",
+    "@vaadin/bundles": "24.6.6",
     "@vaadin/common-frontend": "0.0.19",
-    "@vaadin/polymer-legacy-adapter": "24.6.4",
-    "@vaadin/react-components": "24.6.4",
+    "@vaadin/polymer-legacy-adapter": "24.6.6",
+    "@vaadin/react-components": "24.6.6",
     "@vaadin/vaadin-development-mode-detector": "2.0.7",
-    "@vaadin/vaadin-lumo-styles": "24.6.4",
-    "@vaadin/vaadin-material-styles": "24.6.4",
-    "@vaadin/vaadin-themable-mixin": "24.6.4",
+    "@vaadin/vaadin-lumo-styles": "24.6.6",
+    "@vaadin/vaadin-material-styles": "24.6.6",
+    "@vaadin/vaadin-themable-mixin": "24.6.6",
     "@vaadin/vaadin-usage-statistics": "2.1.3",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
@@ -65,14 +65,14 @@
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.2",
-      "@vaadin/bundles": "24.6.4",
+      "@vaadin/bundles": "24.6.6",
       "@vaadin/common-frontend": "0.0.19",
-      "@vaadin/polymer-legacy-adapter": "24.6.4",
-      "@vaadin/react-components": "24.6.4",
+      "@vaadin/polymer-legacy-adapter": "24.6.6",
+      "@vaadin/react-components": "24.6.6",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
-      "@vaadin/vaadin-lumo-styles": "24.6.4",
-      "@vaadin/vaadin-material-styles": "24.6.4",
-      "@vaadin/vaadin-themable-mixin": "24.6.4",
+      "@vaadin/vaadin-lumo-styles": "24.6.6",
+      "@vaadin/vaadin-material-styles": "24.6.6",
+      "@vaadin/vaadin-themable-mixin": "24.6.6",
       "@vaadin/vaadin-usage-statistics": "2.1.3",
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
@@ -102,7 +102,7 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "ec494a6c26f6e12bf89d4221707cbc59617f5f45ee12c1d634d4861ee8f050cb",
+    "hash": "041bbb096f6307957a74c664cfee45e13bd8f23f24443068d6907742bb15462f",
     "scripts": {
       "build": "./node_modules/typescript/bin/tsc"
     }
