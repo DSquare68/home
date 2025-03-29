@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dsquare.db.ExerciseNames;
 import com.dsquare.model.Exercise;
+import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
 import com.vaadin.flow.router.Route;
 
@@ -17,18 +19,18 @@ import com.vaadin.flow.router.Route;
 public class Import {
 
 	@Autowired
-	private ExerciseRepository exerciseRepository;
+	private ExerciseNamesRepository namesRepository;
 	
-	@PostMapping("/api/add/exercise")
-	public ResponseEntity<Exercise> addExercise(@RequestBody Exercise e) {
-		exerciseRepository.save(e);
+	@PostMapping("/api/add/exercise_name")
+	public ResponseEntity<ExerciseNames> addExercise(@RequestBody ExerciseNames e) {
+		namesRepository.save(e);
 		return ResponseEntity.status(200).build();
 	}
 	
-	@GetMapping("/add/exercises")
-	public String addExercises(@RequestBody List<Exercise> es) {
-		for(Exercise e : es)
-			exerciseRepository.save(e);
+	@GetMapping("/add/exercise_names")
+	public String addExercises(@RequestBody List<ExerciseNames> es) {
+		for(ExerciseNames e : es)
+			namesRepository.save(e);
 		return "import";
 	}
 }

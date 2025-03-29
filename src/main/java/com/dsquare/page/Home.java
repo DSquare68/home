@@ -4,9 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import com.dsquare.api.InitData;
+import com.dsquare.repository.ExerciseNamesRepository;
+import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.view.CircleProgress;
 import com.dsquare.view.HomePage;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -33,22 +39,23 @@ import com.vaadin.flow.spring.annotation.UIScope;
 @PageTitle("Home")
 @UIScope
 @AnonymousAllowed
+@Controller
 public class Home extends AppLayout  {
 	
 	private static final long serialVersionUID = 2216332923141238067L;
-
-	Home() {
+	
+	Home(ExerciseNamesServiceImpl namesService){
+		new InitData(namesService).run();
 		DrawerToggle toggle = new DrawerToggle();
 		SideNav nav = getSideNav();
 		Scroller scroller = new Scroller(nav);
-		H1 title = new H1("HOME");
+		Button title = new Button("HOME");
+		title.addClickListener((b)->UI.getCurrent().navigate("home"));
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 		addToNavbar(toggle, title);
 		addToDrawer(scroller);
 		setContent(new HomePage());
-		//this.setContent(new Span("MEOW"));
-		//this.showRouterLayoutContent(new HomePage());
 	}
 
 	private SideNav getSideNav() {

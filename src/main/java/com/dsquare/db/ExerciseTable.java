@@ -1,4 +1,4 @@
-package com.dsquare.model;
+package com.dsquare.db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.stereotype.Component;
 
+import com.dsquare.model.Round;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,15 +34,15 @@ import jakarta.validation.constraints.NotNull;
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
-public class Exercise implements Serializable {
+public class ExerciseTable implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQUENCE1")
 	@SequenceGenerator(name="SEQUENCE1", sequenceName="SEQUENCE1", allocationSize=1)
 	@JsonProperty("id")
-	private int _ID;
+	private long _ID;
 	@NotNull
-	@JsonProperty("name")
-    private String name;
+	@JsonProperty("name_id")
+    private long name;
 	@OneToMany
 	@ElementCollection
 	@CollectionTable(name = "rounds", joinColumns = @jakarta.persistence.JoinColumn(name = "exercise_id"))
@@ -49,20 +50,6 @@ public class Exercise implements Serializable {
 	
 	@JsonProperty("language")
     private int language;
-	
-	public Exercise(int id, String name, int language) {
-		this._ID = id;
-		this.name = name;
-		this.language = language;
-	}
-	public Exercise(String name, int language) {
-		this.name = name;
-		this.language = language;
-	}
-    public static Exercise[] init(String[] data, int language) {
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        int i = 0;
-        Arrays.stream(data).forEach(d -> exercises.add(new Exercise(exercises.size()+1,d,language)));
-        return exercises.toArray(new Exercise[exercises.size()]);
-    }
+
+  
 }
