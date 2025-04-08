@@ -20,7 +20,6 @@ public class Export {
 	
 	@PostMapping("/api/get/exercises")
 	public List<Exercise> getExercises() {
-		System.out.println("asdf1");
 		return exerciseRepository.findAll();
 	}
 }

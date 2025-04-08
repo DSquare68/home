@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.dsquare.api.InitData;
 import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.security.SecurityService;
 import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.view.CircleProgress;
 import com.dsquare.view.HomePage;
@@ -44,7 +45,7 @@ public class Home extends AppLayout  {
 	
 	private static final long serialVersionUID = 2216332923141238067L;
 	
-	Home(ExerciseNamesServiceImpl namesService){
+	Home(@Autowired SecurityService securityService, ExerciseNamesServiceImpl namesService){
 		new InitData(namesService).run();
 		DrawerToggle toggle = new DrawerToggle();
 		SideNav nav = getSideNav();
