@@ -13,10 +13,11 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "USERS")
+@Table(schema = "ADMIN", name = "USERS")
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,10 +26,18 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQUENCE1")
 	@SequenceGenerator(name="SEQUENCE1", sequenceName="SEQUENCE1", allocationSize=1)
 	@JsonProperty("id")
-	private int _ID;
+	private int ID;
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
+	
+	public User(String username, String firstName, String lastName, String email, String password) {
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+	}
 }

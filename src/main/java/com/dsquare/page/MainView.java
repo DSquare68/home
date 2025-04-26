@@ -27,11 +27,15 @@ public class MainView extends VerticalLayout{
 	MainView() {
 		this.setId("home");
 		Div label = new Div("D^2 HOME");
+		label.setId("welcome-div");
 		Button b = new Button("Enter");
 		b.setId("enter-button");
 		b.addClickListener(e->UI.getCurrent().navigate("home"));
-		label.setId("welcome-div");
+		Button login = new Button("Login");
+		login.setId("login-button");
+		login.addClickListener(e->UI.getCurrent().navigate("login"));
 		add(label);
 		add(b);
+		add(login);
 	}
 }
