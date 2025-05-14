@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.dsquare.api.InitData;
 import com.dsquare.repository.ExerciseNamesRepository;
-import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.repository.TrainingRepository;
 import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.view.CircleProgress;
 import com.dsquare.view.HomePage;

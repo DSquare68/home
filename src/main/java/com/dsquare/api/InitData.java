@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dsquare.db.ExerciseNamesBase;
 import com.dsquare.db.ExerciseNames;
 import com.dsquare.repository.ExerciseNamesRepository;
-import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.repository.TrainingRepository;
 import com.dsquare.service.ExerciseNamesServiceImpl;
 
 @Service

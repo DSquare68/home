@@ -18,12 +18,15 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import static java.util.stream.Collectors.*;
 
 @Entity
 @Table(schema = "ADMIN", name = "EXERCISE_NAMES")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Component
 public class ExerciseNames {
 	@Id

@@ -23,8 +23,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQUENCE1")
-	@SequenceGenerator(name="SEQUENCE1", sequenceName="SEQUENCE1", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
 	private int ID;
 	private String username;

@@ -3,8 +3,6 @@ package com.dsquare.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dsquare.model.Exercise;
-
 public interface ExerciseNamesBase {
     /**
      * The constant nazwyTreningów.
@@ -110,7 +108,7 @@ public interface ExerciseNamesBase {
             "Uginanie ramion ze sztangą stojąc podchwytem",
             "Uginanie ramion ze sztangielkami stojąc podchwytem (z supinacją nadgarstka)",
             "Uginanie ramion ze sztangielkami stojąc (uchwyt młotkowy)",
-            "Uginanie ramion ze sztangą podchwytem na modlitewniku",
+            "Uginanie ramion ze sztangą podsrc/main/java/com/dsquare/model/Exercise.javachwytem na modlitewniku",
             "Uginanie ramienia ze sztangielką na modlitewniku",
             "Uginanie ramion ze sztangielkami w siadzie na ławce skośnej (z supinacją nadgarstka)",
             "Uginanie ramienia ze sztangielką w siadzie - w podporze o kolano",
