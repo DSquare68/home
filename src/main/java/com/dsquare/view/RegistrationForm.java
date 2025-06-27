@@ -34,7 +34,6 @@ public class RegistrationForm extends FormLayout {
 
    public RegistrationForm() {
 	   UserServiceImpl userServiceImpl = new UserServiceImpl();
-	   System.out.println(userServiceImpl.getUserRepository());
        title = new H3("Sign-up");
        firstName = new TextField("First name");
        username = new TextField("Username");
