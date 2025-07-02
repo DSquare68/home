@@ -17,13 +17,13 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder.Default;
 import lombok.Data;
 import static java.util.stream.Collectors.*;
 
 @Entity
 @Table(schema = "ADMIN", name = "EXERCISE_NAMES")
 @Data
-@AllArgsConstructor
 @Component
 public class ExerciseNames {
 	@Id
@@ -36,8 +36,16 @@ public class ExerciseNames {
 	@Column(name = "NAME")
 	@JsonProperty("name")
 	private String name;
+	
+	public ExerciseNames(int id,String name) {
+		this.id = id;
+		this.name = name;
+	}
 	public ExerciseNames(String name) {
 		this.name = name;
+	}
+	public ExerciseNames() {
+		
 	}
 	  public static ArrayList<ExerciseNames> init(String[] data) {
 	        ArrayList<ExerciseNames> exercises = new ArrayList<>();
