@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class Export {
 	private ExerciseNamesRepository exerciseNamesRepository;
 	
 	@GetMapping("/api/get/exercise_name/{id}")
-	public ExerciseNames getExerciseName(@Param("id") int id) {
+	public ExerciseNames getExerciseName(@PathVariable("id") int id) {
 		return exerciseNamesRepository.findById(id).orElse(null);
 	}
 	@GetMapping("/api/get/exercises")
