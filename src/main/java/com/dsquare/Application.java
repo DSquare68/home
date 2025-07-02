@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -23,6 +24,7 @@ import com.vaadin.flow.theme.Theme;
 @Push
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class,ErrorMvcAutoConfiguration.class },scanBasePackages = {"com.dsquare.configuration","com.dsquare.service"})
 @EnableJpaRepositories(basePackages = {"com.dsquare.repository"})
+@ComponentScan(basePackages = {"com.dsquare.configuration","com.dsquare.service","com.dsquare.api","com.dsquare.page","com.dsquare.view"})
 @EntityScan(basePackages = {"com.dsquare.repository","com.dsquare.model","com.dsquare.db"})
 @PWA(name = "Home for activities developing recording simple day of life", shortName = "Home of Dsquare")
 @Theme(value = "dark")
