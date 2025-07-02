@@ -12,7 +12,7 @@ public class GymView extends HorizontalLayout {
 	private static final long serialVersionUID = 3275850456945504655L;
 
 	public GymView() {
-		add(new TrainingsPast(),new TrainingOverview(null));
+
 	}
 	
 }
