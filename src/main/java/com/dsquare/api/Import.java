@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsquare.db.ExerciseNames;
+import com.dsquare.db.TrainingRecord;
 import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.repository.TrainingRepository;
 import com.vaadin.flow.router.Route;
 
 @RestController
@@ -19,6 +21,8 @@ public class Import {
 
 	@Autowired
 	private ExerciseNamesRepository namesRepository;
+	@Autowired
+	private TrainingRepository trainingRepository;
 	
 	@PostMapping("/api/add/exercise_name")
 	public ResponseEntity<ExerciseNames> addExercise(@RequestBody ExerciseNames e) {
@@ -26,10 +30,21 @@ public class Import {
 		return ResponseEntity.status(200).build();
 	}
 	
-	@GetMapping("/add/exercise_names")
+	@PostMapping("/api/add/exercise_names")
 	public String addExercises(@RequestBody List<ExerciseNames> es) {
 		for(ExerciseNames e : es)
 			namesRepository.save(e);
+		return "import";
+	}
+	@PostMapping("/api/add/training_record")
+	public String addTrainingRecord(@RequestBody TrainingRecord t) {
+		trainingRepository.save(t);
+		return "import";
+	}
+	@PostMapping("/api/add/training")
+	public String addTraining(@RequestBody List<TrainingRecord> ts) {
+		for(TrainingRecord e : ts)
+			trainingRepository.save(e);
 		return "import";
 	}
 }
