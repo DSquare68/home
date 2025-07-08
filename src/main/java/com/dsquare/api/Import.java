@@ -31,20 +31,22 @@ public class Import {
 	}
 	
 	@PostMapping("/api/add/exercise_names")
-	public String addExercises(@RequestBody List<ExerciseNames> es) {
+	public ResponseEntity<ExerciseNames> addExercises(@RequestBody List<ExerciseNames> es) {
+		es = es.stream().filter(e->e!=null||e.getName()!=null).collect(java.util.stream.Collectors.toList());
 		for(ExerciseNames e : es)
 			namesRepository.save(e);
-		return "import";
+		return ResponseEntity.status(200).build();
 	}
 	@PostMapping("/api/add/training_record")
-	public String addTrainingRecord(@RequestBody TrainingRecord t) {
+	public ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody TrainingRecord t) {
 		trainingRepository.save(t);
-		return "import";
+		return ResponseEntity.status(200).build();
 	}
 	@PostMapping("/api/add/training")
-	public String addTraining(@RequestBody List<TrainingRecord> ts) {
+	public ResponseEntity<TrainingRecord> addTraining(@RequestBody List<TrainingRecord> ts) {
+		ts = ts.stream().filter(e->e!=null).collect(java.util.stream.Collectors.toList());
 		for(TrainingRecord e : ts)
 			trainingRepository.save(e);
-		return "import";
+		return ResponseEntity.status(200).build();
 	}
 }
