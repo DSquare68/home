@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsquare.page.Home;
-import com.dsquare.threads.BarThreadProgres;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.DetachEvent;
@@ -47,7 +46,6 @@ public class HomePage extends VerticalLayout {
 	private static final long serialVersionUID = -8852819231764919403L;
 	private ProgressBar timeBar;
 	private ProgressBar stateBar;
-	private BarThreadProgres thread;
 	H4 timeLabel,stateLabel;
 	
 	public HomePage() {
@@ -89,13 +87,5 @@ public class HomePage extends VerticalLayout {
 		stateLabel.setText(date);
 		
 	}
-	@Override
-    protected void onAttach(AttachEvent attachEvent) {
-		thread = new BarThreadProgres(attachEvent.getUI(),timeBar);
-        thread.start();
-    }
-	@Override
-	public void onDetach(DetachEvent de) {
-		thread.interrupt();
-	}
+
 }
