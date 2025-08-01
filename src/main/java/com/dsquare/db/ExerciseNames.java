@@ -27,8 +27,8 @@ import static java.util.stream.Collectors.*;
 @Component
 public class ExerciseNames {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//, generator = "SEQUENCE1")
-    //@SequenceGenerator(sequenceName = "SEQUENCE1", allocationSize = 1, name = "CUST_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
+    @SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
 	//@Column(name = "ID")
 	@JsonProperty("id")
 	private int id;

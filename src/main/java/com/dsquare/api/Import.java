@@ -37,11 +37,16 @@ public class Import {
 			namesRepository.save(e);
 		return ResponseEntity.status(200).build();
 	}
-	@PostMapping("/api/add/training_record")
+	@PostMapping("/api/add/training_record") // ?type=class
 	public ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody TrainingRecord t) {
 		trainingRepository.save(t);
 		return ResponseEntity.status(200).build();
 	}
+	/*@PostMapping("/api/add/training_record")//type=json
+	public ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody String t) {
+		int a=0;
+		return ResponseEntity.status(200).build();
+	}*/
 	@PostMapping("/api/add/training")
 	public ResponseEntity<TrainingRecord> addTraining(@RequestBody List<TrainingRecord> ts) {
 		ts = ts.stream().filter(e->e!=null).collect(java.util.stream.Collectors.toList());
