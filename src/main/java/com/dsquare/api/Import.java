@@ -1,5 +1,6 @@
 package com.dsquare.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,17 @@ public class Import {
 		return ResponseEntity.status(200).build();
 	}*/
 	@PostMapping("/api/add/training")
-	public ResponseEntity<TrainingRecord> addTraining(@RequestBody List<TrainingRecord> ts) {
-		ts = ts.stream().filter(e->e!=null).collect(java.util.stream.Collectors.toList());
-		for(TrainingRecord e : ts)
+	public ResponseEntity<TrainingRecord> addTraining(@RequestBody ArrayList<TrainingRecord> ts) {
+		//ts = (ArrayList<TrainingRecord>) ts.stream().filter(e->e!=null).collect(java.util.stream.Collectors.toList());
+		int ID_TRAINING = trainingRepository.getMaxIDTrainingRecord()+1;
+		int ID_SCHEMA= ts.get(0).getSCHEMA(); // Assuming all records have the same schema
+		if(ts.get(0).getIS_SCHEMA()==1)
+			 ID_SCHEMA= trainingRepository.getMaxIDSchema()+1;
+		for(TrainingRecord e : ts) {
+			e.setID_TRAINING(ID_TRAINING);
+			e.setSCHEMA(ID_SCHEMA);
 			trainingRepository.save(e);
+		}
 		return ResponseEntity.status(200).build();
 	}
 }
