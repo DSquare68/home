@@ -14,4 +14,6 @@ public interface ExerciseNamesRepository extends JpaRepository<ExerciseNames, In
 
 	@Query(value="INSERT INTO ADMIN.EXERCISE_NAMES (NAME) VALUES (:#{#name.name})", nativeQuery = true)
 	void insert(@Param("name") ExerciseNames name);
+	
+	Long findIDByName(String name);
 }

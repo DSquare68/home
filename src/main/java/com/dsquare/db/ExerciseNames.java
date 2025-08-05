@@ -31,13 +31,13 @@ public class ExerciseNames {
     @SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
 	//@Column(name = "ID")
 	@JsonProperty("id")
-	private int id;
+	private Long id;
 	@NotNull
 	@Column(name = "NAME")
 	@JsonProperty("name")
 	private String name;
 	
-	public ExerciseNames(int id,String name) {
+	public ExerciseNames(Long id,String name) {
 		this.id = id;
 		this.name = name;
 	}

@@ -27,7 +27,12 @@ public class Export {
 	}
 	@GetMapping("/api/get/exercises")
 	public List<ExerciseNames> getExercises() {
-		System.out.println("asdf1");
 		return exerciseNamesRepository.findAll();
 	}
+	/*@GetMapping("api/get/exerciseIDByName/{name}")
+	public Long getExerciseIDByName(@Param("name") String name) {
+		Long l = exerciseNamesRepository.findIDByName(name);
+		return l;
+	}*/
+	
 }
