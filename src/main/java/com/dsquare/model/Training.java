@@ -17,5 +17,5 @@ public class Training {
 	@SequenceGenerator(name="SEQUENCE1", sequenceName="SEQUENCE1", allocationSize=1)
 	private int id;
 	private String name;
-	private ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+	private ArrayList<ExerciseNames> exercises = new ArrayList<ExerciseNames>();
 }

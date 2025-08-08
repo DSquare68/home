@@ -12,8 +12,13 @@ public class Gym extends Home{
 	
 	private static final long serialVersionUID = 3275850456945504655L;
 
+<<<<<<< HEAD:src/main/java/com/dsquare/page/Gym.java
 	public Gym(ExerciseNamesServiceImpl namesService){
 		super(namesService);
+=======
+	public GymView() {
+
+>>>>>>> master:src/main/java/com/dsquare/page/GymView.java
 	}
 	
 }
