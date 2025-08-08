@@ -17,27 +17,35 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder.Default;
 import lombok.Data;
 import static java.util.stream.Collectors.*;
 
 @Entity
 @Table(schema = "ADMIN", name = "EXERCISE_NAMES")
 @Data
-@AllArgsConstructor
 @Component
 public class ExerciseNames {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//, generator = "SEQUENCE1")
-    //@SequenceGenerator(sequenceName = "SEQUENCE1", allocationSize = 1, name = "CUST_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
+    @SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
 	//@Column(name = "ID")
 	@JsonProperty("id")
-	private int id;
+	private Long id;
 	@NotNull
 	@Column(name = "NAME")
 	@JsonProperty("name")
 	private String name;
+	
+	public ExerciseNames(Long id,String name) {
+		this.id = id;
+		this.name = name;
+	}
 	public ExerciseNames(String name) {
 		this.name = name;
+	}
+	public ExerciseNames() {
+		
 	}
 	  public static ArrayList<ExerciseNames> init(String[] data) {
 	        ArrayList<ExerciseNames> exercises = new ArrayList<>();
