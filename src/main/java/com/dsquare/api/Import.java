@@ -24,38 +24,41 @@ public class Import {
 	private ExerciseNamesRepository namesRepository;
 	@Autowired
 	private TrainingRepository trainingRepository;
-	
+
 	@PostMapping("/api/add/exercise_name")
 	public ResponseEntity<ExerciseNames> addExercise(@RequestBody ExerciseNames e) {
 		namesRepository.save(e);
 		return ResponseEntity.status(200).build();
 	}
-	
+
 	@PostMapping("/api/add/exercise_names")
 	public ResponseEntity<ExerciseNames> addExercises(@RequestBody List<ExerciseNames> es) {
-		es = es.stream().filter(e->e!=null||e.getName()!=null).collect(java.util.stream.Collectors.toList());
-		for(ExerciseNames e : es)
+		es = es.stream().filter(e -> e != null || e.getName() != null).collect(java.util.stream.Collectors.toList());
+		for (ExerciseNames e : es)
 			namesRepository.save(e);
 		return ResponseEntity.status(200).build();
 	}
+
 	@PostMapping("/api/add/training_record") // ?type=class
 	public ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody TrainingRecord t) {
 		trainingRepository.save(t);
 		return ResponseEntity.status(200).build();
 	}
-	/*@PostMapping("/api/add/training_record")//type=json
-	public ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody String t) {
-		int a=0;
-		return ResponseEntity.status(200).build();
-	}*/
+
+	/*
+	 * @PostMapping("/api/add/training_record")//type=json public
+	 * ResponseEntity<TrainingRecord> addTrainingRecord(@RequestBody String t) { int
+	 * a=0; return ResponseEntity.status(200).build(); }
+	 */
 	@PostMapping("/api/add/training")
 	public ResponseEntity<TrainingRecord> addTraining(@RequestBody ArrayList<TrainingRecord> ts) {
-		//ts = (ArrayList<TrainingRecord>) ts.stream().filter(e->e!=null).collect(java.util.stream.Collectors.toList());
-		int ID_TRAINING = trainingRepository.getMaxIDTrainingRecord()+1;
-		int ID_SCHEMA= ts.get(0).getSCHEMA(); // Assuming all records have the same schema
-		if(ts.get(0).getIS_SCHEMA()==1)
-			 ID_SCHEMA= trainingRepository.getMaxIDSchema()+1;
-		for(TrainingRecord e : ts) {
+		ts = (ArrayList<TrainingRecord>) ts.stream().filter(e -> e != null)
+				.collect(java.util.stream.Collectors.toList());
+		int ID_TRAINING = trainingRepository.getMaxIDTrainingRecord() + 1;
+		int ID_SCHEMA = ts.get(0).getSCHEMA(); // Assuming all records have the same schema
+		if (ts.get(0).getIS_SCHEMA() == 1)
+			ID_SCHEMA = trainingRepository.getMaxIDSchema() + 1;
+		for (TrainingRecord e : ts) {
 			e.setID_TRAINING(ID_TRAINING);
 			e.setSCHEMA(ID_SCHEMA);
 			trainingRepository.save(e);

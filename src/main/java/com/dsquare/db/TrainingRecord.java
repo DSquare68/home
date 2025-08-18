@@ -28,6 +28,7 @@ public class TrainingRecord {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
     @SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
+	@JsonProperty("ID")
 	private int ID;
 	@JsonProperty("ID_TRAINING")
 	private int ID_TRAINING;
