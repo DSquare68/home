@@ -1,5 +1,7 @@
 package com.dsquare.repository;
 
+import java.util.ArrayList;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,6 +14,9 @@ public interface TrainingRepository extends JpaRepository<TrainingRecord, Intege
 	int getMaxIDTrainingRecord();
 
 	@Query(value = "SELECT MAX(SCHEMA) FROM ADMIN.TRAININGS", nativeQuery = true)
-	int getMaxIDSchema();	
+	int getMaxIDSchema();
+
+	@Query(value = "SELECT * FROM ADMIN.TRAININGS where IS_SCHEMA=1", nativeQuery = true)
+	ArrayList<TrainingRecord> getAllSchemas();	
 
 }

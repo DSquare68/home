@@ -27,17 +27,18 @@ import static java.util.stream.Collectors.*;
 @Component
 public class ExerciseNames {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
-    @SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
-	//@Column(name = "ID")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
+    //@SequenceGenerator(sequenceName = "SIMPLE", allocationSize = 1, name = "SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	@JsonProperty("id")
-	private Long id;
+	private int id;
 	@NotNull
 	@Column(name = "NAME")
 	@JsonProperty("name")
 	private String name;
 	
-	public ExerciseNames(Long id,String name) {
+	public ExerciseNames(int id,String name) {
 		this.id = id;
 		this.name = name;
 	}

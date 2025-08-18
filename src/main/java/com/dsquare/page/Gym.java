@@ -1,6 +1,7 @@
 package com.dsquare.page;
 
 import com.dsquare.service.ExerciseNamesServiceImpl;
+import com.dsquare.service.TrainingServiceImpl;
 import com.dsquare.view.TrainingOverview;
 import com.dsquare.view.TrainingsPast;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,13 +13,7 @@ public class Gym extends Home{
 	
 	private static final long serialVersionUID = 3275850456945504655L;
 
-<<<<<<< HEAD:src/main/java/com/dsquare/page/Gym.java
-	public Gym(ExerciseNamesServiceImpl namesService){
-		super(namesService);
-=======
-	public GymView() {
-
->>>>>>> master:src/main/java/com/dsquare/page/GymView.java
-	}
-	
+	public Gym(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
+		super(namesService,trainingService);
+	}	
 }
