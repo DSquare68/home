@@ -1,9 +1,12 @@
 package com.dsquare.db;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.dsquare.model.Training;
+import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -65,4 +68,29 @@ public class TrainingRecord {
 	public TrainingRecord() {
 		// Default constructor
 	}
+	public static Training toTraining(ArrayList<TrainingRecord> records, ExerciseNamesServiceImpl service){
+        Training tr = new Training(records.get(0).getNAME_SCHEMA());
+        String exerciseName = "";
+        int exerciseLP = -1;
+        int serieLP = 0;
+        tr.setID(records.get(0).getID_TRAINING());
+        if(records.get(0).getIS_SCHEMA()==1)
+            tr.setTemplete(true);
+        else
+            tr.setTemplete(false);
+        for(TrainingRecord r : records){
+            String name = service.repo.findById(r.getID_EXERCISE_NAME()).get().getName();
+            if(!exerciseName.equals(name)) {
+                tr.getExercises().add(name);
+                exerciseName=name;
+                exerciseLP++;
+            }
+            if(r.getSERIE()==1) {
+                tr.getRounds().put(tr.getExercises().get(exerciseLP), new ArrayList<>());
+            }
+            tr.getRounds().get(tr.getExercises().get(exerciseLP)).add(tr.new Round(r.getSERIE(),r.getREPEAT(),r.getWEIGHT()));
+
+        }
+        return tr;
+    }
 }
