@@ -11,8 +11,6 @@ public class TrainingView extends VerticalLayout {
 	private ArrayList<ExerciseView> exercises ; 
 	public TrainingView(Training training) {
 		exercises = new ArrayList<ExerciseView>();
-		for(ExerciseNames e : training.getExercises()) {
-			exercises.add(new ExerciseView(e));
-		}
+		
 	}
 }

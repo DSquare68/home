@@ -1,6 +1,7 @@
 package com.dsquare.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.dsquare.db.TrainingRecord;
@@ -17,6 +18,7 @@ import lombok.Data;
 public class Training {
 	 private int ID;
 	    private String name;
+	    private Date date;
 	    private ArrayList<String> exercises;
 	    private HashMap<String,ArrayList<Round>> rounds;
 	    private boolean templete;
