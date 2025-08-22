@@ -74,6 +74,7 @@ public class TrainingRecord {
         int exerciseLP = -1;
         int serieLP = 0;
         tr.setID(records.get(0).getID_TRAINING());
+        tr.setDate(records.get(0).getDATE_TRAINING());
         if(records.get(0).getIS_SCHEMA()==1)
             tr.setTemplete(true);
         else
