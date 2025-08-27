@@ -66,7 +66,7 @@ public class Home extends AppLayout  {
 		Image gym = new Image(imageResource, "Gym");
         sideNav.addItem(
                 new SideNavItem(null,"/gym", gym));
-        sideNav.setWidth(8, Unit.PERCENTAGE);
+        ///sideNav.setWidth(8, Unit.PERCENTAGE);
         return sideNav;
 	}
 }
