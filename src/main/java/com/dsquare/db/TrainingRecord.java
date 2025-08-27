@@ -2,6 +2,8 @@ package com.dsquare.db;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.AssertFalse.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder.Default;
 import lombok.Data;
@@ -94,4 +97,22 @@ public class TrainingRecord {
         }
         return tr;
     }
+	public static ArrayList<Training> toTraininings(ArrayList<TrainingRecord> records, ExerciseNamesServiceImpl service){
+		ArrayList<Training> result = new ArrayList<Training>();
+		ArrayList<TrainingRecord> training = new ArrayList<TrainingRecord>();
+		int oldId = records.get(0).getID_TRAINING();
+		for(TrainingRecord tr : records) {
+			int id = tr.getID_TRAINING();
+			if(id==oldId)
+				training.add(tr);
+			else {
+				result.add(TrainingRecord.toTraining(training, service));
+				oldId=id;
+				training = new ArrayList<TrainingRecord>();
+				training.add(tr);
+			}
+			
+		}
+ 		return result;
+	}
 }
