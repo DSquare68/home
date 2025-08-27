@@ -16,7 +16,7 @@ public interface TrainingRepository extends JpaRepository<TrainingRecord, Intege
 	@Query(value = "SELECT MAX(SCHEMA) FROM ADMIN.TRAININGS", nativeQuery = true)
 	int getMaxIDSchema();
 
-	@Query(value = "SELECT * FROM ADMIN.TRAININGS where IS_SCHEMA=1", nativeQuery = true)
+	@Query(value = "SELECT * FROM ADMIN.TRAININGS where IS_SCHEMA=1 order by ID asc", nativeQuery = true)
 	ArrayList<TrainingRecord> getAllSchemas();	
 
 }
