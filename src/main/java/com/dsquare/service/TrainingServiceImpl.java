@@ -29,4 +29,8 @@ public class TrainingServiceImpl {
 	public ArrayList<Training> getSchemasDataTraining() {
 		return TrainingRecord.toTraininings(trainingRepository.getAllSchemas(), exerciseService);
 	}
+
+	public ArrayList<Training> getTrainingsByIDSchema(int id) {
+		return TrainingRecord.toTraininings(trainingRepository.getTrainingsPerSchema(id), exerciseService);
+	}
 }

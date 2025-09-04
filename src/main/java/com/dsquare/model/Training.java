@@ -1,5 +1,6 @@
 package com.dsquare.model;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class Training {
 	 private int ID;
 	    private String name;
 	    private Date date;
+	    private LocalTime timeOfTrainig;
 	    private ArrayList<String> exercises;
 	    private HashMap<String,ArrayList<Round>> rounds;
 	    private boolean templete;
