@@ -7,7 +7,6 @@ import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.service.TrainingServiceImpl;
 import com.dsquare.view.GymTitle;
 import com.dsquare.view.TrainingOverview;
-import com.dsquare.view.TrainingsPast;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
@@ -24,7 +23,7 @@ public class Gym extends Div{
 		//super(namesService,trainingService);
 		schemas = trainingService.getSchemasDataTraining();
 		title = new GymTitle(schemas);
-		title.setId("gym-title-vl");
+		title.setTrainingReadPerSchema(trainingService,namesService);
 		//setContent(title);
 		add(title);
 	}	

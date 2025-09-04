@@ -1,10 +1,5 @@
 package com.dsquare.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.dsquare.model.ExerciseNames;
-
 public interface ExerciseNamesBase {
     /**
      * The constant nazwyTreningów.

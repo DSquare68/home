@@ -54,6 +54,8 @@ public class TrainingRecord {
 	private Date DATE_TRAINING;
 	@JsonProperty("NAME_SCHEMA")
 	private String NAME_SCHEMA;
+	@JsonProperty("TIME_TRAINING")
+	private String TIME_TRAINING;
 	
 	public TrainingRecord(int id_training, int id_exercise_name, int serie, int repeat, double weight,
 			int schema, int is_schema, Date date_training, String name_schema) {
