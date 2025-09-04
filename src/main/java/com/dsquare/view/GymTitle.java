@@ -12,6 +12,7 @@ import com.dsquare.service.TrainingServiceImpl;
 import com.vaadin.flow.component.HasValue.ValueChangeEvent;
 import com.vaadin.flow.component.HasValue.ValueChangeListener;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
@@ -57,14 +58,22 @@ public class GymTitle extends HorizontalLayout{
 			@Override
 			public void valueChanged(ValueChangeEvent event) {
 				Training t = schemasMap.get(event.getValue().toString());
-				new Thread(() -> {trainingsPerSchema = trainingService.getTrainingsByIDSchema(t.getID());
+				new Thread(() -> {
+					trainingsPerSchema = trainingService.getTrainingsByIDSchema(t.getSchema());
 					ArrayList<String> schemasData = new ArrayList<>();
+					if(trainingsPerSchema != null)
 						trainingsPerSchema.forEach(e->{
 						String schemaString = e.getDate()+" "+e.getName();
 						schemasData.add(schemaString);
 						trainingMap.put(schemaString, e);
 					});
-						schemas.setItems(schemasData);
+						Thread.ofVirtual().start(getUI().get().accessLater(() -> {
+							if(trainingsPerSchema==null || trainingsPerSchema.size()==0) {
+								schemasData.clear();
+								schemasData.add("No Trainings");
+							}
+							trainingsPerSchemaComboBox.setItems(schemasData);
+						},null));
 				}).start();
 			}
 		});
