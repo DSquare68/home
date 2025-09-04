@@ -80,6 +80,7 @@ public class TrainingRecord {
         int serieLP = 0;
         tr.setID(records.get(0).getID_TRAINING());
         tr.setDate(records.get(0).getDATE_TRAINING());
+        tr.setSchema(records.get(0).getSCHEMA());
         if(records.get(0).getIS_SCHEMA()==1)
             tr.setTemplete(true);
         else
@@ -100,6 +101,8 @@ public class TrainingRecord {
         return tr;
     }
 	public static ArrayList<Training> toTraininings(ArrayList<TrainingRecord> records, ExerciseNamesServiceImpl service){
+		if(records==null||records.size()==0)
+			return null;
 		ArrayList<Training> result = new ArrayList<Training>();
 		ArrayList<TrainingRecord> training = new ArrayList<TrainingRecord>();
 		int oldId = records.get(0).getID_TRAINING();
@@ -115,6 +118,7 @@ public class TrainingRecord {
 			}
 			
 		}
+		result.add(TrainingRecord.toTraining(training, service));
  		return result;
 	}
 }

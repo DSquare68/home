@@ -20,6 +20,7 @@ public class Training {
 	 private int ID;
 	    private String name;
 	    private Date date;
+	    private int schema;
 	    private LocalTime timeOfTrainig;
 	    private ArrayList<String> exercises;
 	    private HashMap<String,ArrayList<Round>> rounds;
