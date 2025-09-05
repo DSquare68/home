@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.dsquare.event.SchemaEvent;
 import com.dsquare.db.ExerciseNames;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.model.Training;
@@ -11,6 +12,7 @@ import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.service.TrainingServiceImpl;
 import com.vaadin.flow.component.HasValue.ValueChangeEvent;
 import com.vaadin.flow.component.HasValue.ValueChangeListener;
+import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -19,9 +21,12 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import lombok.Getter;
 
+@Getter
 public class GymTitle extends HorizontalLayout{
 
+	public Training schema,selectedTraining;
 	private Div titlePage;
 	private ComboBox schemas;
 	private ComboBox trainingsPerSchemaComboBox;
@@ -31,7 +36,7 @@ public class GymTitle extends HorizontalLayout{
 	private HashMap<String,Training> trainingMap = new HashMap<>();
 	public GymTitle(ArrayList<Training> trainingSchemas) {
 		this.setId("title-gym-hl");
-		
+		UI ui = UI.getCurrent();
 		titlePage = new Div("Trening's Overview");
 		titlePage.setClassName("title-gym-div");
 		trainingName = new Div("Choose training");
@@ -54,10 +59,12 @@ public class GymTitle extends HorizontalLayout{
 	}
 	@SuppressWarnings("unchecked")
 	public void setTrainingReadPerSchema(TrainingServiceImpl trainingService, ExerciseNamesServiceImpl namesService) {
+		GymTitle gt = this;
 		schemas.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChanged(ValueChangeEvent event) {
 				Training t = schemasMap.get(event.getValue().toString());
+				schema = t;
 				new Thread(() -> {
 					trainingsPerSchema = trainingService.getTrainingsByIDSchema(t.getSchema());
 					ArrayList<String> schemasData = new ArrayList<>();
@@ -73,6 +80,7 @@ public class GymTitle extends HorizontalLayout{
 								schemasData.add("No Trainings");
 							}
 							trainingsPerSchemaComboBox.setItems(schemasData);
+							ComponentUtil.fireEvent(UI.getCurrent(),new SchemaEvent(gt,false));
 						},null));
 				}).start();
 			}
