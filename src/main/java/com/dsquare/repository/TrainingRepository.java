@@ -19,7 +19,7 @@ public interface TrainingRepository extends JpaRepository<TrainingRecord, Intege
 	@Query(value = "SELECT * FROM ADMIN.TRAININGS where IS_SCHEMA=1 order by ID asc", nativeQuery = true)
 	ArrayList<TrainingRecord> getAllSchemas();
 
-	@Query(value = "SELECT * FROM ADMIN.TRAININGS where SCHEMA=:id and IS_SCHEMA <> 1 order by ID asc", nativeQuery = true)
+	@Query(value = "SELECT * FROM ADMIN.TRAININGS where SCHEMA=4 and IS_SCHEMA <> 1  order by DATE_TRAINING desc ,ID  asc", nativeQuery = true)
 	ArrayList<TrainingRecord> getTrainingsPerSchema(int id);	
 
 }

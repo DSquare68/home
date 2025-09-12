@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.dsquare.event.SchemaEvent;
+import com.dsquare.event.TrainingEvent;
 import com.dsquare.db.ExerciseNames;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.model.Training;
@@ -26,11 +27,12 @@ import lombok.Getter;
 @Getter
 public class GymTitle extends HorizontalLayout{
 
-	public Training schema,selectedTraining;
+	public Training schema,selectedTraining,previousTraining;
 	private Div titlePage;
 	private ComboBox schemas;
 	private ComboBox trainingsPerSchemaComboBox;
 	private Div trainingName;
+	private ArrayList<String> trainingData;
 	private ArrayList<Training> trainingsPerSchema= new ArrayList<>();
 	private HashMap<String,Training> schemasMap = new HashMap<>();
 	private HashMap<String,Training> trainingMap = new HashMap<>();
@@ -46,6 +48,7 @@ public class GymTitle extends HorizontalLayout{
 		
 		trainingsPerSchemaComboBox = new ComboBox();
 		trainingsPerSchemaComboBox.setClassName("title-gym-combobox");
+		trainingsPerSchemaComboBox.addValueChangeListener(setTrainingView());
 		ArrayList<String> schemasData = new ArrayList<>();
 		trainingSchemas.forEach(e->{
 			String schemaString = e.getDate()+" "+e.getName();
@@ -57,6 +60,23 @@ public class GymTitle extends HorizontalLayout{
 		vl.setId("title-gym-combobox-vl");
 		add(titlePage,vl,trainingName);
 	}
+	private ValueChangeListener setTrainingView() {
+		GymTitle gt = this;
+		return new ValueChangeListener() {
+			@Override
+			public void valueChanged(ValueChangeEvent event) {
+				if(event.getHasValue().isEmpty())
+					return;
+				selectedTraining = trainingMap.get(event.getValue().toString());
+				int a= trainingData.indexOf(event.getValue().toString());
+				if(a!=0)
+					previousTraining = trainingMap.get(trainingData.get(a-1));
+				else
+					previousTraining = new Training();
+				ComponentUtil.fireEvent(UI.getCurrent(),new TrainingEvent(gt,false));
+			}
+		};
+	}
 	@SuppressWarnings("unchecked")
 	public void setTrainingReadPerSchema(TrainingServiceImpl trainingService, ExerciseNamesServiceImpl namesService) {
 		GymTitle gt = this;
@@ -67,19 +87,19 @@ public class GymTitle extends HorizontalLayout{
 				schema = t;
 				new Thread(() -> {
 					trainingsPerSchema = trainingService.getTrainingsByIDSchema(t.getSchema());
-					ArrayList<String> schemasData = new ArrayList<>();
+					trainingData = new ArrayList<>();
 					if(trainingsPerSchema != null)
 						trainingsPerSchema.forEach(e->{
 						String schemaString = e.getDate()+" "+e.getName();
-						schemasData.add(schemaString);
+						trainingData.add(schemaString);
 						trainingMap.put(schemaString, e);
 					});
 						Thread.ofVirtual().start(getUI().get().accessLater(() -> {
 							if(trainingsPerSchema==null || trainingsPerSchema.size()==0) {
-								schemasData.clear();
-								schemasData.add("No Trainings");
+								trainingData.clear();
+								trainingData.add("No Trainings");
 							}
-							trainingsPerSchemaComboBox.setItems(schemasData);
+							trainingsPerSchemaComboBox.setItems(trainingData);
 							ComponentUtil.fireEvent(UI.getCurrent(),new SchemaEvent(gt,false));
 						},null));
 				}).start();

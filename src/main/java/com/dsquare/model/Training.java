@@ -37,6 +37,35 @@ public class Training {
 	        exercises = new ArrayList<>();
 	        rounds = new HashMap<>();
 	    }
+	    public Training(){
+	        this.name = "Empty";
+	        templete = false;
+	        exercises = new ArrayList<>();
+	        exercises.add("a");
+	        exercises.add("b");
+	        exercises.add("c");
+	        exercises.add("d");
+	        exercises.add("e");
+	        exercises.add("f");
+	        exercises.add("g");
+	        exercises.add("h");
+	        exercises.add("j");
+	        exercises.add("k");
+	        exercises.add("l");
+	        rounds = new HashMap<>();
+	        for(String s : exercises) {
+	        	ArrayList<Training.Round> rs = new ArrayList<Training.Round>();
+	        	Training.Round r1= new Training.Round(1, 0, 0);
+	        	Training.Round r2= new Training.Round(2, 0, 0);
+	        	Training.Round r3= new Training.Round(3, 0, 0);
+	        	Training.Round r4= new Training.Round(4, 0, 0);
+	        	rs.add(r1);
+	        	rs.add(r2);
+	        	rs.add(r3);
+	        	rs.add(r4);
+	        	rounds.put(s, rs);
+	        }
+	    }
 
 	    
 	    public class Round {

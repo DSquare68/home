@@ -3,6 +3,7 @@ package com.dsquare.page;
 import java.util.ArrayList;
 
 import com.dsquare.event.SchemaEvent;
+import com.dsquare.event.TrainingEvent;
 import com.dsquare.model.Training;
 import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.service.TrainingServiceImpl;
@@ -24,24 +25,41 @@ import com.vaadin.flow.theme.Theme;
 public class Gym extends Div{
 	
 	private static final long serialVersionUID = 3275850456945504655L;
+	private HorizontalLayout trainings;
 	private Training schema, training;
 	private TrainingView schemaView, trainingView;
 	private GymTitle title;
 	private ArrayList<Training> schemas;
 	public Gym(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
 		//super(namesService,trainingService);
+		trainings = new HorizontalLayout();
+		trainings.setId("trainings-hl");
 		schemas = trainingService.getSchemasDataTraining();
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
+			this.trainings.removeAll();
 			schema = e.getSource().getSchema();
-			schemaView = new TrainingView(schema,null);
-			this.add(schemaView);
+			Training  lastTraining = new Training();
+			schemaView = new TrainingView(schema,lastTraining);
+			schemaView.setId("schema-view-vl");
+			this.trainings.add(schemaView);
 			schemaView.setWidth(40,Unit.PERCENTAGE);
+		});
+		ComponentUtil.addListener(UI.getCurrent(),TrainingEvent.class,e->{
+			if(this.trainings.getChildren().filter(f->f.equals(trainingView)).findAny().isPresent())
+				this.trainings.remove(trainingView);
+			training = e.getSource().getSelectedTraining();
+			Training  lastTraining = e.getSource().getPreviousTraining();
+			trainingView = new TrainingView(schema,lastTraining);
+			trainingView.setId("training-view-vl");
+			this.trainings.add(trainingView);
+			trainingView.setWidth(40,Unit.PERCENTAGE);
 		});
 		//title.setOnSchemaSelected();
 		//setContent(title);
 		add(title);
+		add(trainings);
 		HorizontalLayout yl = new HorizontalLayout();
 	}
 }
