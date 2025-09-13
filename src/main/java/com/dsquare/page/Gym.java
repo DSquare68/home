@@ -51,7 +51,7 @@ public class Gym extends Div{
 				this.trainings.remove(trainingView);
 			training = e.getSource().getSelectedTraining();
 			Training  lastTraining = e.getSource().getPreviousTraining();
-			trainingView = new TrainingView(schema,lastTraining);
+			trainingView = new TrainingView(training,lastTraining);
 			trainingView.setId("training-view-vl");
 			this.trainings.add(trainingView);
 			trainingView.setWidth(40,Unit.PERCENTAGE);

@@ -120,7 +120,15 @@
     "@vaadin/upload": "24.8.7",
     "@vaadin/router": "2.0.0",
     "@vaadin/vertical-layout": "24.8.7",
-    "@vaadin/virtual-list": "24.8.7"
+    "@vaadin/virtual-list": "24.8.7",
+    "@vaadin/board": "24.8.7",
+    "@vaadin/charts": "24.8.7",
+    "@vaadin/cookie-consent": "24.8.7",
+    "@vaadin/crud": "24.8.7",
+    "@vaadin/dashboard": "24.8.7",
+    "@vaadin/grid-pro": "24.8.7",
+    "@vaadin/map": "24.8.7",
+    "@vaadin/rich-text-editor": "24.8.7"
   },
   "vaadin": {
     "dependencies": {

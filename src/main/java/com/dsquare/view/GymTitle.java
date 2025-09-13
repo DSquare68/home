@@ -69,8 +69,8 @@ public class GymTitle extends HorizontalLayout{
 					return;
 				selectedTraining = trainingMap.get(event.getValue().toString());
 				int a= trainingData.indexOf(event.getValue().toString());
-				if(a!=0)
-					previousTraining = trainingMap.get(trainingData.get(a-1));
+				if(a!=trainingData.size()-1)
+					previousTraining = trainingMap.get(trainingData.get(a+1));
 				else
 					previousTraining = new Training();
 				ComponentUtil.fireEvent(UI.getCurrent(),new TrainingEvent(gt,false));

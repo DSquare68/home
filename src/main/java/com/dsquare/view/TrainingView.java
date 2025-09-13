@@ -44,10 +44,11 @@ public class TrainingView extends VerticalLayout{
 		}
 	}
 	private class Round extends HorizontalLayout{
-		public Training.Round round;
+		public Training.Round round,lastRound;
 		
 		public Round(Training.Round round, Training.Round lastRound) {
 			this.round= round;
+			this.lastRound= lastRound;
 			this.setClassName("round-vl");
 			Div lp = new Div(round.getRoundNumber()+"");
 			lp.setClassName("lp-div");
@@ -59,7 +60,19 @@ public class TrainingView extends VerticalLayout{
 			VerticalLayout data = new VerticalLayout();
 			data.setClassName("data-round-vl");
 			Div weight = new Div(round.getWeight()+"");
+			if (round.getWeight()==lastRound.getWeight()||lastRound.getWeight()==0)
+				weight.addClassName("equal-data-div");
+			else if(round.getWeight()<lastRound.getWeight())
+				weight.addClassName("worse-data-div");
+			else if (round.getWeight()>lastRound.getWeight()) 
+				weight.addClassName("better-data-div");
 			Div repeats = new Div(round.getReps()+"");
+			if(round.getReps()==lastRound.getReps()||lastRound.getReps()==0)
+				repeats.addClassName("equal-data-div");
+			else if(round.getReps()<lastRound.getReps())
+				repeats.addClassName("worse-data-div");
+			else if(round.getReps()>lastRound.getReps())
+				repeats.addClassName("better-data-div");
 			data.add(weight,repeats);
 			return data;
 		}
