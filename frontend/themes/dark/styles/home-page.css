@@ -55,8 +55,9 @@ vaadin-app-layout::part(navbar) {
 vaadin-side-nav-item{
 	margin-left:-25%;
 	height:	150px;
-	display: flex;
+	display: flex;	
 }
+
 vaadin-side-nav-item > img{
 	scale: 60%;
 }
