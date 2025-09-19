@@ -61,12 +61,11 @@ public class Home extends AppLayout  {
 
 	private SideNav getSideNav() {
 		SideNav sideNav = new SideNav();
-		StreamResource imageResource = new StreamResource("gym.png",
-		        () -> getClass().getResourceAsStream("/images/gym.png"));
-		Image gym = new Image(imageResource, "Gym");
+		Image gym = new Image("images/gym.png", "Gym");
+		Image football = new Image("images/ball.png", "Football");
         sideNav.addItem(
-                new SideNavItem(null,"/gym", gym));
-        ///sideNav.setWidth(8, Unit.PERCENTAGE);
+                new SideNavItem(null,"/gym", gym)
+                , new SideNavItem(null,"/football",football));
         return sideNav;
 	}
 }
