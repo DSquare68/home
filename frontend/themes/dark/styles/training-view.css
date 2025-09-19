@@ -1,0 +1,65 @@
+#trainings-hl{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.training-view-vl{
+	width: 40%;
+	height: 1000px;
+	background: #99d299;
+}
+#training-view-vl{
+	margin-top: 15px;
+	margin-left: 100px;
+}
+#schema-view-vl{
+	margin-top: 15px;
+	margin-right: 100px;
+}
+.name-training-div{
+	align-self: center;
+	font-size:	36px;
+	font-weight: 750;
+	color: #0000DD;
+}
+.name-exercise-div{
+	font-size: 22px;
+	margin-left: 5px;
+	font-weight:	400;
+}
+.data-round-vl{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height:	75px;
+	width:	75px;
+}
+.lp-div{
+	font-size: 38px;
+	margin-left: 5px;
+	margin-right:5px;
+	align-self: center;
+}
+.exercise-hl{
+	height: 150px;
+}
+.round-vl{
+	height:	75px;
+	width: 75px;
+	margin-right: 35px;
+}
+.better-data-div{
+	font-size: 18px;
+    font-weight: 500;
+    color: #00DD00;
+}
+.worse-data-div{
+	font-size: 18px;
+    font-weight: 500;
+    color: #FF0000;
+}
+.equal-data-div{
+	font-size: 18px;
+    font-weight: 500;
+    color: #0000DD;
+}

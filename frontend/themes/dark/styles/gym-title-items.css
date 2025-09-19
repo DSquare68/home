@@ -1,0 +1,28 @@
+#title-gym-hl{
+	width: 100%;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #adedff;
+}
+.title-gym-div{
+	width:30%;
+	color: #0000DD;
+	font-size: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.title-gym-combobox{
+	font-size:34px;
+	width:600px;
+	color: #00dd00;
+}
+#title-gym-combobox-vl{
+	width:40% !important; 
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
