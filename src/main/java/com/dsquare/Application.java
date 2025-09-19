@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.dsquare.api.FootballApi;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.page.Viewport;
@@ -36,5 +37,6 @@ public class Application extends SpringBootServletInitializer implements AppShel
 
 	public static void main(String[] args) {
       	SpringApplication.run(Application.class, args);
+		//new FootballApi();
 	}
 }
