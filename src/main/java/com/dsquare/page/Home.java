@@ -1,5 +1,8 @@
 package com.dsquare.page;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
@@ -34,6 +37,8 @@ import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.flow.server.streams.DownloadEvent;
+import com.vaadin.flow.server.streams.DownloadHandler;
 import com.vaadin.flow.spring.annotation.UIScope;
 
 @Route("home")
@@ -61,12 +66,11 @@ public class Home extends AppLayout  {
 
 	private SideNav getSideNav() {
 		SideNav sideNav = new SideNav();
-		StreamResource imageResource = new StreamResource("gym.png",
-		        () -> getClass().getResourceAsStream("/images/gym.png"));
-		Image gym = new Image(imageResource, "Gym");
+		Image gym = new Image("images/gym.png", "Gym");
+		Image football = new Image("images/ball.png", "Football");
         sideNav.addItem(
-                new SideNavItem(null,"/gym", gym));
-        ///sideNav.setWidth(8, Unit.PERCENTAGE);
+                new SideNavItem(null,"/gym", gym)
+                , new SideNavItem(null,"/football",football));
         return sideNav;
 	}
 }
