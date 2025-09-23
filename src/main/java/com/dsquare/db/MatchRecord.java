@@ -32,4 +32,5 @@ public class MatchRecord {
 	private int guestResult;
 	private Date date;
 	private String cup;
+	private String season;
 }
