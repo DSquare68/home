@@ -11,6 +11,7 @@ import com.dsquare.api.InitData;
 import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
 import com.dsquare.service.ExerciseNamesServiceImpl;
+import com.dsquare.service.MatchServiceImpl;
 import com.dsquare.service.TrainingServiceImpl;
 import com.dsquare.view.CircleProgress;
 import com.dsquare.view.HomePage;
@@ -46,8 +47,8 @@ public class Home extends AppLayout  {
 	
 	private static final long serialVersionUID = 2216332923141238067L;
 	
-	Home(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
-		new InitData(namesService,trainingService).run();
+	Home(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService, MatchServiceImpl matchService){
+		new InitData(namesService,trainingService,matchService).run();
 		DrawerToggle toggle = new DrawerToggle();
 		SideNav nav = getSideNav();
 		Scroller scroller = new Scroller(nav);
