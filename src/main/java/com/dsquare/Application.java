@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -29,6 +30,7 @@ import com.vaadin.flow.theme.Theme;
 @EntityScan(basePackages = {"com.dsquare.repository","com.dsquare.model","com.dsquare.db"})
 @PWA(name = "Home for activities developing recording simple day of life", shortName = "Home of Dsquare")
 @Theme(value = "dark")
+@ConfigurationProperties
 @SpringBootConfiguration
 @EnableTransactionManagement
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
@@ -36,7 +38,7 @@ public class Application extends SpringBootServletInitializer implements AppShel
 	private static final long serialVersionUID = 6850028705495576466L;
 
 	public static void main(String[] args) {
-      	SpringApplication.run(Application.class, args);
-		//new FootballApi();
+      	//SpringApplication.run(Application.class, args);
+      	new FootballApi();
 	}
 }
