@@ -38,7 +38,6 @@ public class Application extends SpringBootServletInitializer implements AppShel
 	private static final long serialVersionUID = 6850028705495576466L;
 
 	public static void main(String[] args) {
-      	//SpringApplication.run(Application.class, args);
-      	new FootballApi();
+      	SpringApplication.run(Application.class, args);
 	}
 }

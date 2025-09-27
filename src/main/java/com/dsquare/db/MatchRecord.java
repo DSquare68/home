@@ -1,6 +1,6 @@
 package com.dsquare.db;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -14,12 +14,14 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(schema = "ADMIN", name = "MATCHES")
 @Data
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
 public class MatchRecord {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE")
@@ -27,10 +29,10 @@ public class MatchRecord {
 	@JsonProperty("ID")
 	private int ID;
 	private String home;
-	private String quest;
-	private int gomeResult;
+	private String guest;
+	private int homeResult;
 	private int guestResult;
-	private Date date;
+	private Date date_of_match;
 	private String cup;
 	private String season;
 }
