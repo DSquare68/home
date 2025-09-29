@@ -35,4 +35,5 @@ public class MatchRecord {
 	private Date date_of_match;
 	private String cup;
 	private String season;
+	private String mode_of_data;
 }
