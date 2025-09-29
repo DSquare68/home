@@ -3,6 +3,7 @@ package com.dsquare.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.checkerframework.common.value.qual.MatchesRegex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsquare.db.ExerciseNames;
+import com.dsquare.db.MatchRecord;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.repository.MatchRespository;
 import com.dsquare.repository.TrainingRepository;
 
 
@@ -26,6 +29,8 @@ public class Export {
 	private ExerciseNamesRepository exerciseNamesRepository;
 	@Autowired
 	private TrainingRepository trainingRepository;
+	@Autowired
+	private MatchRespository matchRepository;
 	
 	@GetMapping("/api/get/exercise_name/{id}")
 	public ExerciseNames getExerciseName(@PathVariable("id") int id) {
@@ -39,6 +44,10 @@ public class Export {
 	public ArrayList<TrainingRecord> getTrainingSchemas() {
 		ArrayList<TrainingRecord> tr =  trainingRepository.getAllSchemas();
 		return tr;
+	}
+	@GetMapping("/api/get/matches")
+	public List<MatchRecord> getMatches() {
+		return matchRepository.findAll();
 	}
 	/*public Long getExerciseIDByName(@Param("name") String name) {
 		Long l = exerciseNamesRepository.findIDByName(name);
