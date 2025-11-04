@@ -32,7 +32,7 @@ import com.vaadin.flow.theme.Theme;
 @Theme(value = "dark")
 @ConfigurationProperties
 @SpringBootConfiguration
-@EnableTransactionManagement
+@EnableScheduling
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
 	private static final long serialVersionUID = 6850028705495576466L;
