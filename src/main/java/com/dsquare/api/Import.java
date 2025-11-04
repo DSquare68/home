@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsquare.db.ExerciseNames;
+import com.dsquare.db.MatchRecord;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.repository.ExerciseNamesRepository;
 import com.dsquare.repository.ExerciseRepository;
+import com.dsquare.repository.MatchRespository;
 import com.dsquare.repository.TrainingRepository;
 import com.vaadin.flow.router.Route;
 
@@ -24,6 +26,8 @@ public class Import {
 	private ExerciseNamesRepository namesRepository;
 	@Autowired
 	private TrainingRepository trainingRepository;
+	@Autowired
+	private MatchRespository matchRepository;
 
 	@PostMapping("/api/add/exercise_name")
 	public ResponseEntity<ExerciseNames> addExercise(@RequestBody ExerciseNames e) {
@@ -63,6 +67,14 @@ public class Import {
 			e.setSCHEMA(ID_SCHEMA);
 			trainingRepository.save(e);
 		}
+		return ResponseEntity.status(200).build();
+	}
+	
+	@PostMapping("/api/add/matches")
+	public ResponseEntity<MatchRecord> addMatches(@RequestBody ArrayList<MatchRecord> matches) {
+		ArrayList<MatchRecord> guests = matchRepository.getByNotMode(FootballApi.WEB_MODE);
+		for(MatchRecord match : matches)
+			matchRepository.save(match);
 		return ResponseEntity.status(200).build();
 	}
 }

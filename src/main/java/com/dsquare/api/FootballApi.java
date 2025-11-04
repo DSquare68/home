@@ -1,12 +1,15 @@
 package com.dsquare.api;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
 
 import org.jsoup.Jsoup;
@@ -14,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.Formatter;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsquare.db.MatchRecord;
@@ -29,6 +33,13 @@ public class FootballApi {
 	private MatchServiceImpl matchService;
 	private Elements newsHeadlines;
 	private Document doc = null;
+	public final static String WEB_MODE = "WEBSITE_DATA";
+	public final static String ANDROID_TIE_WIN  = "ANDROID_TIE_WIN";
+	public final static String ANDROID_TIE_LOSE  = "ANDROID_TIE_LOSE";
+	public final static String ANDROID_HOME_WIN  = "ANDROID_HOME_WIN";
+	public final static String ANDROID_HOME_LOSE  = "ANDROID_HOME_LOSE";
+	public final static String ANDROID_GUEST_WIN  = "ANDROID_GUEST_WIN";
+	public final static String ANDROID_GUEST_LOSE  = "ANDROID_HOME_LOSE";
 	
 	public FootballApi(MatchServiceImpl service) {
 		this.matchService = service;
@@ -42,14 +53,29 @@ public class FootballApi {
 		
 	}
 	public void run() {
+		//matchService.deleteAll();
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
-		for(ArrayList<MatchRecord> queue : matches) {
-			for(MatchRecord match : queue) {
-				//if(matchRepository.findByHomeAndGuestAndDate(match.getHome(), match.getGuest(), match.getDate())==null) {
-					matchService.addMatchRecord(match);
-			//	}
+		List<MatchRecord> seasonMatches = matchService.getQueueBySeason(matches.get(0).get(0).getSeason(),FootballApi.WEB_MODE);
+		if(seasonMatches==null|| seasonMatches.size()==0) {
+			for(ArrayList<MatchRecord> matchList : matches)
+				matchService.addMatchesRecord(matchList);
+		}else {
+			seasonMatches = seasonMatches.stream().filter(e-> e.getHomeResult() == -1 && e.getGuestResult() == -1 ).sorted((a,b)->Integer.compare(a.getQueue(),b.getQueue())).toList();
+			if(seasonMatches.size()==0) return;
+			int queue = seasonMatches.get(0).getQueue();
+			if(matches.get(queue-1).get(0).getHomeResult() != -1 && matches.get(queue-1).get(0).getGuestResult() != -1) {
+				for(MatchRecord toUpdate : seasonMatches) {
+					MatchRecord m = matches.get(queue-1).stream().filter((e)->e.getHome().equals(toUpdate.getHome()) && e.getGuest().equals(toUpdate.getGuest()) && e.getDate_of_match().equals(toUpdate.getDate_of_match())).findFirst().orElse(null);
+					if(toUpdate!=null) {
+						toUpdate.setHomeResult(m.getHomeResult());
+						toUpdate.setGuestResult(m.getGuestResult());
+						matchService.updateMatch(toUpdate);
+					}
+				}
+				matchService.executeUpdateLastQueue(queue,matches.get(0).get(0).getSeason());
 			}
 		}
+		matchService.executeUpdateLastQueue(13,matches.get(0).get(0).getSeason());
 	}
 	private ArrayList<ArrayList<MatchRecord>> getFromWeb() {
 		newsHeadlines = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
@@ -82,14 +108,16 @@ public class FootballApi {
 						if(date.length()>0) {
 							if(date.contains("("))
 								date = date.substring(0, date.indexOf("("));
-							match.setDate_of_match(Date.from(getMatchDate((date)).atStartOfDay().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toInstant()));
+							match.setDate_of_match(getMatchDate(date));
 						}else {
 							match.setDate_of_match(new Date(0));
 						}
 						match.setCup(cup);
+						match.setMode_of_data(WEB_MODE);
 						String cupS = match.getCup();
 						String[] cupArr = cupS.split(" ");
 						match.setSeason(cupArr[cupArr.length-1]);
+						match.setQueue(queueNumber);
 					matches.get(queueNumber-1).add(match);
 				}
 			}
@@ -97,7 +125,7 @@ public class FootballApi {
 		return matches;
 	}
 	
-	private LocalDate getMatchDate(String date) {
+	private Date getMatchDate(String date) {
 		Hashtable<String, String> monthMap = new Hashtable<>();
 		monthMap.put("stycznia", "01 2025");
 		monthMap.put("lutego", "02  2025");
@@ -122,9 +150,14 @@ public class FootballApi {
 			date = date.substring(0, date.length()-1);
 		if(date.length()<17)
 			date = "0"+date;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy, HH:mm", Locale.ENGLISH);
-		LocalDate dateTime = LocalDate.parse(date, formatter);
-		return dateTime;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy, HH:mm", Locale.ENGLISH);
+		try {
+			return  formatter.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	public ArrayList<ArrayList<MatchRecord>> getMatchesForWeek() {
 		ArrayList<ArrayList<MatchRecord>> res = new ArrayList<>();
