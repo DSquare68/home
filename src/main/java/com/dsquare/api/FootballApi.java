@@ -73,9 +73,9 @@ public class FootballApi {
 					}
 				}
 				matchService.executeUpdateLastQueue(queue,matches.get(0).get(0).getSeason());
+				matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),queue);
 			}
 		}
-		matchService.executeUpdateLastQueue(13,matches.get(0).get(0).getSeason());
 	}
 	private ArrayList<ArrayList<MatchRecord>> getFromWeb() {
 		newsHeadlines = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
