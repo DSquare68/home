@@ -41,13 +41,18 @@ public class MatchServiceImpl {
 	public List<MatchRecord> getQueueBySeason(String season, String webMode) {
 	    Calendar today = Calendar.getInstance();
 	    today.add(Calendar.DATE, -7);
-		int queue = matchRespository.findQueueByDate(today.getTime(),webMode)+1; //TODO remove +1 on production
+		int queue = matchRespository.findQueueByDate(today.getTime(),webMode); //TODO remove +1 on production
 		
 		return matchRespository.findQueueBySeason(season,queue,webMode);
 	}
 
 	public void executeUpdateLastQueue(int queue,String season) {
 		matchRespository.updateLastQueue(queue,season);
+	}
+
+	public void checkPredictionQueue(String season, int queue) {
+		matchRespository.checkPredictionQueue(season,queue);
+		
 	}
 
 }

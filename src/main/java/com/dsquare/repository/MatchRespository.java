@@ -36,5 +36,9 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	@Procedure(procedureName = "ADMIN.UPDATE_LAST_QUEUE")
 	@Transactional
 	void updateLastQueue(@Param("QUEUE_DATA") Integer QUEUE_DATA,@Param("SEASON_DATA") String SEASON_DATA);
+	
+	@Procedure(procedureName = "ADMIN.CHECK_PREDICTIONS")
+	@Transactional
+	void checkPredictionQueue(@Param("SEASON_DATA") String SEASON_DATA,@Param("QUEUE_DATA") Integer QUEUE_DATA);
 
 }
