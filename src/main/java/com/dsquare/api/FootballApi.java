@@ -55,6 +55,8 @@ public class FootballApi {
 	public void run() {
 		//matchService.deleteAll();
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
+		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
+		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
 		List<MatchRecord> seasonMatches = matchService.getQueueBySeason(matches.get(0).get(0).getSeason(),FootballApi.WEB_MODE);
 		if(seasonMatches==null|| seasonMatches.size()==0) {
 			for(ArrayList<MatchRecord> matchList : matches)
@@ -126,19 +128,21 @@ public class FootballApi {
 	}
 	
 	private Date getMatchDate(String date) {
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
 		Hashtable<String, String> monthMap = new Hashtable<>();
-		monthMap.put("stycznia", "01 2025");
-		monthMap.put("lutego", "02  2025");
-		monthMap.put("marca", "03 2025");
-		monthMap.put("kwietnia", "04 2025");
-		monthMap.put("maja", "05 2025");
-		monthMap.put("czerwca", "06 2025");
-		monthMap.put("lipca", "07 2025");
-		monthMap.put("sierpnia", "08 2025");
-		monthMap.put("września", "09 2025");
-		monthMap.put("października", "10 2025");
-		monthMap.put("listopada", "11 2025");
-		monthMap.put("grudnia", "12 2025");
+		monthMap.put("stycznia", "01 "+year);
+		monthMap.put("lutego", "02  "+year);
+		monthMap.put("marca", "03 "+year);
+		monthMap.put("kwietnia", "04 "+year);
+		monthMap.put("maja", "05 "+year);
+		monthMap.put("czerwca", "06 "+year);
+		monthMap.put("lipca", "07 "+year);
+		monthMap.put("sierpnia", "08 "+year);
+		monthMap.put("września", "09 "+year);
+		monthMap.put("października", "10 "+year);
+		monthMap.put("listopada", "11 "+year);
+		monthMap.put("grudnia", "12 "+year);
 		
 		for(String month : monthMap.keySet()) {
 			if(date.contains(month)) {
