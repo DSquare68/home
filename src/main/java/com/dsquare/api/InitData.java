@@ -39,6 +39,7 @@ public class InitData {
 		initQueueMatch();
 	}
 	private void initQueueMatch() {
+		//new FootballApi(matchService).run();
 		Calendar c = Calendar.getInstance();
 		c.set(2025,10,27,23,59,59);
 		Timer t = new Timer();

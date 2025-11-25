@@ -41,8 +41,8 @@ public class MatchServiceImpl {
 	public List<MatchRecord> getQueueBySeason(String season, String webMode) {
 	    Calendar today = Calendar.getInstance();
 	    today.add(Calendar.DATE, -7);
-		int queue = matchRespository.findQueueByDate(today.getTime(),webMode); //TODO remove +1 on production
-		
+		int queue = matchRespository.findQueueByDate(today.getTime(),webMode); 
+		queue =14; //TODO remove hardcode
 		return matchRespository.findQueueBySeason(season,queue,webMode);
 	}
 
