@@ -41,7 +41,7 @@ public class InitData {
 	private void initQueueMatch() {
 		//new FootballApi(matchService).run();
 		Calendar c = Calendar.getInstance();
-		c.set(2025,10,27,23,59,59);
+		c.set(2025,12,02,21,30,00);
 		Timer t = new Timer();
 		TimerTask task = new TimerTask(){
 			@Override
