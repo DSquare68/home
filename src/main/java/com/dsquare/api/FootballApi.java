@@ -34,6 +34,7 @@ public class FootballApi {
 	private Elements newsHeadlines;
 	private Document doc = null;
 	public final static String WEB_MODE = "WEBSITE_DATA";
+	public final static String ANDROID = "ANDROID";
 	public final static String ANDROID_TIE_WIN  = "ANDROID_TIE_WIN";
 	public final static String ANDROID_TIE_LOSE  = "ANDROID_TIE_LOSE";
 	public final static String ANDROID_HOME_WIN  = "ANDROID_HOME_WIN";
@@ -67,7 +68,7 @@ public class FootballApi {
 			int queue = seasonMatches.get(0).getQueue();
 			if(matches.get(queue-1).get(0).getHomeResult() != -1 && matches.get(queue-1).get(0).getGuestResult() != -1) {
 				for(MatchRecord toUpdate : seasonMatches) {
-					MatchRecord m = matches.get(queue-1).stream().filter((e)->e.getHome().equals(toUpdate.getHome()) && e.getGuest().equals(toUpdate.getGuest()) && e.getDate_of_match().equals(toUpdate.getDate_of_match())).findFirst().orElse(null);
+					MatchRecord m = matches.get(queue-1).stream().filter((e)->e.getHome().equals(toUpdate.getHome()) && e.getGuest().equals(toUpdate.getGuest()) && e.getSeason().equals(toUpdate.getSeason())).findFirst().orElse(null);
 					if(toUpdate!=null) {
 						toUpdate.setHomeResult(m.getHomeResult());
 						toUpdate.setGuestResult(m.getGuestResult());
@@ -131,12 +132,12 @@ public class FootballApi {
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		Hashtable<String, String> monthMap = new Hashtable<>();
-		monthMap.put("stycznia", "01 "+year);
-		monthMap.put("lutego", "02  "+year);
-		monthMap.put("marca", "03 "+year);
-		monthMap.put("kwietnia", "04 "+year);
-		monthMap.put("maja", "05 "+year);
-		monthMap.put("czerwca", "06 "+year);
+		monthMap.put("stycznia", "01 "+(year+1));
+		monthMap.put("lutego", "02 "+(year+1));
+		monthMap.put("marca", "03 "+(year+1));
+		monthMap.put("kwietnia", "04 "+(year+1));
+		monthMap.put("maja", "05 "+(year+1));
+		monthMap.put("czerwca", "06 "+(year+1));
 		monthMap.put("lipca", "07 "+year);
 		monthMap.put("sierpnia", "08 "+year);
 		monthMap.put("września", "09 "+year);
@@ -156,6 +157,8 @@ public class FootballApi {
 			date = "0"+date;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy, HH:mm", Locale.ENGLISH);
 		try {
+			if(date==null || date.length()<11)
+				return null;
 			return  formatter.parse(date);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

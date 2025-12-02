@@ -18,7 +18,7 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 
-	@Query("SELECT m FROM MatchRecord m WHERE m.season = ?1")
+	@Query("SELECT m FROM MatchRecord m WHERE m.season = ?1 order by m.queue, m.ID asc")
 	ArrayList<MatchRecord> findBySeason(String season);
 
 	@Query("SELECT m FROM MatchRecord m WHERE m.mode_of_data != ?1")
@@ -27,11 +27,11 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	//@Query("UPDATE MatchRecord m SET m = ?2 WHERE m.id = ?1")
 	//void update(int id, MatchRecord toUpdate);
 
-	@Query("select m from MatchRecord m where m.season = ?1  and m.mode_of_data = ?3 and m.queue = ?2")
+	@Query("select m from MatchRecord m where m.season = ?1  and m.mode_of_data like %?3% and m.queue = ?2")
 	List<MatchRecord> findQueueBySeason(String season, int queue , String webMode);
 
-	@Query("SELECT m.queue FROM MatchRecord m WHERE m.date_of_match > ?1 and m.mode_of_data = ?2 order by m.date_of_match LIMIT 1")
-	int findQueueByDate(Date day, String webMode);
+	@Query("SELECT m.queue FROM MatchRecord m WHERE m.date_of_match > ?1 and m.mode_of_data LIKE %?2% order by m.date_of_match LIMIT 1")
+	Integer findQueueByDate(Date day, String webMode);
 
 	@Procedure(procedureName = "UPDATE_LAST_QUEUE")
 	@Transactional
@@ -40,5 +40,8 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	@Procedure(procedureName = "CHECK_PREDICTIONS")
 	@Transactional
 	void checkPredictionQueue(@Param("SEASON_DATA") String SEASON_DATA,@Param("QUEUE_DATA") Integer QUEUE_DATA);
+
+	@Query("SELECT DISTINCT m.season FROM MatchRecord m ORDER BY m.season DESC")
+	String[] findAllSeasons();
 
 }

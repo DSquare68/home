@@ -56,7 +56,7 @@ type DevToolsConf = {
     enable: boolean;
     url: string;
     backend?: string;
-    liveReloadPort: number;
+    liveReloadPort?: number;
     token?: string;
 };
 export declare class VaadinDevTools extends LitElement {

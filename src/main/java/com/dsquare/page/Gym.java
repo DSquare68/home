@@ -60,6 +60,5 @@ public class Gym extends Div{
 		//setContent(title);
 		add(title);
 		add(trainings);
-		HorizontalLayout yl = new HorizontalLayout();
 	}
 }

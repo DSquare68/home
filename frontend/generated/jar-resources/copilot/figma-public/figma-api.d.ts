@@ -99,4 +99,4 @@ export declare function renderNode(node: FigmaNode, metadata: ImportMetadata, cu
 export declare function findChild(node: FigmaNode, matcher: (node: FigmaNode) => boolean): FigmaNode | undefined;
 export declare function findFirstChild(node: FigmaNode, name: string): FigmaNode | undefined;
 export declare function findAllChildren(node: FigmaNode, matcher: (node: FigmaNode) => boolean): FigmaNode[];
-export declare function _createChildrenDefinitions(node: FigmaNode, metadata: ImportMetadata, matcher: (n: FigmaNode) => boolean): any[];
+export declare function _createChildrenDefinitions(node: FigmaNode, metadata: ImportMetadata, matcher: (n: FigmaNode) => boolean): ComponentDefinition[];
