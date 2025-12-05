@@ -14,15 +14,16 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.9</version>
+		<version>3.5.8</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
         <vaadin.version>24.9.6</vaadin.version>
 		<spring-security.version>6.5.3</spring-security.version>
 		<spring-boot.version>3.5.5</spring-boot.version>
+		<lombok.version>1.18.32</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -96,6 +97,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -171,23 +173,25 @@
             </plugin>
         </plugins>
     </build>
-	    <profiles>
+	<profiles>
         <profile>
             <id>prod</id>
             <dependencies>
 	            <dependency>
 	                <groupId>com.vaadin</groupId>
 	                <artifactId>vaadin</artifactId>
+	                <version>${vaadin.version}</version>
 	                <exclusions>
 	                    <exclusion>
 	                        <groupId>com.vaadin</groupId>
 	                        <artifactId>vaadin-dev</artifactId>
-	                    </exclusion>
+	                    </exclusion>                          
 	                </exclusions>
 	            </dependency>
 		        <dependency>
 		            <groupId>com.vaadin</groupId>
 		            <artifactId>flow-server-production-mode</artifactId>
+		            <version>${vaadin.version}</version>
 		        </dependency>
 	        </dependencies>
             <build>
@@ -212,9 +216,10 @@
                             </execution>
                         </executions>
                         <configuration>
+                      
+						  </configuration>
                         	 <!--<forceProductionBuild>true</forceProductionBuild>
                         	 <ciBuild>true</ciBuild>-->
-			   			</configuration>
                     </plugin>
                 </plugins>
             </build>

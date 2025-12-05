@@ -94,14 +94,14 @@ public class GymTitle extends HorizontalLayout{
 						trainingData.add(schemaString);
 						trainingMap.put(schemaString, e);
 					});
-						Thread.ofVirtual().start(getUI().get().accessLater(() -> {
+						new Thread (getUI().get().accessLater(() -> {
 							if(trainingsPerSchema==null || trainingsPerSchema.size()==0) {
 								trainingData.clear();
 								trainingData.add("No Trainings");
 							}
 							trainingsPerSchemaComboBox.setItems(trainingData);
 							ComponentUtil.fireEvent(UI.getCurrent(),new SchemaEvent(gt,false));
-						},null));
+						},null)).start();
 				}).start();
 			}
 		});

@@ -48,7 +48,10 @@ public class MatchServiceImpl {
 	    	queue = queueInt.intValue();
 	    else {
 	    	queueInt = matchRespository.findQueueByDate(today.getTime(),FootballApi.WEB_MODE);
-	    	queue = queueInt.intValue();
+	    	if (queueInt != null)
+	    		queue = queueInt.intValue();
+	    	else
+	    		return null;
 	    	return matchRespository.findQueueBySeason(season,queue,FootballApi.WEB_MODE);
 	    }
 		//queue =14; //TODO remove hardcode
