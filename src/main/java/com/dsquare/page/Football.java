@@ -40,6 +40,8 @@ public class Football extends Div{
 			season =cal.get(Calendar.YEAR)-1+"/"+cal.get(Calendar.YEAR);
 		seasonMatches = matchService.getBySeason(season);
 		queueMatches = matchService.getQueueBySeason(season,FootballApi.ANDROID);
+		if(queueMatches==null)
+			return;
 		Integer[] queues = seasonMatches.stream().map(MatchRecord::getQueue).distinct().toList().toArray(new Integer[seasonMatches.stream().map(MatchRecord::getQueue).distinct().toList().size()]);
 		Div ekstraklasa = new Div("EKSTRAKLASA");
 		ekstraklasa.setId("league-title");
