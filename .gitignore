@@ -1,6 +1,9 @@
 HELP.md
-/src/main/resources/secrets.properties
-/target/
+
+.eclipse/
+.vaadin/
+src/main/resources/secrets.properties
+target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
