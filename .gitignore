@@ -2,6 +2,7 @@ HELP.md
 
 .eclipse/
 .vaadin/
+node_modules/
 src/main/resources/secrets.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
