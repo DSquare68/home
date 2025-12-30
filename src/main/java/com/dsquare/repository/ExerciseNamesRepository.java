@@ -16,4 +16,6 @@ public interface ExerciseNamesRepository extends JpaRepository<ExerciseNames, In
 	void insert(@Param("name") ExerciseNames name);
 	
 	Long findIDByName(String name);
+
+	ExerciseNames getExerciseIdByName(String exercise);
 }

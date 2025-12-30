@@ -2,11 +2,15 @@ package com.dsquare.page;
 
 import java.util.ArrayList;
 
+import com.dsquare.db.ExerciseNames;
+import com.dsquare.db.TrainingRecord;
+import com.dsquare.event.ExerciseDetailsEvent;
 import com.dsquare.event.SchemaEvent;
 import com.dsquare.event.TrainingEvent;
 import com.dsquare.model.Training;
 import com.dsquare.service.ExerciseNamesServiceImpl;
 import com.dsquare.service.TrainingServiceImpl;
+import com.dsquare.view.ExerciseDetails;
 import com.dsquare.view.GymTitle;
 import com.dsquare.view.TrainingOverview;
 import com.dsquare.view.TrainingView;
@@ -30,11 +34,13 @@ public class Gym extends Div{
 	private TrainingView schemaView, trainingView;
 	private GymTitle title;
 	private ArrayList<Training> schemas;
+	private ArrayList<ExerciseNames> exerciseNames;
 	public Gym(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
 		//super(namesService,trainingService);
 		trainings = new HorizontalLayout();
 		trainings.setId("trainings-hl");
 		schemas = trainingService.getSchemasDataTraining();
+		exerciseNames = namesService.getAllExerciseNames();
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
@@ -56,9 +62,17 @@ public class Gym extends Div{
 			this.trainings.add(trainingView);
 			trainingView.setWidth(40,Unit.PERCENTAGE);
 		});
+		ComponentUtil.addListener(UI.getCurrent(),ExerciseDetailsEvent.class,e->{
+			String exercise = e.getSource().getExerciseName();
+			int id = namesService.getExerciseIdByName(exercise);
+			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsWithExercise(id);
+			
+		});
+		ExerciseDetails exerciseDetails = new ExerciseDetails(exerciseNames);
 		//title.setOnSchemaSelected();
 		//setContent(title);
 		add(title);
 		add(trainings);
+		add(exerciseDetails);
 	}
 }

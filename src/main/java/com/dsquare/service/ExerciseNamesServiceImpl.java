@@ -18,4 +18,10 @@ public class ExerciseNamesServiceImpl{
 		repo.saveAll(names);
 		//names.forEach(e->repo.insert(e));
 	}
+	public ArrayList<ExerciseNames> getAllExerciseNames() {
+		return (ArrayList<ExerciseNames>) repo.findAll();
+	}
+	public int getExerciseIdByName(String exercise) {
+		return repo.getExerciseIdByName(exercise).getId();
+	}
 }

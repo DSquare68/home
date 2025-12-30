@@ -33,4 +33,9 @@ public class TrainingServiceImpl {
 	public ArrayList<Training> getTrainingsByIDSchema(int id) {
 		return TrainingRecord.toTraininings(trainingRepository.getTrainingsPerSchema(id), exerciseService);
 	}
+
+	public ArrayList<TrainingRecord> getTrainingsWithExercise(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -31,9 +31,11 @@ public class GymTitle extends HorizontalLayout{
 	private Div titlePage;
 	private ComboBox schemas;
 	private ComboBox trainingsPerSchemaComboBox;
+	private ComboBox exerciseComboBox;
 	private Div trainingName;
 	private ArrayList<String> trainingData;
 	private ArrayList<Training> trainingsPerSchema= new ArrayList<>();
+	private ArrayList<ExerciseNames> exerciseNames;
 	private HashMap<String,Training> schemasMap = new HashMap<>();
 	private HashMap<String,Training> trainingMap = new HashMap<>();
 	public GymTitle(ArrayList<Training> trainingSchemas) {
@@ -45,7 +47,6 @@ public class GymTitle extends HorizontalLayout{
 		trainingName.setClassName("title-gym-div");
 		schemas = new ComboBox();
 		schemas.setClassName("title-gym-combobox");
-		
 		trainingsPerSchemaComboBox = new ComboBox();
 		trainingsPerSchemaComboBox.setClassName("title-gym-combobox");
 		trainingsPerSchemaComboBox.addValueChangeListener(setTrainingView());
