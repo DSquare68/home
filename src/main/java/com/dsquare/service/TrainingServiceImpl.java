@@ -35,7 +35,6 @@ public class TrainingServiceImpl {
 	}
 
 	public ArrayList<TrainingRecord> getTrainingsWithExercise(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return trainingRepository.getTrainingsWithExercise(id);
 	}
 }

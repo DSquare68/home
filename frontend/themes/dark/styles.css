@@ -2,6 +2,7 @@
 @import url('./styles/gym-title-items.css');
 @import url('./styles/training-view.css');
 @import url('./styles/football-page.css');
+@import url('./styles/details-exercise.css');
 
 #home{
 	position: relative;
