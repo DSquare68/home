@@ -4,15 +4,27 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import com.dsquare.db.TrainingRecord;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
-public class ExerciseDetails {
+public class ExerciseDetails extends HorizontalLayout {
 
 	public ExerciseDetails(ArrayList<TrainingRecord> trainingsWithExercise) {
-		ArrayList<Double> weights = (ArrayList<Double>) trainingsWithExercise.stream()
+		Double[] weights = (Double[]) trainingsWithExercise.stream()
 								.mapToDouble(TrainingRecord::getWEIGHT)
 								.distinct()
-								.boxed() // Convert IntStream to Stream<Integer>
-								.collect(Collectors.toList());
+								.boxed()
+								.toArray();
+		
 	}
-
+	class WeightSet extends Div{
+		Double weight;
+		ArrayList<TrainingRecord> records;
+		
+		public WeightSet(Double weight, ArrayList<TrainingRecord> records) {
+			this.setClassName("exercise-details-weight-set");
+			this.weight = weight;
+			this.records = records;
+		}
+	}
 }
