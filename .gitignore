@@ -6,7 +6,7 @@ node_modules/
 src/main/resources/secrets.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
-src/main/frontend/generated/
+frontend/generated/
 pnpmfile.js
 .npmrc
 webpack.generated.js
