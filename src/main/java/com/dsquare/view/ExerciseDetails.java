@@ -31,8 +31,15 @@ public class ExerciseDetails extends HorizontalLayout {
 			}
 			j++;
 		}
+		double[][] percentReps = new double[weights.length][repsPerWeightCount[0].length];
+		for(int i =0;i<repsPerWeightCount.length;i++) {
+			for(int l=0;l<repsPerWeightCount[i].length;l++) {
+				//percentReps[i][l] = ((double)repsCount/(double)allCount)*100.0;
+			}
+			k++;
+		}
 		for(int i=0;i<weights.length;i++) {
-			this.add(new WeightSet((double)weights[i],repsPerWeight[i],repsPerWeightCount[i]));
+			this.add(new WeightSet((double)weights[i],repsPerWeight[i],percentReps[i]));
 		}
 	}
 	class WeightSet extends Div{
