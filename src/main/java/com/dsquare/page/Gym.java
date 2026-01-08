@@ -31,8 +31,8 @@ import com.vaadin.flow.theme.Theme;
 public class Gym extends Div{
 	
 	private static final long serialVersionUID = 3275850456945504655L;
+	private ExerciseDetails exerciseDetails;
 	private HorizontalLayout trainings;
-	private Div exercise;
 	private Training schema, training;
 	private TrainingView schemaView, trainingView;
 	private GymTitle title;
@@ -46,7 +46,6 @@ public class Gym extends Div{
 		exerciseNames = namesService.getAllExerciseNames();
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
-		exerciseDetails = new ExerciseDetails();
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
 			this.trainings.removeAll();
 			schema = e.getSource().getSchema();
@@ -70,13 +69,14 @@ public class Gym extends Div{
 			String exercise = e.getSource().getExerciseName();
 			int id = namesService.getExerciseIdByName(exercise);
 			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsWithExercise(id);
-			ExerciseDetails exerciseDetails = new ExerciseDetails(trainingsWithExercise);
+			exerciseDetails = new ExerciseDetails(trainingsWithExercise);
+			add(exerciseDetails);
 			
 		});
-		ExerciseDetailsSettings exerciseDetails = new ExerciseDetailsSettings(exerciseNames);
+		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		//title.setOnSchemaSelected();
 		//setContent(title);
-		add(new VerticalLayout(title,exerciseDetails),trainings);
+		add(new VerticalLayout(title,exerciseDetailsSettings));
 		
 	}
 }

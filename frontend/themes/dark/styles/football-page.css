@@ -75,3 +75,17 @@
 	height: 30px;
 	background-color: #000000;
 }
+#exercise-details-layout{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.exercise-details-reps-container{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
