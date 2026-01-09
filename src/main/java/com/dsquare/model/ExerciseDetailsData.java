@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.dsquare.db.TrainingRecord;
 
+import lombok.Data;
+
+@Data
 public class ExerciseDetailsData {
 
 	private ArrayList<TrainingRecord> recordsForWeight;
@@ -18,10 +21,11 @@ public class ExerciseDetailsData {
 	public ExerciseDetailsData(double weight,ArrayList<TrainingRecord> recordsForWeight,int totalCount) {
 		this.weight = weight;
 		this.recordsForWeight = recordsForWeight;
-		this.totalCount = totalCount;;
+		this.totalCount = totalCount;
+		calculateStats();
 	}
 	
-	public void calculateStats(int totalCount) {
+	public void calculateStats() {
 		this.allCount = recordsForWeight.size();
 		this.reps = recordsForWeight.stream().mapToInt(TrainingRecord::getREPEAT).distinct().toArray();
 		this.repsCount = new int[reps.length];

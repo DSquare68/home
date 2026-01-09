@@ -1,10 +1,14 @@
 package com.dsquare.view;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import com.dsquare.db.TrainingRecord;
+import com.dsquare.model.ExerciseDetailsData;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class ExerciseDetails extends HorizontalLayout {
@@ -17,48 +21,60 @@ public class ExerciseDetails extends HorizontalLayout {
 								.distinct()
 								.boxed()
 								.toArray();
-		int count = trainingsWithExercise.size();
-		int[][] repsPerWeight = new int[weights.length][];
-		int[][] repsPerWeightCount = new int[weights.length][];
-		int j=0,k=0;
-		for(Object w : weights) {
-			ArrayList<TrainingRecord> recordsForWeight = trainingsWithExercise.stream().filter(e->e.getWEIGHT()==(double)w).collect(Collectors.toCollection(ArrayList::new));
-			repsPerWeight[j] = recordsForWeight.stream().mapToInt(TrainingRecord::getREPEAT).distinct().toArray();
-			for(int rep : repsPerWeight[j]) {
-				repsPerWeightCount[j][k++] =(int) trainingsWithExercise.stream()
-											.filter(e->e.getWEIGHT()==(double)w&&e.getREPEAT()==rep)
-											.count();
-			}
-			j++;
-		}
-		double[][] percentReps = new double[weights.length][repsPerWeightCount[0].length];
-		for(int i =0;i<repsPerWeightCount.length;i++) {
-			for(int l=0;l<repsPerWeightCount[i].length;l++) {
-				//percentReps[i][l] = ((double)repsCount/(double)allCount)*100.0;
-			}
-			k++;
+		ExerciseDetailsData[] data= new ExerciseDetailsData[weights.length];
+		int k=0;
+		for(Object w:weights) {
+			data[k++] = new ExerciseDetailsData((double)w,trainingsWithExercise.stream()
+													.filter(e->e.getWEIGHT()==(double)w)
+													.collect(Collectors.toCollection(ArrayList::new)),
+												allCount);
 		}
 		for(int i=0;i<weights.length;i++) {
-			this.add(new WeightSet((double)weights[i],repsPerWeight[i],percentReps[i]));
+			this.add(new WeightSet(data[i]));
 		}
 	}
 	class WeightSet extends Div{
 		Double weight;
 		int[] reps;
 		
-		public WeightSet(Double weight, int[] reps,int[] repsCount) {
+		public WeightSet(ExerciseDetailsData data) {
 			this.setClassName("exercise-details-weight-set");
-			this.weight = weight;
-			this.reps = reps;
-			int len = reps.length;
+			this.weight = data.getWeight();
+			this.reps = data.getReps();
 			this.setHeight("300px");
-			this.setWidth(150*len+"px");
-			Div weightDiv = new Div(weight+" kg");
-			Div[] repsDivs = new Div[len];
-			for(int i=0;i<len;i++) {
-				repsDivs[i] = new Div(reps[i]+" reps");
+			this.setWidth(150*reps.length+"px");
+			DecimalFormat df = new DecimalFormat("#0.00");
+			Span weightSpan = new Span(df.format(weight)+" kg");
+			weightSpan.setClassName("exercise-details-span-blue");
+			Span percentSpan = new Span(df.format(data.getPercentOfWeight()));
+			percentSpan.setClassName("exercise-details-span-blue");
+			Span percentTextSpan = new Span(" % of total\n");
+			percentTextSpan.setClassName("exercise-details-span-white");
+			Span lineBreak = new Span(" | ");
+			Div weightDiv = new Div();
+			weightDiv.add(weightSpan,lineBreak,percentSpan,percentTextSpan);
+			Div[] repsDivs = new Div[reps.length];
+			for(int i=0;i<reps.length;i++) {
+				Span repSpan = new Span(reps[i]+"");
+				repSpan.setClassName("exercise-details-span-blue");
+				Span repTextSpan = new Span(" reps ");
+				repTextSpan.setClassName("exercise-details-span-white");
+				Span lpCount = new Span(data.getRepsCount()[i]+"");
+				lpCount.setClassName("exercise-details-span-blue");
+				Span lpCountSpan = new Span(" LP\n");
+				lpCountSpan.setClassName("exercise-details-span-white");
+				Span weightPercentSpan = new Span(df.format(data.getPercentRepsInWeight()[i]));
+				weightPercentSpan.setClassName("exercise-details-span-blue");
+				Span percentInWeightSpan = new Span(" % in weight\n");
+				percentInWeightSpan.setClassName("exercise-details-span-white");
+				Span totalPercentSpan = new Span(df.format(data.getPercentOfRepsInTotal()[i]));
+				totalPercentSpan.setClassName("exercise-details-span-blue");
+				Span percentInTotalSpan = new Span(" % of total");
+				percentInTotalSpan.setClassName("exercise-details-span-white");
+				repsDivs[i] = new Div();
+				repsDivs[i].add(repSpan,repTextSpan,lpCount,lpCountSpan,weightPercentSpan,percentInWeightSpan,totalPercentSpan,percentInTotalSpan);
 				repsDivs[i].setHeight(125 + "px");
-				repsDivs[i].setWidth(125 + "px");
+				repsDivs[i].setWidth(1025 + "px");
 				repsDivs[i].setClassName("exercise-details-reps-div");
 			}
 			Div repsContainer = new Div();

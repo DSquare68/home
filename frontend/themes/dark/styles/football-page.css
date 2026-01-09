@@ -89,3 +89,11 @@
     align-items: center;
     text-align: center;
 }
+.exercise-details-span-blue{
+	color: rgba(0, 46, 200, 1);
+	white-space: pre-line;
+}
+.exercise-details-span-white{
+	color: #FFFFFF;
+	white-space: pre-line;
+}
