@@ -53,11 +53,10 @@ vaadin-app-layout::part(navbar) {
 	margin-right: 50px;
 }
 vaadin-side-nav-item{
-	margin-left:-25%;
-	height:	150px;
+	height:	200px;
 	display: flex;	
 }
 
 vaadin-side-nav-item > img{
-	scale: 60%;
+	scale:100%;
 }
