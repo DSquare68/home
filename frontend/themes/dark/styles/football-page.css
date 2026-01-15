@@ -75,12 +75,15 @@
 	height: 30px;
 	background-color: #000000;
 }
-#exercise-details-layout{
+.exercise-details-layout{
 	display: flex;
     flex-direction: row;
+    padding-top: 50px;
     justify-content: space-around;
-    align-items: center;
     text-align: center;
+    background: #94cd00;
+    width: 1000px;
+    height: 400px;
 }
 .exercise-details-reps-container{
 	display: flex;
@@ -96,4 +99,17 @@
 .exercise-details-span-white{
 	color: #FFFFFF;
 	white-space: pre-line;
+}
+.exercise-details-span-weight{
+	font-size: 48px;
+	height: 80px;
+}
+.exercise-details-span-reps{
+	font-size: 36px;
+	width: 500px;
+	height: 120px;
+}
+.exercise-details-weight-div{
+	width: 600px;
+	margin: auto;
 }
