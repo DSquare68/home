@@ -48,7 +48,6 @@ public class Home extends AppLayout  {
 	private static final long serialVersionUID = 2216332923141238067L;
 	
 	Home(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService, MatchServiceImpl matchService){
-		new InitData(namesService,trainingService,matchService).run();
 		DrawerToggle toggle = new DrawerToggle();
 		SideNav nav = getSideNav();
 		Scroller scroller = new Scroller(nav);

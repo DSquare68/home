@@ -19,9 +19,8 @@ public class RegisterPage extends VerticalLayout {
 		setSizeFull();
 		registrationForm.getStyle().set("align-self", "center");
 		setJustifyContentMode(JustifyContentMode.CENTER);
-	    setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-	    add(registrationForm);
+		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		add(registrationForm);
 	}
-	
-	
+
 }
