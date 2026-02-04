@@ -76,7 +76,7 @@ public class Gym extends Div{
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		//title.setOnSchemaSelected();
 		//setContent(title);
-		add(new VerticalLayout(title,exerciseDetailsSettings));
+		add(new VerticalLayout(title,exerciseDetailsSettings,trainings));
 		
 	}
 }
