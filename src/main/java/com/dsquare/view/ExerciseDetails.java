@@ -42,7 +42,7 @@ public class ExerciseDetails extends HorizontalLayout {
 			this.weight = data.getWeight();
 			this.reps = data.getReps();
 			this.setHeight("400px");
-			this.setWidth(315*reps.length+"px");
+			this.setWidth(315*(reps.length==1?2:reps.length)+"px");
 			DecimalFormat df = new DecimalFormat("#0.00");
 			Span weightSpan = new Span(df.format(weight)+" kg");
 			weightSpan.addClassName("exercise-details-span-blue");

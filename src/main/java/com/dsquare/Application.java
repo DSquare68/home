@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.dsquare.api.FootballApi;
+import com.dsquare.component.StartService;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.page.Viewport;
@@ -29,7 +30,6 @@ import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.spring.annotation.EnableVaadin;
 import com.vaadin.flow.theme.Theme;
 
-import component.StartServiceTimer;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 
@@ -59,7 +59,7 @@ public class Application extends SpringBootServletInitializer implements AppShel
 	        (WebApplicationContext) servletContext.getAttribute(
 	            WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
 	        );
-	    StartServiceTimer myTimerTask =  new StartServiceTimer();
+	    StartService myTimerTask =  new StartService();
 	    scheduledExecutor.scheduleAtFixedRate(myTimerTask.getTask(), myTimerTask.getPeriodMillis(),myTimerTask.getPeriodMillis(),TimeUnit.MILLISECONDS);
 	    
 	}

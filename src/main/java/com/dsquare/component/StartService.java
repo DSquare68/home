@@ -1,4 +1,4 @@
-package component;
+package com.dsquare.component;
 
 import java.util.Calendar;
 import java.util.TimerTask;
@@ -15,7 +15,7 @@ import com.dsquare.service.TrainingServiceImpl;
 import lombok.Getter;
 
 @Component("startServiceTimer")
-public class StartServiceTimer {
+public class StartService {
 
 	@Autowired
 	private ExerciseNamesServiceImpl namesService;
@@ -28,7 +28,7 @@ public class StartServiceTimer {
 	@Getter
 	private Runnable task;
 	
-	public StartServiceTimer() {
+	public StartService() {
 		time();
 		createTask();
 	}
