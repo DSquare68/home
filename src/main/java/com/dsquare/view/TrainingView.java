@@ -38,7 +38,10 @@ public class TrainingView extends VerticalLayout{
 			Div nameT = new Div(name);
 			nameT.setClassName("name-exercise-div");
 			for(int i=0;i<rounds.size();i++) {
-				hl.add(new Round(rounds.get(i),lastRounds.get(i)));
+				if(i>=lastRounds.size())
+					hl.add(new Round(rounds.get(i),new Training().new Round(0,0,0)));
+				else
+					hl.add(new Round(rounds.get(i),lastRounds.get(i)));
 			}
 			this.add(nameT,hl);
 		}
