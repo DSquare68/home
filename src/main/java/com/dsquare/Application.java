@@ -51,16 +51,4 @@ public class Application extends SpringBootServletInitializer implements AppShel
 	public static void main(String[] args) {
       	SpringApplication.run(Application.class, args);
 	}
-	
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-	    super.onStartup(servletContext);
-	    WebApplicationContext applicationContext = 
-	        (WebApplicationContext) servletContext.getAttribute(
-	            WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
-	        );
-	    StartService myTimerTask =  new StartService();
-	    scheduledExecutor.scheduleAtFixedRate(myTimerTask.getTask(), myTimerTask.getPeriodMillis(),myTimerTask.getPeriodMillis(),TimeUnit.MILLISECONDS);
-	    
-	}
 }

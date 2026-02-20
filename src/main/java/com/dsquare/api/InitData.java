@@ -7,7 +7,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 import com.dsquare.db.ExerciseNamesBase;
@@ -30,8 +32,8 @@ public class InitData {
 		this.matchService = MatchServiceImpl;
 	}
 
-	// Run at application startup
-	@EventListener(ApplicationReadyEvent.class)
+	@Transactional
+	@Scheduled(cron = "0 30 23 ? * MON")
 	public void run() {
 		initExerciseNames();
 		initQueueMatch();

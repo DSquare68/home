@@ -47,7 +47,7 @@ public class StartService {
 		// Schedule a task to run at a specific start date/time and then every 7 days.
 		Calendar c = Calendar.getInstance();
 		// Example: 2 December 2025 at 21:30:00 (Calendar months are 0-based -> DECEMBER == 11)
-		c.set(2026, Calendar.JANUARY, 26, 23, 45, 0);
+		c.set(2026, Calendar.FEBRUARY, 19, 23, 45, 0);
 		long targetMillis = c.getTimeInMillis();
 		long now = System.currentTimeMillis();
 		periodMillis = TimeUnit.DAYS.toMillis(7);

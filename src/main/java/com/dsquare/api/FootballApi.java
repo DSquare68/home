@@ -54,7 +54,7 @@ public class FootballApi {
 		
 	}
 	public void run() {
-		//matchService.deleteAll();
+		matchService.deleteAll();
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
@@ -153,7 +153,7 @@ public class FootballApi {
 		}
 		if(date.charAt(date.length()-1)==' ')
 			date = date.substring(0, date.length()-1);
-		if(date.length()<17)
+		if(date.length()>10&&date.length()<17)
 			date = "0"+date;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy, HH:mm", Locale.ENGLISH);
 		try {
