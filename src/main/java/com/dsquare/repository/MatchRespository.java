@@ -43,5 +43,7 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 
 	@Query("SELECT DISTINCT m.season FROM MatchRecord m ORDER BY m.season DESC")
 	String[] findAllSeasons();
+	@Query("DELETE FROM MatchRecord m WHERE m.mode_of_data = ?1")
+	void deleteAllWhereMode(String webMode);
 
 }

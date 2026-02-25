@@ -79,4 +79,9 @@ public class MatchServiceImpl {
 		return matchRespository.findAllSeasons();
 	}
 
+	public void deleteAllWhereMode(String webMode) {
+		matchRespository.deleteAllWhereMode(webMode);
+		
+	}
+
 }
