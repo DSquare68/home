@@ -17,6 +17,7 @@ import com.dsquare.view.TrainingView;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
@@ -45,9 +46,28 @@ public class Football extends Div{
 		Integer[] queues = seasonMatches.stream().map(MatchRecord::getQueue).distinct().toList().toArray(new Integer[seasonMatches.stream().map(MatchRecord::getQueue).distinct().toList().size()]);
 		Div ekstraklasa = new Div("EKSTRAKLASA");
 		ekstraklasa.setId("league-title");
-		SeasonAndQueueView seasonAndQueueView = new SeasonAndQueueView("Season: "+season,"Queue matches: "+queueMatches.get(0).getQueue()+"/"+seasonMatches.get(seasonMatches.size()-1).getQueue());
+		boolean showpredictions = false; 
 		final String[] seasons = matchService.getAllSeasons();
-		footballView = new FootballView(queueMatches,seasons,queues);
+		Button showpredictionsDiv = new Button("Show predictions");
+		showpredictionsDiv.setId("show-predictions-disabled");
+		
+		showpredictionsDiv.addClickListener(e->
+			{
+				boolean finalShowpredictions = !showpredictions;
+				if(finalShowpredictions) {
+					showpredictionsDiv.setId("show-predictions-enabled");
+				}else {
+					showpredictionsDiv.setId("show-predictions-disabled");
+				}
+				this.remove(footballView);
+				
+				footballView = new FootballView(queueMatches,seasons,queues,finalShowpredictions);
+				this.add(footballView);
+		}
+		);
+		ekstraklasa.add(showpredictionsDiv);
+		SeasonAndQueueView seasonAndQueueView = new SeasonAndQueueView("Season: "+season,"Queue matches: "+queueMatches.get(0).getQueue()+"/"+seasonMatches.get(seasonMatches.size()-1).getQueue());
+		footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
 
 		ComponentUtil.addListener(UI.getCurrent(),SeasonEvent.class,e->{
 			this.remove(footballView);
@@ -56,7 +76,7 @@ public class Football extends Div{
 			queueMatches = matchService.getQueueBySeason(season,FootballApi.ANDROID); //TODO maby by selected queue show after change season
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(queueMatches.get(0).getQueue()+"/"+seasonMatches.get(seasonMatches.size()-1).getQueue());
-			footballView = new FootballView(queueMatches,seasons,queues);
+			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
 			this.add(footballView);
 		});
 		ComponentUtil.addListener(UI.getCurrent(),QueueEvent.class,e->{
@@ -66,7 +86,7 @@ public class Football extends Div{
 			queueMatches = matchService.getQueueByLPQueue(season,selectedQueue); //TODO maby by selected queue show after change season
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(queueMatches.get(0).getQueue()+"/"+seasonMatches.get(seasonMatches.size()-1).getQueue());
-			footballView = new FootballView(queueMatches,seasons,queues);
+			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
 			this.add(footballView);
 		});
 		add(ekstraklasa,seasonAndQueueView,footballView);	

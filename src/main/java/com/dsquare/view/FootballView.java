@@ -26,7 +26,7 @@ public class FootballView extends VerticalLayout{
 	private ComboBox seasonsComboBox,queueComboBox;
 	private String selectedSeason,selectedQueue;
 	
-	public FootballView(List<MatchRecord> queueMatches, String[] seasons, Integer[] queues) {
+	public FootballView(List<MatchRecord> queueMatches, String[] seasons, Integer[] queues, boolean showPredictions) {
 		this.setId("football-view-vl");
 		Div bellHorizontalDiv = new Div();
 		bellHorizontalDiv.setId("bell-horizontal-div");

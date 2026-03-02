@@ -1,6 +1,11 @@
 #football{
 	background: linear-gradient(90deg,rgba(0, 72, 248, 1) 0%, rgba(0, 46, 200, 1) 50%, rgba(0, 29, 169, 1) 100%);
 }
+#league-title{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #league-title, #football-view-combobox-hl{
 	width: 100%;
 	font-size: 78px;
@@ -10,6 +15,20 @@
 	background: linear-gradient(90deg,rgba(0, 72, 248, 1) 0%, rgba(0, 46, 200, 1) 50%, rgba(0, 29, 169, 1) 100%);
 	*/
 	line-height: 90px;
+}
+#show-predictions-enable{
+	wiidth: 300px;
+	height: 75px;
+	font-size: 36px;
+	color: #000000;
+    background-color: #00FF00;
+}
+#show-predictions-disable{
+	wiidth: 300px;
+	height: 75px;
+	font-size: 36px;
+	color: #000000;
+    background-color: #FF0000;
 }
 .match-view-vl{
 	border-style: solid;
