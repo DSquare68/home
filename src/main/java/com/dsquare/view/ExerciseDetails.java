@@ -21,6 +21,7 @@ public class ExerciseDetails extends HorizontalLayout {
 								.distinct()
 								.boxed()
 								.toArray();
+		weights = Arrays.stream(weights).sorted((a,b)->Double.compare((double)b,(double)a)).toArray();
 		ExerciseDetailsData[] data= new ExerciseDetailsData[weights.length];
 		int k=0;
 		for(Object w:weights) {

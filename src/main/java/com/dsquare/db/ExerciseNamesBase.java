@@ -78,8 +78,6 @@ public interface ExerciseNamesBase {
             "Ściąganie kolan w siadzie",
             "Przywodzenie nóg do wewnątrz",
             "Odwodzenie nóg na zewnątrz",
-            "Martwy ciąg",
-            "Martwy ciąg na prostych nogach",
 
             "Wspięcia na palce w staniu",
             "Wspięcia na palce w staniu na maszynie",

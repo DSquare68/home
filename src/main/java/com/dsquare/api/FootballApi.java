@@ -54,7 +54,7 @@ public class FootballApi {
 		
 	}
 	public void run() {
-		matchService.deleteAllWhereMode(WEB_MODE);
+		//matchService.deleteAllWhereMode(WEB_MODE);
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
