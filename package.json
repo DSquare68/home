@@ -132,10 +132,10 @@
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.2",
-      "@vaadin/bundles": "24.9.9",
+      "@vaadin/bundles": "24.6.6",
       "@vaadin/common-frontend": "0.0.19",
       "@vaadin/polymer-legacy-adapter": "24.9.9",
-      "@vaadin/react-components": "24.9.9",
+      "@vaadin/react-components": "24.6.6",
       "@vaadin/vaadin-development-mode-detector": "2.0.7",
       "@vaadin/vaadin-lumo-styles": "24.9.9",
       "@vaadin/vaadin-material-styles": "24.9.9",
@@ -156,6 +156,7 @@
       "@types/react": "18.3.27",
       "@types/react-dom": "18.3.7",
       "@vitejs/plugin-react": "4.7.0",
+      "async": "3.2.6",
       "glob": "12.0.0",
       "magic-string": "0.30.21",
       "rollup-plugin-brotli": "3.1.0",
@@ -169,6 +170,9 @@
       "workbox-core": "7.3.0",
       "workbox-precaching": "7.3.0"
     },
-    "hash": "d4f9fc1b44dd5ef89422a1328336959e040fa03a8a462026b71cbcf9ffaccd47"
+    "hash": "d4f9fc1b44dd5ef89422a1328336959e040fa03a8a462026b71cbcf9ffaccd47",
+    "scripts": {
+      "build": "./node_modules/typescript/bin/tsc"
+    }
   }
 }
