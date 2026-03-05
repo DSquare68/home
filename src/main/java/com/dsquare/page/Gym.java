@@ -38,6 +38,7 @@ public class Gym extends Div{
 	private GymTitle title;
 	private ArrayList<Training> schemas;
 	private ArrayList<ExerciseNames> exerciseNames;
+	private Div exerciseDetailsDiv;
 	public Gym(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
 		//super(namesService,trainingService);
 		trainings = new HorizontalLayout();
@@ -46,6 +47,7 @@ public class Gym extends Div{
 		exerciseNames = namesService.getAllExerciseNames();
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
+		exerciseDetailsDiv = new Div();
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
 			this.trainings.removeAll();
 			schema = e.getSource().getSchema();
@@ -66,17 +68,18 @@ public class Gym extends Div{
 			trainingView.setWidth(40,Unit.PERCENTAGE);
 		});
 		ComponentUtil.addListener(UI.getCurrent(),ExerciseDetailsEvent.class,e->{
+			if(this.exerciseDetailsDiv.getChildren().filter(f->f.equals(exerciseDetails)).findAny().isPresent()) {
+				this.exerciseDetailsDiv.remove(exerciseDetails);
+			}
 			String exercise = e.getSource().getExerciseName();
 			int id = namesService.getExerciseIdByName(exercise);
 			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsWithExercise(id);
-			exerciseDetails = new ExerciseDetails(trainingsWithExercise);
-			add(exerciseDetails);
+			exerciseDetails=new ExerciseDetails(trainingsWithExercise);
+			exerciseDetailsDiv.add(exerciseDetails);
 			
 		});
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
-		//title.setOnSchemaSelected();
-		//setContent(title);
-		add(new VerticalLayout(title,exerciseDetailsSettings,trainings));
+		add(new VerticalLayout(title,exerciseDetailsSettings,trainings,exerciseDetailsDiv));
 		
 	}
 }
