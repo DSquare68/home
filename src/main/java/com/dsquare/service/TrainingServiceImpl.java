@@ -37,4 +37,23 @@ public class TrainingServiceImpl {
 	public ArrayList<TrainingRecord> getTrainingsWithExercise(int id) {
 		return trainingRepository.getTrainingsWithExercise(id);
 	}
+
+	public String[] getYearsWithTrainings() {
+		return trainingRepository.getYearsWithTrainings();
+	}
+
+	public String[] getMountsWithTrainings() {
+		return trainingRepository.getMountsWithTrainings();
+	}
+
+	public ArrayList<TrainingRecord> getTrainingsByYearAndMount(int year, int mount) {
+		if(year==0 && mount==0) 
+			return (ArrayList<TrainingRecord>) trainingRepository.findAll();
+		else if(year==0) 
+			return trainingRepository.getTrainingsByMount(mount);
+		else if(mount==0) 
+			return trainingRepository.getTrainingsByYear(year);
+		else
+			return trainingRepository.getTrainingsByYearAndMount(year, mount);
+	}
 }

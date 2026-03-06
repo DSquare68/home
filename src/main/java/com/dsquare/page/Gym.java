@@ -6,6 +6,7 @@ import com.dsquare.db.ExerciseNames;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.event.ExerciseDetailsEvent;
 import com.dsquare.event.SchemaEvent;
+import com.dsquare.event.TrainingCalendarSummaryEvent;
 import com.dsquare.event.TrainingEvent;
 import com.dsquare.model.Training;
 import com.dsquare.service.ExerciseNamesServiceImpl;
@@ -13,6 +14,9 @@ import com.dsquare.service.TrainingServiceImpl;
 import com.dsquare.view.ExerciseDetails;
 import com.dsquare.view.ExerciseDetailsSettings;
 import com.dsquare.view.GymTitle;
+import com.dsquare.view.TrainingCalendarSummary;
+import com.dsquare.view.TrainingCalendarSummarySettings;
+import com.dsquare.view.TrainingCalendarSummarySettings;
 import com.dsquare.view.TrainingOverview;
 import com.dsquare.view.TrainingView;
 import com.vaadin.flow.component.AttachEvent;
@@ -38,7 +42,9 @@ public class Gym extends Div{
 	private GymTitle title;
 	private ArrayList<Training> schemas;
 	private ArrayList<ExerciseNames> exerciseNames;
-	private Div exerciseDetailsDiv;
+	private Div exerciseDetailsDiv,trainingCalendarSummaryDiv;
+	private TrainingCalendarSummary trainingCalendarSummary;
+	private TrainingCalendarSummarySettings trainingCalendarSummarySettings;
 	public Gym(ExerciseNamesServiceImpl namesService, TrainingServiceImpl trainingService){
 		//super(namesService,trainingService);
 		trainings = new HorizontalLayout();
@@ -48,6 +54,8 @@ public class Gym extends Div{
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
 		exerciseDetailsDiv = new Div();
+		String[] years = trainingService.getYearsWithTrainings();
+		String[] mounts = trainingService.getMountsWithTrainings();
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
 			this.trainings.removeAll();
 			schema = e.getSource().getSchema();
@@ -67,19 +75,20 @@ public class Gym extends Div{
 			this.trainings.add(trainingView);
 			trainingView.setWidth(40,Unit.PERCENTAGE);
 		});
-		ComponentUtil.addListener(UI.getCurrent(),ExerciseDetailsEvent.class,e->{
-			if(this.exerciseDetailsDiv.getChildren().filter(f->f.equals(exerciseDetails)).findAny().isPresent()) {
-				this.exerciseDetailsDiv.remove(exerciseDetails);
+		ComponentUtil.addListener(UI.getCurrent(),TrainingCalendarSummaryEvent.class,e->{
+			if(this.trainingCalendarSummaryDiv.getChildren().filter(f->f.equals(trainingCalendarSummary)).findAny().isPresent()) {
+				this.trainingCalendarSummaryDiv.remove(trainingCalendarSummary);
 			}
-			String exercise = e.getSource().getExerciseName();
-			int id = namesService.getExerciseIdByName(exercise);
-			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsWithExercise(id);
-			exerciseDetails=new ExerciseDetails(trainingsWithExercise);
-			exerciseDetailsDiv.add(exerciseDetails);
+			int year = e.getSource().getYear();
+			int mount = e.getSource().getMount();
+			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsByYearAndMount(year,mount);
+			trainingCalendarSummary=new TrainingCalendarSummary(trainingsWithExercise);
+			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			
 		});
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
-		add(new VerticalLayout(title,exerciseDetailsSettings,trainings,exerciseDetailsDiv));
+		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounts);
+		add(new VerticalLayout(title,exerciseDetailsSettings,trainingCalendarSummarySettings,trainings,exerciseDetailsDiv,trainingCalendarSummaryDiv));
 		
 	}
 }
