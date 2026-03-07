@@ -28,7 +28,7 @@ public interface TrainingRepository extends JpaRepository<TrainingRecord, Intege
 	@Query(value = "SELECT DISTINCT EXTRACT(YEAR FROM DATE_TRAINING) FROM ADMIN.TRAININGS where IS_SCHEMA <> 1 order by EXTRACT(YEAR FROM DATE_TRAINING) desc", nativeQuery = true)
 	String[] getYearsWithTrainings();
 
-	@Query(value = "SELECT DISTINCT EXTRACT(MONTH FROM DATE_TRAINING) FROM ADMIN.TRAININGS where where IS_SCHEMA <> 1 order by EXTRACT(MONTH FROM DATE_TRAINING) desc", nativeQuery = true)
+	@Query(value = "SELECT DISTINCT EXTRACT(MONTH FROM DATE_TRAINING) FROM ADMIN.TRAININGS where IS_SCHEMA <> 1 order by EXTRACT(MONTH FROM DATE_TRAINING) desc", nativeQuery = true)
 	String[] getMountsWithTrainings();
 
 	@Query(value = "SELECT * FROM ADMIN.TRAININGS where EXTRACT(MONTH FROM DATE_TRAINING)=?1 and IS_SCHEMA <> 1 order by DATE_TRAINING desc ,ID  asc", nativeQuery = true)

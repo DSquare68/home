@@ -3,6 +3,7 @@
 @import url('./styles/training-view.css');
 @import url('./styles/football-page.css');
 @import url('./styles/details-exercise.css');
+@import url('./styles/training-calendary-summary.css');
 
 #home{
 	position: relative;

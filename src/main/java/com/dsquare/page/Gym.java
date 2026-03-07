@@ -54,8 +54,9 @@ public class Gym extends Div{
 		title = new GymTitle(schemas);
 		title.setTrainingReadPerSchema(trainingService,namesService);
 		exerciseDetailsDiv = new Div();
+		trainingCalendarSummaryDiv = new Div();
 		String[] years = trainingService.getYearsWithTrainings();
-		String[] mounts = trainingService.getMountsWithTrainings();
+		String[] mounths = trainingService.getMountsWithTrainings();
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
 			this.trainings.removeAll();
 			schema = e.getSource().getSchema();
@@ -87,7 +88,7 @@ public class Gym extends Div{
 			
 		});
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
-		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounts);
+		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounths);
 		add(new VerticalLayout(title,exerciseDetailsSettings,trainingCalendarSummarySettings,trainings,exerciseDetailsDiv,trainingCalendarSummaryDiv));
 		
 	}
