@@ -55,6 +55,7 @@ public class Gym extends Div{
 		title.setTrainingReadPerSchema(trainingService,namesService);
 		exerciseDetailsDiv = new Div();
 		trainingCalendarSummaryDiv = new Div();
+		trainingCalendarSummaryDiv.setWidth(100,Unit.PERCENTAGE);
 		String[] years = trainingService.getYearsWithTrainings();
 		String[] mounths = trainingService.getMountsWithTrainings();
 		ComponentUtil.addListener(UI.getCurrent(),SchemaEvent.class,e->{
@@ -87,6 +88,8 @@ public class Gym extends Div{
 			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			
 		});
+		trainingCalendarSummary=new TrainingCalendarSummary(trainingService.getAll()); //TODO remove on production
+		trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounths);
 		add(new VerticalLayout(title,exerciseDetailsSettings,trainingCalendarSummarySettings,trainings,exerciseDetailsDiv,trainingCalendarSummaryDiv));

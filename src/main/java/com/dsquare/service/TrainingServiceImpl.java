@@ -56,4 +56,8 @@ public class TrainingServiceImpl {
 		else
 			return trainingRepository.getTrainingsByYearAndMount(year, mount);
 	}
+
+	public ArrayList<TrainingRecord> getAll() {
+		return (ArrayList<TrainingRecord>) trainingRepository.findAll();
+	}
 }

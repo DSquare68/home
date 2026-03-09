@@ -1,5 +1,5 @@
 #training-calendar-summary{
-	width: 80%;
+	width: 100%;
 	height: 50px;
 	background: #FF0000;
 }
@@ -30,4 +30,22 @@
     margin-right: auto;
     margin-left: 150px;
     background: #009900;
+}
+.calendar-day-label-no-trening{
+	background: #FF0000;
+}
+.calendar-day-label-trening{
+	background: #00DD00;
+}
+#calendar-weeks{
+	width: 50%;
+    background: #99d299;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.calendar-week{
+	padding-top: 10px;
+	padding-left: auto;
+	padding-right: auto;
 }
