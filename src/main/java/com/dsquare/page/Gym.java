@@ -84,6 +84,7 @@ public class Gym extends Div{
 			int year = e.getSource().getYear();
 			int mount = e.getSource().getMount();
 			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsByYearAndMount(year,mount);
+			
 			trainingCalendarSummary=new TrainingCalendarSummary(trainingsWithExercise);
 			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			

@@ -33,9 +33,21 @@
 }
 .calendar-day-label-no-trening{
 	background: #FF0000;
+	height: 60px;
+	width: 60px;
+	font-size: 28px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 .calendar-day-label-trening{
 	background: #00DD00;
+	height: 60px;
+	width: 60px;
+	font-size: 28px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 #calendar-weeks{
 	width: 50%;
@@ -45,7 +57,22 @@
     align-items: center;
 }
 .calendar-week{
-	padding-top: 10px;
 	padding-left: auto;
 	padding-right: auto;
+}
+.calendar-date-label{
+	margin-left: 50px;
+    font-size: 28px;
+    width: 200px;
+    	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.calendar-duration-label{
+	margin-right: 50px;
+    font-size: 28px;
+    width: 200px;	
+    	display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
