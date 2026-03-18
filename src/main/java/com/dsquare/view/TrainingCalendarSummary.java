@@ -9,10 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.dsquare.db.TrainingRecord;
+import com.dsquare.model.MonthData;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class TrainingCalendarSummary extends Div {
+public class TrainingCalendarSummary extends HorizontalLayout {
 
 	public TrainingCalendarSummary(ArrayList<TrainingRecord> trainings) {
 		this.setId("training-calendar-summary");
@@ -41,7 +43,11 @@ public class TrainingCalendarSummary extends Div {
 		}
 		calendarWeeks.setHeight(calendarWeeks.getChildren().count()*75+"px");
 		calendarWeeks.setId("calendar-weeks");
-		this.add(calendarWeeks);
+		VerticalLayout dayAndMonth = new VerticalLayout();
+		dayAndMonth.setId("day-and-month");
+		dayAndMonth.setWidth("50%");
+		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.size(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
+		this.add(calendarWeeks,dayAndMonth);
 	}
 	private Integer timeToInt(String time_TRAINING) {
 		if (time_TRAINING == null) return 0;

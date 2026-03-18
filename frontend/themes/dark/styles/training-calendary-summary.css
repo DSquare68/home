@@ -76,3 +76,30 @@
     justify-content: space-around;
     align-items: center;
 }
+/* Mounth */
+.training-calendar-mounth-data{
+	color: #0000DD;
+    font-size: 28px;
+    margin-left: 50px;
+    height: 50px;
+}
+#training-calendar-mounth{
+	width: 100%;
+    height: 300px;
+    background: #99d299;
+}
+#training-calendar-mounth-number-of-trainings{
+	
+}
+#training-calendar-mounth-total-duration{
+	
+}
+#training-calendar-mounth-total-reps{
+	
+}
+#training-calendar-mounth-total-weight{
+	
+}
+#training-calendar-mounth-month-year{
+	
+}
