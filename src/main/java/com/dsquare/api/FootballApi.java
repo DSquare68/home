@@ -54,7 +54,7 @@ public class FootballApi {
 		
 	}
 	public void run() {
-		//matchService.deleteAllWhereMode(WEB_MODE);
+		matchService.deleteAllWhereMode(WEB_MODE);
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
@@ -133,7 +133,7 @@ public class FootballApi {
 		int year = cal.get(Calendar.YEAR);
 		
 		Hashtable<String, String> monthMap = new Hashtable<>();
-		if(Calendar.MONTH<6)
+		if(cal.MONTH<6)
 			--year;
 		monthMap.put("sierpnia", "08 "+year);
 		monthMap.put("września", "09 "+year);
@@ -141,7 +141,7 @@ public class FootballApi {
 		monthMap.put("listopada", "11 "+year);
 		monthMap.put("grudnia", "12 "+year);
 		year = cal.get(Calendar.YEAR);
-		if(Calendar.MONTH>6)
+		if(cal.MONTH>6)
 			++year;
 		monthMap.put("stycznia", "01 "+year);
 		monthMap.put("lutego", "02 "+year);

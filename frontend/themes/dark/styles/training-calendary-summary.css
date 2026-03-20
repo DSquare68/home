@@ -86,7 +86,7 @@
 #training-calendar-mounth{
 	width: 100%;
     height: 300px;
-    background: #99d299;
+    background: #99d299; /* Może inny kolor */
 }
 #training-calendar-mounth-number-of-trainings{
 	

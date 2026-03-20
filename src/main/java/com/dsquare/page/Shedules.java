@@ -18,6 +18,8 @@ import com.dsquare.api.FootballApi;
 import com.dsquare.db.MatchRecord;
 import com.dsquare.service.MatchServiceImpl;
 
+import jakarta.transaction.Transactional;
+
 @Component
 public class Shedules {
 

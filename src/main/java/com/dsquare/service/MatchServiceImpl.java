@@ -14,6 +14,8 @@ import com.dsquare.api.FootballApi;
 import com.dsquare.db.MatchRecord;
 import com.dsquare.repository.MatchRespository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MatchServiceImpl {
 	@Autowired
