@@ -9,17 +9,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.dsquare.db.TrainingRecord;
+import com.dsquare.event.CalendarSelectedDayEvent;
 import com.dsquare.model.MonthData;
+import com.dsquare.view.CalendarWeek.ButtonDay;
+import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class TrainingCalendarSummary extends HorizontalLayout {
 
+	private ButtonDay selectedDay;
+	
 	public TrainingCalendarSummary(ArrayList<TrainingRecord> trainings) {
 		this.setId("training-calendar-summary");
 		VerticalLayout calendarWeeks = new VerticalLayout();
-		calendarWeeks.setWidth("50%");
 		calendarWeeks.setId("calendar-weeks");
 		trainings.stream().sorted((e,r) -> e.getDATE_TRAINING().compareTo(r.getDATE_TRAINING()));
 		ArrayList<ArrayList<Date>> weeks = new ArrayList<>();
@@ -46,8 +51,12 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		VerticalLayout dayAndMonth = new VerticalLayout();
 		dayAndMonth.setId("day-and-month");
 		dayAndMonth.setWidth("50%");
-		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.size(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
+		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.stream().map(e -> e.getID_TRAINING()).distinct().count(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
 		this.add(calendarWeeks,dayAndMonth);
+		ComponentUtil.addListener(UI.getCurrent(),CalendarSelectedDayEvent.class,e->{
+			selectedDay.removeClassName("calendar-day-label-trening-selected");
+			selectedDay = e.getSource();
+	});
 	}
 	private Integer timeToInt(String time_TRAINING) {
 		if (time_TRAINING == null) return 0;

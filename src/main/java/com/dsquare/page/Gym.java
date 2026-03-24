@@ -17,7 +17,6 @@ import com.dsquare.view.GymTitle;
 import com.dsquare.view.TrainingCalendarSummary;
 import com.dsquare.view.TrainingCalendarSummarySettings;
 import com.dsquare.view.TrainingCalendarSummarySettings;
-import com.dsquare.view.TrainingOverview;
 import com.dsquare.view.TrainingView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ComponentEvent;

@@ -103,3 +103,6 @@
 #training-calendar-mounth-month-year{
 	
 }
+.calendar-day-label-trening-selected{
+	border: 10px solid #00DD00;
+}

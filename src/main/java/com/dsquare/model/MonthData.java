@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class MonthData {
 
-	int numberOfTrainings;
+	long numberOfTrainings;
 	int totalDuration, month, year, totalReps;
 	double totalWeight;
 }

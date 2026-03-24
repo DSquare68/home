@@ -1,0 +1,28 @@
+package com.dsquare.view;
+
+import com.dsquare.api.FootballApi;
+import com.dsquare.event.SeasonEvent;
+import com.dsquare.service.TrainingServiceImpl;
+import com.dsquare.view.CalendarWeek.ButtonDay;
+import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import com.dsquare.event.CalendarSelectedDayEvent;
+
+public class TrainingCalendarDay extends VerticalLayout {
+	private String day;
+	public TrainingCalendarDay(TrainingServiceImpl trainingService) {
+		this.setId("training-calendar-day");
+		this.setWidth("50%");
+			ComponentUtil.addListener(UI.getCurrent(),CalendarSelectedDayEvent.class,e->{
+			this.remove();
+			day = e.getSource().getDay();
+	
+			this.add();
+		});
+		
+	}
+	
+
+}
