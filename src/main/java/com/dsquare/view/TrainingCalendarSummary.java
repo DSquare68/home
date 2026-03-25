@@ -48,14 +48,17 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		}
 		calendarWeeks.setHeight(calendarWeeks.getChildren().count()*75+"px");
 		calendarWeeks.setId("calendar-weeks");
+		calendarWeeks.setWidth("50%");
 		VerticalLayout dayAndMonth = new VerticalLayout();
 		dayAndMonth.setId("day-and-month");
 		dayAndMonth.setWidth("50%");
 		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.stream().map(e -> e.getID_TRAINING()).distinct().count(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
 		this.add(calendarWeeks,dayAndMonth);
 		ComponentUtil.addListener(UI.getCurrent(),CalendarSelectedDayEvent.class,e->{
-			selectedDay.removeClassName("calendar-day-label-trening-selected");
+			if(selectedDay != null) 
+				selectedDay.removeClassName("calendar-day-label-trening-selected");
 			selectedDay = e.getSource();
+			
 	});
 	}
 	private Integer timeToInt(String time_TRAINING) {

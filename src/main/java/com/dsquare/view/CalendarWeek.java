@@ -31,9 +31,8 @@ public class CalendarWeek extends HorizontalLayout {
 			ButtonDay ed = this;
 			this.setText(day);
 			this.setClassName("calendar-day-label-no-trening");
-			this.setEnabled(false);
 			this.addClickListener(e -> {
-				this.setClassName("calendar-day-label-trening-selected");
+				this.addClassName("calendar-day-label-trening-selected");
 				ComponentUtil.fireEvent(UI.getCurrent(),new CalendarSelectedDayEvent(ed,false));
 			});
 		}

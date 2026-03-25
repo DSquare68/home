@@ -39,6 +39,7 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
+  	color: #000000;
 }
 .calendar-day-label-trening{
 	background: #00DD00;
@@ -48,6 +49,7 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
+  	color: #000000;
 }
 #calendar-weeks{
 	width: 50%;
@@ -61,17 +63,17 @@
 	padding-right: auto;
 }
 .calendar-date-label{
-	margin-left: 50px;
-    font-size: 28px;
-    width: 200px;
+	margin-left: 25px;
+    font-size: 22px;
+    width: 150px;
     	display: flex;
     justify-content: space-around;
     align-items: center;
 }
 .calendar-duration-label{
-	margin-right: 50px;
+	margin-right: 25px;
     font-size: 28px;
-    width: 200px;	
+    width: 150px;	
     	display: flex;
     justify-content: space-around;
     align-items: center;
@@ -86,7 +88,7 @@
 #training-calendar-mounth{
 	width: 100%;
     height: 300px;
-    background: #99d299; /* Może inny kolor */
+    background: #99d299; 
 }
 #training-calendar-mounth-number-of-trainings{
 	
@@ -104,5 +106,5 @@
 	
 }
 .calendar-day-label-trening-selected{
-	border: 10px solid #00DD00;
+	border: 5px solid #0000DD;
 }
