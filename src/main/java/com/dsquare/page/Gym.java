@@ -84,11 +84,11 @@ public class Gym extends Div{
 			int mount = e.getSource().getMount();
 			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsByYearAndMount(year,mount);
 			
-			trainingCalendarSummary=new TrainingCalendarSummary(trainingsWithExercise);
+			trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingsWithExercise);
 			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			
 		});
-		trainingCalendarSummary=new TrainingCalendarSummary(trainingService.getAll()); //TODO remove on production
+		trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingService.getAll()); //TODO remove on production
 		trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounths);

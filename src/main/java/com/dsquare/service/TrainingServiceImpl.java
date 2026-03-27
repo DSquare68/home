@@ -60,4 +60,8 @@ public class TrainingServiceImpl {
 	public ArrayList<TrainingRecord> getAll() {
 		return (ArrayList<TrainingRecord>) trainingRepository.findAll();
 	}
+
+	public ArrayList<TrainingRecord> getTrainingsByDay(int year,String day) {
+		return trainingRepository.getTrainingsByDay(""+year+day, ""+(year+1)+day);
+	}
 }

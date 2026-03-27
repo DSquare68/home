@@ -39,6 +39,9 @@ public interface TrainingRepository extends JpaRepository<TrainingRecord, Intege
 
 	@Query(value = "SELECT * FROM ADMIN.TRAININGS where EXTRACT(YEAR FROM DATE_TRAINING)=?1 and EXTRACT(MONTH FROM DATE_TRAINING)=?2 and IS_SCHEMA <> 1 order by DATE_TRAINING desc ,ID  asc", nativeQuery = true)
 	ArrayList<TrainingRecord> getTrainingsByYearAndMount(int year, int mount);
+
+	@Query(value = "SELECT * FROM ADMIN.TRAININGS where DATE_TRAINING>=?1 and DATE_TRAINING<?2  and IS_SCHEMA <> 1 order by DATE_TRAINING desc ,ID  asc", nativeQuery = true)
+	ArrayList<TrainingRecord> getTrainingsByDay(String from, String to);
 	
 
 }

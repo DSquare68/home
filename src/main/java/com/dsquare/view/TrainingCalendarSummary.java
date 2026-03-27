@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.event.CalendarSelectedDayEvent;
 import com.dsquare.model.MonthData;
+import com.dsquare.service.TrainingServiceImpl;
 import com.dsquare.view.CalendarWeek.ButtonDay;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
@@ -22,7 +23,7 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 
 	private ButtonDay selectedDay;
 	
-	public TrainingCalendarSummary(ArrayList<TrainingRecord> trainings) {
+	public TrainingCalendarSummary(TrainingServiceImpl trainigService,ArrayList<TrainingRecord> trainings) {
 		this.setId("training-calendar-summary");
 		VerticalLayout calendarWeeks = new VerticalLayout();
 		calendarWeeks.setId("calendar-weeks");
@@ -53,6 +54,7 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		dayAndMonth.setId("day-and-month");
 		dayAndMonth.setWidth("50%");
 		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.stream().map(e -> e.getID_TRAINING()).distinct().count(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
+		dayAndMonth.add(new TrainingCalendarDay(trainigService));
 		this.add(calendarWeeks,dayAndMonth);
 		ComponentUtil.addListener(UI.getCurrent(),CalendarSelectedDayEvent.class,e->{
 			if(selectedDay != null) 

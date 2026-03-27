@@ -17,6 +17,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import com.dsquare.event.CalendarSelectedDayEvent;
 
@@ -26,6 +27,9 @@ public class CalendarWeek extends HorizontalLayout {
 	public class ButtonDay extends Button {
 		@Getter
 		private String day;
+		@Getter
+		@Setter
+		private Date date;
 		public ButtonDay(String day) {
 			this.day = day;	
 			ButtonDay ed = this;
@@ -58,6 +62,7 @@ public class CalendarWeek extends HorizontalLayout {
 		for(Date date: dates) {
 			int d = date.getDay()==0? 6 : date.getDay()-1;
 			this.getChildren().toList().get(1+d).setClassName("calendar-day-label-trening");
+			((ButtonDay) this.getChildren().toList().get(1+d)).setDate(date);
 		}
 		int sum = duration.stream().filter(Objects::nonNull).mapToInt(Integer::intValue).sum();
 		Div durationLabel = new Div(sum/60+"h "+sum%60+"m");
