@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.dsquare.db.TrainingRecord;
 import com.dsquare.event.CalendarSelectedDayEvent;
@@ -23,7 +25,7 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 
 	private ButtonDay selectedDay;
 	
-	public TrainingCalendarSummary(TrainingServiceImpl trainigService,ArrayList<TrainingRecord> trainings) {
+	public TrainingCalendarSummary(TrainingServiceImpl trainigService,ArrayList<TrainingRecord> trainings, int year, int mount) {
 		this.setId("training-calendar-summary");
 		VerticalLayout calendarWeeks = new VerticalLayout();
 		calendarWeeks.setId("calendar-weeks");
@@ -33,7 +35,7 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		Map<Date, ArrayList<Integer>> durationMap = new LinkedHashMap<>();
 		ArrayList<ArrayList<Integer>> durations = new ArrayList<>();
 		int ID_training = 0;
-		for (TrainingRecord record : trainings) {
+		for (TrainingRecord record : trainings.stream().collect(Collectors.toMap(TrainingRecord::getDATE_TRAINING,Function.identity(),(e,r)->e)).values().stream().collect(Collectors.toList())) {	
 			Date date = record.getDATE_TRAINING();
 			Date weekStart = startOfWeekMonday(date);
 			weeksMap.computeIfAbsent(weekStart, k -> new ArrayList<>()).add(date);
@@ -53,7 +55,16 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		VerticalLayout dayAndMonth = new VerticalLayout();
 		dayAndMonth.setId("day-and-month");
 		dayAndMonth.setWidth("50%");
-		dayAndMonth.add(new TrainingCalendarMonth(new MonthData(trainings.stream().map(e -> e.getID_TRAINING()).distinct().count(),trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),trainings.get(0).getDATE_TRAINING().getMonth(),trainings.get(0).getDATE_TRAINING().getYear(),trainings.stream().mapToInt(e->timeToInt(e.getTIME_TRAINING())).sum(),(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
+		if(!trainings.isEmpty()) 
+			dayAndMonth.add(new TrainingCalendarMonth(new MonthData(
+				trainings.stream().map(e -> e.getID_TRAINING()).distinct().count(),
+				trainings.stream().mapToInt(TrainingRecord::getREPEAT).sum(),
+				mount,
+				year,
+				trainings.stream().collect(Collectors.toMap(TrainingRecord::getID_TRAINING, TrainingRecord::getTIME_TRAINING,(e,r)->e)).values().stream().map(e->timeToInt(e.toString())).mapToInt(e->e).sum(),
+				(double)trainings.stream().mapToDouble(e->e.getWEIGHT()).sum())));
+		else 
+			dayAndMonth.add(new TrainingCalendarMonth(new MonthData(0,0,0,0,0,0)));
 		dayAndMonth.add(new TrainingCalendarDay(trainigService));
 		this.add(calendarWeeks,dayAndMonth);
 		ComponentUtil.addListener(UI.getCurrent(),CalendarSelectedDayEvent.class,e->{

@@ -21,7 +21,7 @@ public class TrainingCalendarMonth extends VerticalLayout {
 		Div totalWeight = new Div(String.format("Suma obciążenia: %.1f kg", data.getTotalWeight()));
 		totalWeight.setId("training-calendar-mounth-total-weight");
 		totalWeight.setClassName("training-calendar-mounth-data");
-		Div monthYear = new Div("Data: "+data.getMonth()+1+"."+data.getYear());
+		Div monthYear = new Div("Data: "+(data.getMonth()+1)+"."+(data.getYear()+1900));
 		monthYear.setId("training-calendar-mounth-month-year");
 		monthYear.setClassName("training-calendar-mounth-data");
 		this.add(monthYear,numberOfTrainings, totalDuration, totalReps, totalWeight);

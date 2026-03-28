@@ -1,6 +1,7 @@
 package com.dsquare.page;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.dsquare.db.ExerciseNames;
 import com.dsquare.db.TrainingRecord;
@@ -84,11 +85,11 @@ public class Gym extends Div{
 			int mount = e.getSource().getMount();
 			ArrayList<TrainingRecord> trainingsWithExercise = trainingService.getTrainingsByYearAndMount(year,mount);
 			
-			trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingsWithExercise);
+			trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingsWithExercise,year,mount);
 			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			
 		});
-		trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingService.getAll()); //TODO remove on production
+		trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingService.getAllFromMount(Calendar.MONTH+1,Calendar.YEAR),Calendar.YEAR,Calendar.MONTH+1); //TODO remove on production
 		trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounths);
