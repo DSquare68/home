@@ -89,8 +89,8 @@ public class Gym extends Div{
 			trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 			
 		});
-		trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingService.getAllFromMount(Calendar.MONTH+1,Calendar.YEAR),Calendar.YEAR,Calendar.MONTH+1); //TODO remove on production
-		trainingCalendarSummaryDiv.add(trainingCalendarSummary);
+		//trainingCalendarSummary=new TrainingCalendarSummary(trainingService,trainingService.getAllFromMount(Calendar.MONTH+1,Calendar.YEAR),Calendar.YEAR,Calendar.MONTH+1); //TODO remove on production
+		//trainingCalendarSummaryDiv.add(trainingCalendarSummary);
 		ExerciseDetailsSettings exerciseDetailsSettings = new ExerciseDetailsSettings(exerciseNames);
 		TrainingCalendarSummarySettings trainingCalendarSummarySettings = new TrainingCalendarSummarySettings(years,mounths);
 		add(new VerticalLayout(title,exerciseDetailsSettings,trainingCalendarSummarySettings,trainings,exerciseDetailsDiv,trainingCalendarSummaryDiv));
