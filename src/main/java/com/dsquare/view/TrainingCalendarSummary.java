@@ -31,21 +31,32 @@ public class TrainingCalendarSummary extends HorizontalLayout {
 		calendarWeeks.setId("calendar-weeks");
 		trainings.stream().sorted((e,r) -> e.getDATE_TRAINING().compareTo(r.getDATE_TRAINING()));
 		ArrayList<ArrayList<Date>> weeks = new ArrayList<>();
-		Map<Date, ArrayList<Date>> weeksMap = new LinkedHashMap<>();
-		Map<Date, ArrayList<Integer>> durationMap = new LinkedHashMap<>();
+		//Map<Date, ArrayList<Date>> weeksMap = new LinkedHashMap<>();
+		//ArrayList<Date> weeksMap = new ArrayList<>();
+		//ArrayList<ArrayList<Integer>> durationMap =  new ArrayList<>();
 		ArrayList<ArrayList<Integer>> durations = new ArrayList<>();
 		int ID_training = 0;
-		for (TrainingRecord record : trainings.stream().collect(Collectors.toMap(TrainingRecord::getDATE_TRAINING,Function.identity(),(e,r)->e)).values().stream().collect(Collectors.toList())) {	
+		Date prevWeek = null;
+		int lp =-1;
+		for (TrainingRecord record : trainings.stream().collect(Collectors.toMap(TrainingRecord::getDATE_TRAINING,Function.identity(),(e,r)->e)).values().stream().collect(Collectors.toList()).stream().sorted((e,r) -> e.getDATE_TRAINING().compareTo(r.getDATE_TRAINING())).collect(Collectors.toList())) {	
 			Date date = record.getDATE_TRAINING();
 			Date weekStart = startOfWeekMonday(date);
-			weeksMap.computeIfAbsent(weekStart, k -> new ArrayList<>()).add(date);
-			if(ID_training != record.getID_TRAINING()) {
-				ID_training = record.getID_TRAINING();
-				durationMap.computeIfAbsent(weekStart, k -> new ArrayList<>()).add(timeToInt(record.getTIME_TRAINING()));
+			//weeksMap.computeIfAbsent(weekStart, k -> new ArrayList<>()).add(date);
+			if(!weekStart.equals(prevWeek)) {
+				lp++;
+				prevWeek = weekStart;
+				weeks.add(new ArrayList<>());
+				durations.add(new ArrayList<>());
 			}
+			weeks.get(lp).add(date);
+			durations.get(lp).add(timeToInt(record.getTIME_TRAINING()));
+			//if(ID_training != record.getID_TRAINING()) {
+				//ID_training = record.getID_TRAINING();
+			//	durationMap.computeIfAbsent(weekStart, k -> new ArrayList<>()).add(timeToInt(record.getTIME_TRAINING()));
+			//}
 		}
-		weeks = new ArrayList<>(weeksMap.values());
-		durations = new ArrayList<>(durationMap.values());
+		//weeks = new ArrayList<>(weeksMap.values());
+		//durations = new ArrayList<>(durationMap.values());
 		for(int i=0; i<weeks.size(); i++) {
 			calendarWeeks.add(new CalendarWeek(weeks.get(i),durations.get(i)));
 		}

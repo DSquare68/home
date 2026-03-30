@@ -49,7 +49,7 @@ public class CalendarWeek extends HorizontalLayout {
 		Div dateLabel = new Div();
 		dateLabel.setClassName("calendar-date-label");
 		int dayInt = dates.get(0).getDay();
-		Date dateMonday = dates.get(0);
+		Date dateMonday = (Date) dates.get(0).clone();
 		dateMonday.setDate(dateMonday.getDate()-(dayInt==0? 6 : dayInt-1));
 		Date dateSunday = new Date(dateMonday.getTime());
 		dateSunday.setDate(dateMonday.getDate()+6);

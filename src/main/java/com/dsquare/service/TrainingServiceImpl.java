@@ -1,6 +1,8 @@
 package com.dsquare.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,8 +63,13 @@ public class TrainingServiceImpl {
 		return (ArrayList<TrainingRecord>) trainingRepository.findAll();
 	}
 
-	public ArrayList<TrainingRecord> getTrainingsByDay(int year,String day) {
-		return trainingRepository.getTrainingsByDay(""+year+day, ""+(year+1)+day);
+	public ArrayList<TrainingRecord> getTrainingsByDay(Date date) {
+		Date tomorrowDay = (Date) date.clone();
+		tomorrowDay.setDate(tomorrowDay.getDate()+1);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String todayS = formatter.format(date);
+        String tomorrowS = formatter.format(tomorrowDay);
+		return trainingRepository.getTrainingsByDay(todayS, tomorrowS);
 	}
 
 	public ArrayList<TrainingRecord> getAllFromMount(int i, int year) {
