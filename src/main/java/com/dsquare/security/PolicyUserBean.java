@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "pl.business.cat.security")
 public class PolicyUserBean {
 	
-	@Bean
-	public PolicyUserAuthorizationManager getPolicyUserAuthorizationManager() {
-		return new PolicyUserAuthorizationManager("ADMIN");
-	}
+	//@Bean
+	//public PolicyUserAuthorizationManager getPolicyUserAuthorizationManager() {
+	//	return new PolicyUserAuthorizationManager("ADMIN");
+	//}
 
 }
