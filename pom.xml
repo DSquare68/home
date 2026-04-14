@@ -7,7 +7,7 @@
 	<artifactId>home</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<!--<packaging>war</packaging>-->
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>home</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -22,7 +22,7 @@
 		<java.version>25</java.version>
         <vaadin.version>25.1.1</vaadin.version>
 		<spring-security.version>7.0.4</spring-security.version>
-		<lombok.version>1.18.38</lombok.version>
+		<lombok.version>1.18.44</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -83,6 +83,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -126,15 +127,26 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-	<!--
-		<resources>
-	        <resource>
-	            <directory>src/main/resources</directory>
-	        </resource>
-	    </resources>
-	-->
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-compiler-plugin</artifactId>
+	            <configuration>
+	                <source>${java.version}</source>
+	                <target>${java.version}</target>
+	                <encoding>UTF-8</encoding>
+	                <!-- THIS IS THE MOST IMPORTANT PART for Java 25 -->
+	                <annotationProcessorPaths>
+	                    <path>
+	                        <groupId>org.projectlombok</groupId>
+	                        <artifactId>lombok</artifactId>
+	                        <version>${lombok.version}</version>
+	                    </path>
+	                    <!-- Add other processors here if you use MapStruct, etc. -->
+	                </annotationProcessorPaths>
+	            </configuration>
+	        </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -201,10 +213,16 @@
                             </execution>
                         </executions>
                         <configuration>
-                      
+					        <source>${java.version}</source>
+						        <target>${java.version}</target>
+						        <annotationProcessorPaths>
+						            <path>
+						                <groupId>org.projectlombok</groupId>
+						                <artifactId>lombok</artifactId>
+						                <version>${lombok.version}</version>
+						            </path>
+					        </annotationProcessorPaths>
 						  </configuration>
-                        	 <!--<forceProductionBuild>true</forceProductionBuild>
-                        	 <ciBuild>true</ciBuild>-->
                     </plugin>
                 </plugins>
             </build>
