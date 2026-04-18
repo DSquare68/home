@@ -83,7 +83,6 @@ public class MatchServiceImpl {
 
 	public void deleteAllWhereMode(String webMode) {
 		matchRespository.deleteAllWhereMode(webMode);
-		
 	}
 
 }
