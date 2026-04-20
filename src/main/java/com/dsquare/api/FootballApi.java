@@ -135,6 +135,7 @@ public class FootballApi {
 		Hashtable<String, String> monthMap = new Hashtable<>();
 		if(cal.MONTH<6)
 			--year;
+		monthMap.put("lipca", "07 "+year);
 		monthMap.put("sierpnia", "08 "+year);
 		monthMap.put("września", "09 "+year);
 		monthMap.put("października", "10 "+year);
@@ -149,7 +150,7 @@ public class FootballApi {
 		monthMap.put("kwietnia", "04 "+year);
 		monthMap.put("maja", "05 "+year);
 		monthMap.put("czerwca", "06 "+year);
-		monthMap.put("lipca", "07 "+year);
+		
 		
 		
 		for(String month : monthMap.keySet()) {

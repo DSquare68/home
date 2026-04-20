@@ -44,7 +44,7 @@ import jakarta.servlet.ServletException;
 @ConfigurationProperties
 @SpringBootConfiguration
 @EnableScheduling
-public class Application implements AppShellConfigurator {
+public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
 	private static final long serialVersionUID = 6850028705495576466L;
 	private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
