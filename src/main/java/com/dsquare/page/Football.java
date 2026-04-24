@@ -33,13 +33,14 @@ public class Football extends Div{
 	
 	public Football(MatchServiceImpl  matchService) {
 		this.setId("football");
+		new FootballApi(matchService).run();
 		Calendar cal = Calendar.getInstance();
 		String season;
 		if(cal.get(Calendar.MONTH)>=7)
 			season = cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.YEAR)+1);
 		else
 			season =cal.get(Calendar.YEAR)-1+"/"+cal.get(Calendar.YEAR);
-		seasonMatches = matchService.getBySeason(season);
+		seasonMatches = matchService.getBySeason(season,FootballApi.WEB_MODE);
 		queueMatches = matchService.getQueueBySeason(season,FootballApi.ANDROID);
 		if(queueMatches==null)
 			return;
@@ -72,7 +73,7 @@ public class Football extends Div{
 		ComponentUtil.addListener(UI.getCurrent(),SeasonEvent.class,e->{
 			this.remove(footballView);
 			selectedSeason = e.getSource().getSelectedSeason();
-			seasonMatches = matchService.getBySeason(season);
+			seasonMatches = matchService.getBySeason(season,FootballApi.WEB_MODE);
 			queueMatches = matchService.getQueueBySeason(season,FootballApi.ANDROID); //TODO maby by selected queue show after change season
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(queueMatches.get(0).getQueue()+"/"+seasonMatches.get(seasonMatches.size()-1).getQueue());

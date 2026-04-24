@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -56,27 +57,39 @@ public class FootballApi {
 	public void run() {
 		//matchService.deleteAllWhereMode(WEB_MODE);
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
+		for(ArrayList<MatchRecord> matchList : matches)
+			matchList.sort((a,b)->Integer.compare(a.getGuestResult(), b.getGuestResult()));
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
-		List<MatchRecord> seasonMatches = matchService.getQueueBySeason(matches.get(0).get(0).getSeason(),FootballApi.WEB_MODE);
+		List<MatchRecord> seasonMatches = matchService.getBySeason(matches.get(0).get(0).getSeason(),WEB_MODE);
+		List<MatchRecord> androidSeasonMatches = matchService.getBySeason(matches.get(0).get(0).getSeason(),ANDROID);
 		if(seasonMatches==null|| seasonMatches.size()==0) {
 			for(ArrayList<MatchRecord> matchList : matches)
 				matchService.addMatchesRecord(matchList);
 		}else {
 			seasonMatches = seasonMatches.stream().filter(e-> e.getHomeResult() == -1 && e.getGuestResult() == -1 ).sorted((a,b)->Integer.compare(a.getQueue(),b.getQueue())).toList();
 			if(seasonMatches.size()==0) return;
-			int queue = seasonMatches.get(0).getQueue();
-			if(matches.get(queue-1).get(0).getHomeResult() != -1 && matches.get(queue-1).get(0).getGuestResult() != -1) {
+			int[] queue = seasonMatches.stream().mapToInt(e->e.getQueue()).distinct().toArray();
+			for(int i=0; i<queue.length; i++) {
+				if(matches.get(queue[i]-1).get(0).getHomeResult() == -1 && matches.get(queue[i]-1).get(0).getGuestResult() == -1)
+					continue;
 				for(MatchRecord toUpdate : seasonMatches) {
-					MatchRecord m = matches.get(queue-1).stream().filter((e)->e.getHome().equals(toUpdate.getHome()) && e.getGuest().equals(toUpdate.getGuest()) && e.getSeason().equals(toUpdate.getSeason())).findFirst().orElse(null);
+					MatchRecord m = matches.get(queue[i]-1).stream().filter((e)->e.getHome().equals(toUpdate.getHome()) && e.getGuest().equals(toUpdate.getGuest()) && e.getSeason().equals(toUpdate.getSeason())).findFirst().orElse(null);
 					if(toUpdate!=null) {
 						toUpdate.setHomeResult(m.getHomeResult());
 						toUpdate.setGuestResult(m.getGuestResult());
 						matchService.updateMatch(toUpdate);
 					}
 				}
-				matchService.executeUpdateLastQueue(queue,matches.get(0).get(0).getSeason());
-				matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),queue);
+			}
+			List<Integer> allQueues = androidSeasonMatches.stream().mapToInt(e->e.getQueue()).distinct().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+			for(int i : queue)
+				if(allQueues.contains(i))
+					allQueues.remove((Integer)i);
+			if(allQueues.size()==0) return;
+			for(Integer q : allQueues) {
+				matchService.executeUpdateLastQueue(q,matches.get(0).get(0).getSeason());
+				matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),q);
 			}
 		}
 	}
