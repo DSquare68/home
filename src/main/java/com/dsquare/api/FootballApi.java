@@ -33,7 +33,10 @@ public class FootballApi {
 
 	private MatchServiceImpl matchService;
 	private Elements newsHeadlines;
-	private Document doc = null;
+	private Document docEkstraklasa = null;
+	private Document docLigaKonferencji = null;
+	private Document docLigaEuropy = null;
+	private Document docLigaMistrzow = null;
 	public final static String WEB_MODE = "WEBSITE_DATA";
 	public final static String ANDROID = "ANDROID";
 	public final static String ANDROID_TIE_WIN  = "ANDROID_TIE_WIN";
@@ -46,7 +49,11 @@ public class FootballApi {
 	public FootballApi(MatchServiceImpl service) {
 		this.matchService = service;
 		try {
-			doc = Jsoup.connect("http://www.90minut.pl/liga/1/liga14072.html").get();
+			docEkstraklasa = Jsoup.connect("http://www.90minut.pl/liga/1/liga14072.html").get();
+			docLigaKonferencji = Jsoup.connect("http://www.90minut.pl/liga/1/liga14079.html").get();
+			docLigaEuropy = Jsoup.connect("http://www.90minut.pl/liga/1/liga14078.html").get();
+			docLigaMistrzow = Jsoup.connect("http://www.90minut.pl/liga/1/liga14077.html").get();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +63,64 @@ public class FootballApi {
 	}
 	public void run() {
 		//matchService.deleteAllWhereMode(WEB_MODE);
+		getEkstraklasaMatches();
+		getLigaKonferencjiMatches();
+	}
+	private void getLigaKonferencjiMatches() {
+		ArrayList<ArrayList<MatchRecord>> matches = getEuropeLigesFromWeb(docLigaKonferencji);
+		
+	}
+	private ArrayList<ArrayList<MatchRecord>> getEuropeLigesFromWeb(Document docLigaKonferencji2) {
+		newsHeadlines = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
+		Elements queues  = newsHeadlines.select("p");
+		int queueNumber = 0;
+		ArrayList<ArrayList<MatchRecord>> matches = new ArrayList<>();
+		String cup = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
+		boolean isKonferencja = false;
+		if(cup.contains("Konferencjii"))
+			isKonferencja = true;
+		for(int i=4; i<queues.size(); i++) {
+			if(queues.get(i).text().contains("elimina") || queues.get(i).text().contains("Kolejka") || queues.get(i).text().toLowerCase().contains("finał"))
+				i++;
+			Elements matchesInQueue = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p["+(i+1)+"]/table[@class='main']").select("tr");
+			for(int j=0; j<matchesInQueue.size(); j++) {
+				MatchRecord match = new MatchRecord();
+				Elements matchDetails = matchesInQueue.get(j).select("td");
+				if(matchDetails.size() < 2) continue;
+					match.setHome(matchDetails.get(1).select("b").isEmpty() ? matchDetails.get(1).text() : matchDetails.get(1).select("b").get(0).text());
+					match.setGuest(matchDetails.get(3).select("b").isEmpty() ? matchDetails.get(3).text() : matchDetails.get(3).select("b").get(0).text());
+					String result = matchDetails.get(2).select("a").isEmpty() ? "" : matchDetails.get(2).select("a").get(2).select("b").get(0).text(); 
+					if(result.length()>0) {
+						String[] scores  = result.split("-");
+						match.setHomeResult(Integer.valueOf(scores[0]));
+						match.setGuestResult(Integer.valueOf(scores[1]));
+					}else {
+						match.setHomeResult(-1);
+						match.setGuestResult(-1);
+					}
+					String date = matchDetails.get(5).select("td").isEmpty() ? "" : matchDetails.get(5).select("td").get(0).text();
+					if(date.length()>0) {
+						if(date.contains("("))
+							date = date.substring(0, date.indexOf("("));
+						match.setDate_of_match(getMatchDate(date));
+					}else {
+						match.setDate_of_match(new Date(0));
+					}
+					match.setCup(cup);
+					match.setMode_of_data(WEB_MODE);
+					String cupS = match.getCup();
+					String[] cupArr = cupS.split(" ");
+					match.setSeason(cupArr[cupArr.length-1]);
+					match.setQueue(queueNumber); //TODO: ustawić kolejkę dla eliminacji
+				matches.get(queueNumber-1).add(match);
+			}
+			
+		}
+		return matches;
+		
+		
+	}
+	private void getEkstraklasaMatches() {
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
 		for(ArrayList<MatchRecord> matchList : matches)
 			matchList.sort((a,b)->Integer.compare(a.getGuestResult(), b.getGuestResult()));
@@ -92,19 +157,20 @@ public class FootballApi {
 				matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),q);
 			}
 		}
+		
 	}
 	private ArrayList<ArrayList<MatchRecord>> getFromWeb() {
-		newsHeadlines = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
+		newsHeadlines = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
 		Elements queues  = newsHeadlines.select("p");
 		int queueNumber = 0;
 		ArrayList<ArrayList<MatchRecord>> matches = new ArrayList<>();
-		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text();
+		String cup = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text();
 		for(int i=4; i<queues.size(); i++) {
 			if(queues.get(i).text().contains("Kolejka")) {
 				queueNumber++;
 				matches.add(new ArrayList<MatchRecord>());
 				i++;
-				Elements matchesInQueue = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p["+(i+1)+"]/table[@class='main']").select("tr");
+				Elements matchesInQueue = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p["+(i+1)+"]/table[@class='main']").select("tr");
 				for(int j=0; j<matchesInQueue.size(); j++) {
 					MatchRecord match = new MatchRecord();
 					Elements matchDetails = matchesInQueue.get(j).select("td");
