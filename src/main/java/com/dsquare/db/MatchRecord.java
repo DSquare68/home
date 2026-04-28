@@ -41,4 +41,8 @@ public class MatchRecord {
 	private String season;
 	private String mode_of_data;
 	private int queue;
+	private int elimination;
+	private int round;
+	private int knockout;
+	private boolean rematch;
 }
