@@ -19,7 +19,7 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 
-	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup = ?2 m.mode_of_data LIKE %?3% order by m.queue, m.ID asc",nativeQuery = true)
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1  and m.cup= ?2 and m.mode_of_data LIKE %?3% order by m.queue, m.ID asc",nativeQuery = true)
 	ArrayList<MatchRecord> findByCupAndSeason(String season,String cup,String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.mode_of_data != ?1",nativeQuery = true)
@@ -47,5 +47,11 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	
 	@Query(value="DELETE FROM ADMIN.MATCHES m WHERE m.mode_of_data = ?1",nativeQuery = true)
 	void deleteAllWhereMode(String webMode);
+
+	@Query(value="SELECT DISTINCT m.cup FROM ADMIN.MATCHES m WHERE m.mode_of_data LIKE %?1% ORDER BY m.cup",nativeQuery = true)
+	String[] findCupsDistinct(String webMode);
+
+	@Query(value="SELECT DISTINCT m.queue FROM ADMIN.MATCHES m WHERE m.cup = ?1 and m.mode_of_data LIKE %?2% ORDER BY m.queue",nativeQuery = true)
+	Integer[] findQueueOfCup(String cup, String webMode);
 
 }

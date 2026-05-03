@@ -41,6 +41,10 @@ public class FootballView extends VerticalLayout{
 		queueComboBox.setItems(queues);
 		queueComboBox.setValue(queueMatches.get(0).getQueue());
 		queueComboBox.addValueChangeListener(updateQueueInView());
+		queueComboBox.setClassName("football-view-combobox-top");
+		queueComboBox.setItems(queues);
+		queueComboBox.setValue(queueMatches.get(0).getQueue());
+		queueComboBox.addValueChangeListener(updateQueueInView());
 		HorizontalLayout comboBoxesLayout = new HorizontalLayout(seasonsComboBox,queueComboBox);
 		comboBoxesLayout.setId("football-view-combobox-hl");
 		HorizontalLayout matchesDiv = new HorizontalLayout();

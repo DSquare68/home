@@ -67,9 +67,8 @@ public class FootballApi {
 		getLigaKonferencjiMatches(docLigaKonferencji);
 	}
 	private void getLigaKonferencjiMatches(Document doc) {
-		String[] data = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text().split(" ");
-		String season = data[1];
-		String cup = data[0];
+		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
+		String season = cup.split(" ")[2];
 		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);
 		if(seasonMatches.size()>0) 
 			return;

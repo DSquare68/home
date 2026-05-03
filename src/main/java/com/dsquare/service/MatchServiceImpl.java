@@ -89,4 +89,12 @@ public class MatchServiceImpl {
 		matchRespository.deleteAllWhereMode(webMode);
 	}
 
+	public String[] getCups(String webMode) {
+		return matchRespository.findCupsDistinct(webMode);
+	}
+
+	public Integer[] getQueuesOfCup(String cup, String webMode) {
+		return matchRespository.findQueueOfCup(cup, webMode);
+	}
+
 }
