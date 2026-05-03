@@ -19,8 +19,8 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 
-	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.mode_of_data LIKE %?2% order by m.queue, m.ID asc",nativeQuery = true)
-	ArrayList<MatchRecord> findBySeason(String season,String webMode);
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup = ?2 m.mode_of_data LIKE %?3% order by m.queue, m.ID asc",nativeQuery = true)
+	ArrayList<MatchRecord> findByCupAndSeason(String season,String cup,String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.mode_of_data != ?1",nativeQuery = true)
 	ArrayList<MatchRecord> getByNotMode(String webMode);

@@ -29,8 +29,8 @@ public class MatchServiceImpl {
 		matchRespository.saveAll(matches);
 	}
 
-	public ArrayList<MatchRecord> getBySeason(String season,String mode) {
-		return matchRespository.findBySeason(season,mode);
+	public ArrayList<MatchRecord> getByCupAndSeason(String season,String cup,String mode) {
+		return matchRespository.findByCupAndSeason(season,cup,mode);
 	}
 
 	public void deleteAll() {

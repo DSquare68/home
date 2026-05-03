@@ -67,8 +67,10 @@ public class FootballApi {
 		getLigaKonferencjiMatches(docLigaKonferencji);
 	}
 	private void getLigaKonferencjiMatches(Document doc) {
-		String season = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
-		List<MatchRecord> seasonMatches = matchService.getBySeason(season,WEB_MODE);
+		String[] data = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text().split(" ");
+		String season = data[1];
+		String cup = data[0];
+		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);
 		if(seasonMatches.size()>0) 
 			return;
 		ArrayList<ArrayList<MatchRecord>> matches = getEuropeLigesFromWeb(doc);
@@ -76,7 +78,7 @@ public class FootballApi {
 			matchList.sort((a,b)->Integer.compare(a.getGuestResult(), b.getGuestResult()));
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
-		List<MatchRecord> androidSeasonMatches = matchService.getBySeason(matches.get(0).get(0).getSeason(),ANDROID);
+		List<MatchRecord> androidSeasonMatches = matchService.getByCupAndSeason(matches.get(0).get(0).getSeason(),cup,ANDROID);
 		if(seasonMatches==null|| seasonMatches.size()==0) {
 			for(ArrayList<MatchRecord> matchList : matches)
 				matchService.addMatchesRecord(matchList);
@@ -113,34 +115,45 @@ public class FootballApi {
 	private ArrayList<ArrayList<MatchRecord>> getEuropeLigesFromWeb(Document doc) {
 		newsHeadlines = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']");
 		Elements queues  = newsHeadlines.select("p");
-		int elimNumber = 1, roundNumber = 1, knockoutNumber = 1,queueNumber = 0;
+		int elimNumber = 1, roundNumber = 0, knockoutNumber = 0,queueNumber = 0,stage = 1;
 		ArrayList<ArrayList<MatchRecord>> matches = new ArrayList<>();
 		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
-		boolean isKonferencja = false;
+		boolean isKonferencja = false, isRematch = false;
 		if(cup.contains("Konferencjii"))
 			isKonferencja = true;
-		int stage = 0;
 		matches.add(new ArrayList<MatchRecord>());
 		for(int i=4; i<queues.size(); i++) {
-			if(queues.get(i).text().contains("elimina"))
-				stage = 1;
-			else if(queues.get(i).text().contains("kolejka"))
-				stage = 2;
-			 else if(queues.get(i).text().toLowerCase().contains("finał"))
-				 stage = 3;
 			if(queues.get(i).text().contains("elimina") || queues.get(i).text().contains("Kolejka") || queues.get(i).text().toLowerCase().contains("finał")) {
-				i++;
 				matches.add(new ArrayList<MatchRecord>());
 				queueNumber++;
 			}
+			if(queues.get(i).text().contains("elimina")) {
+				stage = 1;
+				elimNumber++;
+				isRematch=false;
+				continue;
+			}
+			else if(queues.get(i).text().contains("Kolejka")) {
+				stage = 2;
+				roundNumber++;
+				isRematch=false;
+				continue;
+			}
+			 else if(queues.get(i).text().toLowerCase().contains("finał")) {
+				 stage = 3;
+				 knockoutNumber++;
+				 isRematch=false;
+				 continue;
+			 }
 			Elements matchesInQueue = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p["+(i+1)+"]/table[@class='main']").select("tr");
 			for(int j=0; j<matchesInQueue.size(); j++) {
-				MatchRecord match = new MatchRecord();
 				Elements matchDetails = matchesInQueue.get(j).select("td");
+				MatchRecord match = new MatchRecord();
+				if(matchDetails.size() == 1) isRematch=true;
 				if(matchDetails.size() < 3) continue;
 				match.setHome(matchDetails.get(1).select("b").isEmpty() ? matchDetails.get(1).text() : matchDetails.get(1).select("b").get(0).text());
 				match.setGuest(matchDetails.get(3).select("b").isEmpty() ? matchDetails.get(3).text() : matchDetails.get(3).select("b").get(0).text());
-				String result = matchDetails.get(2).select("a").isEmpty() ? "" : matchDetails.get(2).select("a").get(0).select("b").get(0).text(); 
+				String result= matchDetails.get(2).select("a").isEmpty() ? (matchDetails.get(2).select("b").isEmpty() ? "" : matchDetails.get(2).select("b").get(0).text()) : matchDetails.get(2).select("a").get(0).select("b").get(0).text();
 				if(result.length()>0) {
 					String[] scores  = result.split("-");
 					match.setHomeResult(Integer.valueOf(scores[0]));
@@ -162,6 +175,7 @@ public class FootballApi {
 				String cupS = match.getCup();
 				String[] cupArr = cupS.split(" ");
 				match.setSeason(cupArr[cupArr.length-1]);
+				match.setRematch(isRematch);
 				switch(stage) {
 					case 1:
 						match.setElimination(elimNumber);
@@ -172,6 +186,7 @@ public class FootballApi {
 						match.setElimination(-1);
 						match.setRound(roundNumber);
 						match.setKnockout(-1);
+						match.setRematch(false);
 						break;
 					case 3:
 						match.setElimination(-1);
@@ -181,14 +196,17 @@ public class FootballApi {
 				}				
 				matches.get(queueNumber).add(match);
 			}
+			
 		}
 		return matches;
 		
 		
 	}
 	private void getEkstraklasaMatches() {
-		String season = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text().split(" ")[1];
-		List<MatchRecord> seasonMatches = matchService.getBySeason(season,WEB_MODE);
+		String[] data=docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text().split(" ");
+		String season = data[1];
+		String cup = data[0];
+		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);
 		if(seasonMatches.size()>0) 
 			return;
 		ArrayList<ArrayList<MatchRecord>> matches = getFromWeb();
@@ -196,7 +214,7 @@ public class FootballApi {
 			matchList.sort((a,b)->Integer.compare(a.getGuestResult(), b.getGuestResult()));
 		//matchService.executeUpdateLastQueue(14,matches.get(0).get(0).getSeason());
 		//matchService.checkPredictionQueue(matches.get(0).get(0).getSeason(),14);
-		List<MatchRecord> androidSeasonMatches = matchService.getBySeason(matches.get(0).get(0).getSeason(),ANDROID);
+		List<MatchRecord> androidSeasonMatches = matchService.getByCupAndSeason(matches.get(0).get(0).getSeason(),cup,ANDROID);
 		if(seasonMatches==null|| seasonMatches.size()==0) {
 			for(ArrayList<MatchRecord> matchList : matches)
 				matchService.addMatchesRecord(matchList);
