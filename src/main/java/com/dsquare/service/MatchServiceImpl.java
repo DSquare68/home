@@ -43,23 +43,23 @@ public class MatchServiceImpl {
 
 	}
 
-	public List<MatchRecord> getQueueBySeason(String season, String webMode) {
+	public List<MatchRecord> getQueueBySeason(String season,String cup, String webMode) {
 		Calendar today = Calendar.getInstance();
 		today.add(Calendar.DATE, -7);
 		int queue = -1;
-		Integer queueInt = matchRespository.findQueueByDate(today.getTime(), webMode);
+		Integer queueInt = matchRespository.findQueueByDate(today.getTime(),cup, webMode);
 		if (queueInt != null)
 			queue = queueInt.intValue();
 		else {
-			queueInt = matchRespository.findQueueByDate(today.getTime(), FootballApi.WEB_MODE);
+			queueInt = matchRespository.findQueueByDate(today.getTime(),cup, FootballApi.WEB_MODE);
 			if (queueInt != null)
 				queue = queueInt.intValue();
 			else
 				return null;
-			return matchRespository.findQueueBySeason(season, queue, FootballApi.WEB_MODE);
+			return matchRespository.findQueueBySeason(season,cup, queue, FootballApi.WEB_MODE);
 		}
 		// queue =14; //TODO remove hardcode
-		return matchRespository.findQueueBySeason(season, queue, webMode);
+		return matchRespository.findQueueBySeason(season,cup, queue, webMode);
 	}
 
 	public void executeUpdateLastQueue(int queue, String season) {
@@ -71,14 +71,14 @@ public class MatchServiceImpl {
 
 	}
 
-	public List<MatchRecord> getQueueByLPQueue(String season, String selectedQueue) {
-		List<MatchRecord> matches = matchRespository.findQueueBySeason(season, Integer.valueOf(selectedQueue),
+	public List<MatchRecord> getQueueByLPQueue(String season, String cup, String selectedQueue) {
+		List<MatchRecord> matches = matchRespository.findQueueBySeason(season,cup,Integer.valueOf(selectedQueue),
 				FootballApi.ANDROID);
 		;
 		if (matches != null && matches.size() > 0)
 			return matches;
 		else
-			return matchRespository.findQueueBySeason(season, Integer.valueOf(selectedQueue), FootballApi.WEB_MODE);
+			return matchRespository.findQueueBySeason(season, cup, Integer.valueOf(selectedQueue), FootballApi.WEB_MODE);
 	}
 
 	public String[] getAllSeasons() {

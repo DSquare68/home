@@ -63,10 +63,12 @@ public class FootballApi {
 	}
 	public void run() {
 		//matchService.deleteAllWhereMode(WEB_MODE);
-		//getEkstraklasaMatches();
-		getLigaKonferencjiMatches(docLigaKonferencji);
+		getEkstraklasaMatches();
+		getLigaMatches(docLigaKonferencji);
+		getLigaMatches(docLigaEuropy);
+		getLigaMatches(docLigaMistrzow);
 	}
-	private void getLigaKonferencjiMatches(Document doc) {
+	private void getLigaMatches(Document doc) {
 		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
 		String season = cup.split(" ")[2];
 		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);

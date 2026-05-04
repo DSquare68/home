@@ -28,11 +28,11 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	//@Query("UPDATE MatchRecord m SET m = ?2 WHERE m.id = ?1")
 	//void update(int id, MatchRecord toUpdate);
 
-	@Query(value="select * from ADMIN.MATCHES m where m.season = ?1  and m.mode_of_data like %?3% and m.queue = ?2",nativeQuery = true)
-	List<MatchRecord> findQueueBySeason(String season, int queue , String webMode);
+	@Query(value="select * from ADMIN.MATCHES m where m.season = ?1 and m.cup=?2  and m.mode_of_data like %?4% and m.queue = ?3",nativeQuery = true)
+	List<MatchRecord> findQueueBySeason(String season,String cup, int queue , String webMode);
 
-	@Query(value="SELECT m.queue FROM ADMIN.MATCHES m WHERE m.date_of_match > ?1 and m.mode_of_data LIKE %?2% order by m.date_of_match FETCH FIRST 1 ROW ONLY",nativeQuery = true)
-	Integer findQueueByDate(Date day, String webMode);
+	@Query(value="SELECT m.queue FROM ADMIN.MATCHES m WHERE m.date_of_match > ?1 and m.cup=?2 and m.mode_of_data LIKE %?3% order by m.date_of_match FETCH FIRST 1 ROW ONLY",nativeQuery = true)
+	Integer findQueueByDate(Date day,String cup, String webMode);
 
 	@Procedure(procedureName = "UPDATE_LAST_QUEUE")
 	@Transactional
