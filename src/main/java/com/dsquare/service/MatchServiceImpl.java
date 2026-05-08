@@ -72,13 +72,23 @@ public class MatchServiceImpl {
 	}
 
 	public List<MatchRecord> getQueueByLPQueue(String season, String cup, String selectedQueue) {
-		List<MatchRecord> matches = matchRespository.findQueueBySeason(season,cup,Integer.valueOf(selectedQueue),
-				FootballApi.ANDROID);
-		;
-		if (matches != null && matches.size() > 0)
-			return matches;
-		else
-			return matchRespository.findQueueBySeason(season, cup, Integer.valueOf(selectedQueue), FootballApi.WEB_MODE);
+		String[] queueParts = selectedQueue.split(" ");
+		List<MatchRecord> matches= new ArrayList<>();
+		if(queueParts[0].equals("Queue"))
+			matches = matchRespository.findQueueBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]), FootballApi.WEB_MODE);
+		else if(queueParts[0].equals("Elimination"))
+			if(queueParts.length==3 && queueParts[2].equals("Rematch"))
+				matches = matchRespository.findEliminationBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]),true, FootballApi.WEB_MODE);
+			else
+				matches = matchRespository.findEliminationBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]),false, FootballApi.WEB_MODE);
+		else if(queueParts[0].equals("Round"))
+			matches = matchRespository.findRoundBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]), FootballApi.WEB_MODE);
+		else if(queueParts[0].equals("Knockout"))
+			if(queueParts.length==3 && queueParts[2].equals("Rematch"))
+				matches = matchRespository.findKnockoutBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]),true, FootballApi.WEB_MODE);
+			else
+				matches = matchRespository.findKnockoutBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]),false, FootballApi.WEB_MODE);
+		return matches;
 	}
 
 	public String[] getAllSeasons() {
@@ -93,8 +103,22 @@ public class MatchServiceImpl {
 		return matchRespository.findCupsDistinct(webMode);
 	}
 
-	public Integer[] getQueuesOfCup(String cup, String webMode) {
-		return matchRespository.findQueueOfCup(cup, webMode);
+	public ArrayList<String> getQueuesOfCup(String cup, String webMode) {
+		ArrayList<String[]> queues =  matchRespository.findQueueOfCup(cup, webMode);
+		ArrayList<String> queuesString = new ArrayList<>();
+		for(String[] queue: queues) {
+			String queueString = "";
+			if(!queue[0].equals("-1"))
+				queueString += "Queue "+queue[0];
+			else if(!queue[1].equals("-1"))
+				queueString += "Elimination "+queue[1]+(Boolean.parseBoolean(queue[4])?" Rematch":"");
+			else if(!queue[2].equals("-1"))
+				queueString += "Round "+queue[2];
+			else if(!queue[3].equals("-1"))
+				queueString += "Knockout "+queue[3]+(Boolean.parseBoolean(queue[4])?" Rematch":"");
+			queuesString.add(queueString);
+		}
+		return queuesString;
 	}
 
 }

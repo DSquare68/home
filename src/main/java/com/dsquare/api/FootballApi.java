@@ -177,6 +177,7 @@ public class FootballApi {
 				String[] cupArr = cupS.split(" ");
 				match.setSeason(cupArr[cupArr.length-1]);
 				match.setRematch(isRematch);
+				match.setQueue(-1);
 				switch(stage) {
 					case 1:
 						match.setElimination(elimNumber);

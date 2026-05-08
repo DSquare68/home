@@ -51,7 +51,19 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	@Query(value="SELECT DISTINCT m.cup FROM ADMIN.MATCHES m WHERE m.mode_of_data LIKE %?1% ORDER BY m.cup",nativeQuery = true)
 	String[] findCupsDistinct(String webMode);
 
-	@Query(value="SELECT DISTINCT m.queue FROM ADMIN.MATCHES m WHERE m.cup = ?1 and m.mode_of_data LIKE %?2% ORDER BY m.queue",nativeQuery = true)
-	Integer[] findQueueOfCup(String cup, String webMode);
+	@Query(value="SELECT DISTINCT m.queue,m.elimination,m.round,m.knockout,m.rematch FROM ADMIN.MATCHES m WHERE m.cup = ?1 and m.mode_of_data LIKE %?2% and m.mode_of_data = 'WEBSITE_DATA' GROUP BY m.queue , m.elimination, m.round, m.knockout, m.REMATCH ORDER BY m.QUEUE ,m.KNOCKOUT,m.ROUND, m.ELIMINATION ,m.REMATCH",nativeQuery = true)
+	ArrayList<String[]> findQueueOfCup(String cup, String webMode);
+
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?4% and m.queue = ?3",nativeQuery = true)
+	List<MatchRecord> findQueueBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
+
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?5% and m.elimination = ?3 and rematch = ?4",nativeQuery = true)
+	List<MatchRecord> findEliminationBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
+
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?4% and m.round = ?3",nativeQuery = true)
+	List<MatchRecord> findRoundBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
+
+	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?5% and m.knockout = ?3 and rematch = ?4",nativeQuery = true)
+	List<MatchRecord> findKnockoutBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
 
 }
