@@ -86,7 +86,8 @@ public class Football extends Div{
 		//ekstraklasa.add(showpredictionsDiv);
 		SeasonAndQueueView seasonAndQueueView = new SeasonAndQueueView("Season: "+season,queues.get(0).split(" ")[0]+":"+queues.get(0).split(" ")[1]);
 		footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
-
+		footballView.getQueueComboBox().setValue(queues.get(0));
+		footballView.getSeasonsComboBox().setValue(season);
 		ComponentUtil.addListener(UI.getCurrent(),SeasonEvent.class,e->{
 			this.remove(footballView);
 			selectedSeason = e.getSource().getSelectedSeason();
@@ -96,6 +97,7 @@ public class Football extends Div{
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(queues.get(0));
 			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
+			footballView.getQueueComboBox().setValue(0);
 			this.add(footballView);
 		});
 		ComponentUtil.addListener(UI.getCurrent(),QueueEvent.class,e->{
@@ -111,11 +113,13 @@ public class Football extends Div{
 		ComponentUtil.addListener(UI.getCurrent(), CupEvent.class, e->{
 			this.remove(footballView);
 			selectedCup = e.getSource().getSelectedCup();
-			queueMatches = matchService.getQueueBySeason(season,selectedCup,FootballApi.WEB_MODE); //TODO maby by selected queue show after change season
+			queueMatches = matchService.getQueueBySeason(selectedSeason,selectedCup,FootballApi.WEB_MODE); //TODO maby by selected queue show after change season
 			queues = matchService.getQueuesOfCup(selectedCup, FootballApi.WEB_MODE);
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(queues.get(0).split(" ")[0]+":"+queues.get(0).split(" ")[1]);
 			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
+			footballView.getQueueComboBox().setValue(0);
+			footballView.getSeasonsComboBox().setValue(0);
 			this.add(footballView);
 		});
 		add(cupsComboBox,seasonAndQueueView,footballView);	

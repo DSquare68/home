@@ -18,11 +18,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 public class FootballView extends VerticalLayout{
 
 	private static final long serialVersionUID = -9215516004327144312L;
+	@Getter
 	private ComboBox seasonsComboBox,queueComboBox;
 	private String selectedSeason,selectedQueue;
 	
@@ -34,12 +36,10 @@ public class FootballView extends VerticalLayout{
 		seasonsComboBox = new ComboBox();
 		seasonsComboBox.setClassName("football-view-combobox");
 		seasonsComboBox.setItems(seasons);
-		seasonsComboBox.setValue(seasons[0]);
 		seasonsComboBox.addValueChangeListener(updateSeasonInView());
 		queueComboBox = new ComboBox();
 		queueComboBox.setClassName("football-view-combobox");
 		queueComboBox.setItems(queues);
-		queueComboBox.setValue(queues.get(0));
 		queueComboBox.addValueChangeListener(updateQueueInView());
 		HorizontalLayout comboBoxesLayout = new HorizontalLayout(seasonsComboBox,queueComboBox);
 		comboBoxesLayout.setId("football-view-combobox-hl");
