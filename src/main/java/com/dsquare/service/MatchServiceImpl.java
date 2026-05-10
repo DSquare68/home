@@ -71,9 +71,9 @@ public class MatchServiceImpl {
 
 	}
 
-	public List<MatchRecord> getQueueByLPQueue(String season, String cup, String selectedQueue) {
+	public ArrayList<MatchRecord> getQueueByLPQueue(String season, String cup, String selectedQueue) {
 		String[] queueParts = selectedQueue.split(" ");
-		List<MatchRecord> matches= new ArrayList<>();
+		ArrayList<MatchRecord> matches= new ArrayList<>();
 		if(queueParts[0].equals("Queue"))
 			matches = matchRespository.findQueueBySeasonAndCup(season,cup,Integer.valueOf(queueParts[1]), FootballApi.WEB_MODE);
 		else if(queueParts[0].equals("Elimination"))
@@ -91,7 +91,7 @@ public class MatchServiceImpl {
 		return matches;
 	}
 
-	public String[] getAllSeasons() {
+	public ArrayList<String> getAllSeasons() {
 		return matchRespository.findAllSeasons();
 	}
 
@@ -119,6 +119,10 @@ public class MatchServiceImpl {
 			queuesString.add(queueString);
 		}
 		return queuesString;
+	}
+
+	public ArrayList<String> getSeasonsInCup(String selectedCup, String webMode) {
+		return matchRespository.findSeasonsInCup(selectedCup,webMode);
 	}
 
 }

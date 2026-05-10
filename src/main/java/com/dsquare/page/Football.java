@@ -33,13 +33,11 @@ public class Football extends Div{
 	
 	public ComboBox cupsComboBox;
 	private static final long serialVersionUID = 8461698117936164465L;
-	private FootballView footballView;
 	private String selectedSeason, selectedQueue;
 	@Getter
 	private String selectedCup;
-	private ArrayList<MatchRecord> seasonMatches;
-	private List<MatchRecord> queueMatches;
-	private ArrayList<String> queues;
+	private ArrayList<MatchRecord> queueMatches;
+	private ArrayList<String> queues, seasons;
 	
 	public Football(MatchServiceImpl  matchService) {
 		this.setId("football");
@@ -53,7 +51,6 @@ public class Football extends Div{
 		String[] cups = matchService.getCups(FootballApi.WEB_MODE);
 		selectedCup = cups[0];
 		queues= matchService.getQueuesOfCup(cups[0], FootballApi.WEB_MODE);
-		seasonMatches = matchService.getByCupAndSeason(season,selectedCup,FootballApi.WEB_MODE);
 		queueMatches = matchService.getQueueByLPQueue(season,selectedCup,queues.get(0)); 
 		selectedSeason = season;
 		selectedQueue = queues.get(0);
@@ -67,7 +64,8 @@ public class Football extends Div{
 		cupsComboBox.addValueChangeListener(updateCupInView());
 		cupsComboBox.setId("league-title");
 		boolean showpredictions = false; 
-		final String[] seasons = matchService.getAllSeasons();
+		seasons = matchService.getAllSeasons();
+		final FootballView footballView = new FootballView();
 		Button showpredictionsDiv = new Button("Show predictions");
 		showpredictionsDiv.setId("show-predictions-disabled");
 		
@@ -80,47 +78,39 @@ public class Football extends Div{
 					showpredictionsDiv.setId("show-predictions-disabled");
 				}
 				this.remove(footballView);
-				
-				footballView = new FootballView(queueMatches,seasons,queues,finalShowpredictions);
+				 ArrayList<MatchRecord> predictionMatches = null;// TODO add new function matchService.getPredictions(selectedSeason, selectedCup,selectedQueue);
+				footballView.setPredictionMatches(predictionMatches);
 				this.add(footballView);
 		});
 		//ekstraklasa.add(showpredictionsDiv);
 		SeasonAndQueueView seasonAndQueueView = new SeasonAndQueueView("Season: "+season,queues.get(0).split(" ")[0]+":"+queues.get(0).split(" ")[1]);
-		footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
+		footballView.setSeasons(seasons);
+		footballView.setQueues(queues);
 		footballView.getQueueComboBox().setValue(queues.get(0));
 		footballView.getSeasonsComboBox().setValue(season);
 		ComponentUtil.addListener(UI.getCurrent(),SeasonEvent.class,e->{
 			this.remove(footballView);
 			selectedSeason = e.getSource().getSelectedSeason();
-			seasonMatches = matchService.getByCupAndSeason(season,selectedCup,FootballApi.WEB_MODE);
-			queueMatches = matchService.getQueueBySeason(season,selectedCup,FootballApi.ANDROID); //TODO maby by selected queue show after change season
 			queues = matchService.getQueuesOfCup(cups[0], FootballApi.WEB_MODE);
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
-			seasonAndQueueView.getQueueDiv().setText(queues.get(0));
-			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
-			footballView.getQueueComboBox().setValue(0);
+			footballView.setQueues(queues);
+			footballView.getQueueComboBox().setValue(queues.get(0));
 			this.add(footballView);
 		});
 		ComponentUtil.addListener(UI.getCurrent(),QueueEvent.class,e->{
 			this.remove(footballView);
-			selectedSeason = e.getSource().getSelectedSeason();
 			selectedQueue = e.getSource().getSelectedQueue();
 			queueMatches = matchService.getQueueByLPQueue(selectedSeason,selectedCup,selectedQueue); //TODO maby by selected queue show after change season
-			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			seasonAndQueueView.getQueueDiv().setText(selectedQueue);
-			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
+			footballView.setQueueMatches(queueMatches);
 			this.add(footballView);
 		});
 		ComponentUtil.addListener(UI.getCurrent(), CupEvent.class, e->{
 			this.remove(footballView);
 			selectedCup = e.getSource().getSelectedCup();
-			queueMatches = matchService.getQueueBySeason(selectedSeason,selectedCup,FootballApi.WEB_MODE); //TODO maby by selected queue show after change season
-			queues = matchService.getQueuesOfCup(selectedCup, FootballApi.WEB_MODE);
-			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
-			seasonAndQueueView.getQueueDiv().setText(queues.get(0).split(" ")[0]+":"+queues.get(0).split(" ")[1]);
-			footballView = new FootballView(queueMatches,seasons,queues,showpredictions);
-			footballView.getQueueComboBox().setValue(0);
-			footballView.getSeasonsComboBox().setValue(0);
+			seasons = matchService.getSeasonsInCup(selectedCup,FootballApi.WEB_MODE); //TODO maby by selected queue show after change season
+			footballView.setSeasons(seasons);
+			footballView.getSeasonsComboBox().setValue(seasons.get(0));
 			this.add(footballView);
 		});
 		add(cupsComboBox,seasonAndQueueView,footballView);	

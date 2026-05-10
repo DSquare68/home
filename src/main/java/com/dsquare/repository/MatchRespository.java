@@ -43,7 +43,7 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	void checkPredictionQueue(@Param("SEASON_DATA") String SEASON_DATA,@Param("QUEUE_DATA") Integer QUEUE_DATA);
 
 	@Query(value="SELECT DISTINCT m.season FROM ADMIN.MATCHES m ORDER BY m.season DESC",nativeQuery = true)
-	String[] findAllSeasons();
+	ArrayList<String> findAllSeasons();
 	
 	@Query(value="DELETE FROM ADMIN.MATCHES m WHERE m.mode_of_data = ?1",nativeQuery = true)
 	void deleteAllWhereMode(String webMode);
@@ -55,15 +55,18 @@ public interface MatchRespository extends JpaRepository<MatchRecord, Integer> {
 	ArrayList<String[]> findQueueOfCup(String cup, String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?4% and m.queue = ?3",nativeQuery = true)
-	List<MatchRecord> findQueueBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
+	ArrayList<MatchRecord> findQueueBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?5% and m.elimination = ?3 and rematch = ?4",nativeQuery = true)
-	List<MatchRecord> findEliminationBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
+	ArrayList<MatchRecord> findEliminationBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?4% and m.round = ?3",nativeQuery = true)
-	List<MatchRecord> findRoundBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
+	ArrayList<MatchRecord> findRoundBySeasonAndCup(String season, String cup, Integer valueOf, String webMode);
 
 	@Query(value="SELECT * FROM ADMIN.MATCHES m WHERE m.season = ?1 and m.cup=?2  and m.mode_of_data like %?5% and m.knockout = ?3 and rematch = ?4",nativeQuery = true)
-	List<MatchRecord> findKnockoutBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
+	ArrayList<MatchRecord> findKnockoutBySeasonAndCup(String season, String cup, Integer valueOf, boolean b, String webMode);
+
+	@Query(value="SELECT m.season FROM ADMIN.MATCHES m WHERE m.cup = ?1 and m.cup=?2 order by m.season desc",nativeQuery = true)
+	ArrayList<String> findSeasonsInCup(String selectedSeason, String webMode);
 
 }

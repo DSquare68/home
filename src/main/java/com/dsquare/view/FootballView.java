@@ -24,40 +24,31 @@ import lombok.Getter;
 public class FootballView extends VerticalLayout{
 
 	private static final long serialVersionUID = -9215516004327144312L;
-	@Getter
 	private ComboBox seasonsComboBox,queueComboBox;
 	private String selectedSeason,selectedQueue;
+	private ArrayList<MatchRecord> queueMatches, predictionMatches;
+	private boolean showPredictions;
+	private ArrayList<String> seasons, queues;
+	private HorizontalLayout matchesDiv;
 	
-	public FootballView(List<MatchRecord> queueMatches, String[] seasons, ArrayList<String> queues, boolean showPredictions) {
+	public FootballView() {
 		this.setId("football-view-vl");
 		Div bellHorizontalDiv = new Div();
 		bellHorizontalDiv.setId("bell-horizontal-div");
-		selectedSeason = queueMatches.get(0).getSeason();
 		seasonsComboBox = new ComboBox();
 		seasonsComboBox.setClassName("football-view-combobox");
-		seasonsComboBox.setItems(seasons);
 		seasonsComboBox.addValueChangeListener(updateSeasonInView());
 		queueComboBox = new ComboBox();
 		queueComboBox.setClassName("football-view-combobox");
-		queueComboBox.setItems(queues);
 		queueComboBox.addValueChangeListener(updateQueueInView());
 		HorizontalLayout comboBoxesLayout = new HorizontalLayout(seasonsComboBox,queueComboBox);
 		comboBoxesLayout.setId("football-view-combobox-hl");
-		HorizontalLayout matchesDiv = new HorizontalLayout();
+		matchesDiv = new HorizontalLayout();
 		matchesDiv.setWidth(100, Unit.PERCENTAGE);
 		VerticalLayout leftMatchesVl = new VerticalLayout();
 		VerticalLayout rightMatchesVl = new VerticalLayout();
 		leftMatchesVl.setWidth(50, Unit.PERCENTAGE);
 		rightMatchesVl.setWidth(50, Unit.PERCENTAGE);
-		for(int i=0;i<queueMatches.size();i++) {
-			MatchView matchView = new MatchView(queueMatches.get(i));
-			Div bellVerticalDiv = new Div();
-			bellVerticalDiv.setId("bell-vertical-div");
-			if(i%2==0)
-				leftMatchesVl.add(matchView);
-			else
-				rightMatchesVl.add(matchView);
-		}
 		matchesDiv.setId("matches-div");
 		matchesDiv.add(leftMatchesVl, rightMatchesVl);
 		// TODO Auto-generated constructor stub
@@ -98,5 +89,29 @@ public class FootballView extends VerticalLayout{
 			}
 		};
 	}
-
+	public void setQueues(ArrayList<String> queues) {
+		this.queues = queues;
+		queueComboBox.setItems(queues);
+	}
+	
+	public void setSeasons(ArrayList<String> seasons) {
+		this.seasons = seasons;
+		seasonsComboBox.setItems(seasons);
+	}
+	
+	public void setQueueMatches(ArrayList<MatchRecord> queueMatches) {
+		this.queueMatches = queueMatches;
+		VerticalLayout left =(VerticalLayout) matchesDiv.getComponentAt(0);
+		VerticalLayout right =(VerticalLayout) matchesDiv.getComponentAt(1);
+		for(int i=0;i<queueMatches.size();i++) {
+			MatchView matchView = new MatchView(queueMatches.get(i));
+			Div bellVerticalDiv = new Div();
+			bellVerticalDiv.setId("bell-vertical-div");
+			if(i%2==0)
+				left.add(matchView);
+			else
+				right.add(matchView);
+		}
+	}
+	
 }
