@@ -52,14 +52,15 @@ public class Football extends Div{
 			season =cal.get(Calendar.YEAR)-1+"/"+cal.get(Calendar.YEAR);
 		String[] cups = matchService.getCups(FootballApi.WEB_MODE);
 		selectedCup = cups[0];
+		queues= matchService.getQueuesOfCup(cups[0], FootballApi.WEB_MODE);
 		seasonMatches = matchService.getByCupAndSeason(season,selectedCup,FootballApi.WEB_MODE);
-		queueMatches = matchService.getQueueBySeason(season,selectedCup,FootballApi.ANDROID);
+		queueMatches = matchService.getQueueByLPQueue(season,selectedCup,queues.get(0)); 
 		selectedSeason = season;
-		selectedQueue = String.valueOf(queueMatches.get(0).getQueue());
+		selectedQueue = queues.get(0);
 		if(queueMatches==null)
 			return;
 		
-		queues= matchService.getQueuesOfCup(cups[0], FootballApi.WEB_MODE);
+		
 		cupsComboBox = new ComboBox();
 		cupsComboBox.setItems(cups);
 		cupsComboBox.setValue(cups[0]);
