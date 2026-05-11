@@ -118,10 +118,11 @@ public class FootballApi {
 		Elements queues  = newsHeadlines.select("p");
 		int elimNumber = 1, roundNumber = 0, knockoutNumber = 0,queueNumber = 0,stage = 1;
 		ArrayList<ArrayList<MatchRecord>> matches = new ArrayList<>();
-		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
+		String[] cupArr = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text().trim().split(" ");
 		boolean isKonferencja = false, isRematch = false;
-		if(cup.contains("Konferencjii"))
+		if(cupArr[1].contains("Konferencjii"))
 			isKonferencja = true;
+		String cup = cupArr[0]+" "+cupArr[1];
 		matches.add(new ArrayList<MatchRecord>());
 		for(int i=4; i<queues.size(); i++) {
 			if(queues.get(i).text().contains("elimina") || queues.get(i).text().contains("Kolejka") || queues.get(i).text().toLowerCase().contains("finał")) {
@@ -174,7 +175,6 @@ public class FootballApi {
 				match.setCup(cup);
 				match.setMode_of_data(WEB_MODE);
 				String cupS = match.getCup();
-				String[] cupArr = cupS.split(" ");
 				match.setSeason(cupArr[cupArr.length-1]);
 				match.setRematch(isRematch);
 				match.setQueue(-1);
@@ -206,8 +206,11 @@ public class FootballApi {
 	}
 	private void getEkstraklasaMatches() {
 		String[] data=docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text().split(" ");
-		String season = data[1];
-		String cup = data[0];
+		String season = data[data.length-1];
+		String cup = "";
+		for(int i=0; i<data.length-1; i++)
+			cup += data[i]+" ";
+		cup.trim();
 		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);
 		if(seasonMatches.size()>0) 
 			return;
@@ -253,7 +256,12 @@ public class FootballApi {
 		Elements queues  = newsHeadlines.select("p");
 		int queueNumber = 0;
 		ArrayList<ArrayList<MatchRecord>> matches = new ArrayList<>();
-		String cup = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text();
+		String[] data = docEkstraklasa.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr[1]/td[@class='main']/b").get(0).text().split(" ");
+		String season = data[data.length-1];
+		String cup = "";
+		for(int k=0; k<data.length-1; k++)
+			cup += data[k]+" ";
+		cup.trim();
 		for(int i=4; i<queues.size(); i++) {
 			if(queues.get(i).text().contains("Kolejka")) {
 				queueNumber++;
@@ -285,9 +293,7 @@ public class FootballApi {
 						}
 						match.setCup(cup);
 						match.setMode_of_data(WEB_MODE);
-						String cupS = match.getCup();
-						String[] cupArr = cupS.split(" ");
-						match.setSeason(cupArr[cupArr.length-1]);
+						match.setSeason(season);
 						match.setQueue(queueNumber);
 						match.setElimination(-1);
 						match.setRound(-1);

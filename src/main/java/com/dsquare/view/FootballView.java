@@ -101,6 +101,8 @@ public class FootballView extends VerticalLayout{
 	
 	public void setQueueMatches(ArrayList<MatchRecord> queueMatches) {
 		this.queueMatches = queueMatches;
+		((VerticalLayout )matchesDiv.getComponentAt(0)).removeAll();
+		((VerticalLayout )matchesDiv.getComponentAt(1)).removeAll();
 		VerticalLayout left =(VerticalLayout) matchesDiv.getComponentAt(0);
 		VerticalLayout right =(VerticalLayout) matchesDiv.getComponentAt(1);
 		for(int i=0;i<queueMatches.size();i++) {
