@@ -69,8 +69,9 @@ public class FootballApi {
 		getLigaMatches(docLigaMistrzow);
 	}
 	private void getLigaMatches(Document doc) {
-		String cup = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text();
-		String season = cup.split(" ")[2];
+		String[] cupArr = doc.selectXpath("/html/body/table[2]/tbody/tr[1]/td[@class='main']/p[3]/table[@class='main2']/tbody/tr/td[@class='main']/b").get(0).text().split(" ");
+		String cup = cupArr[0]+" "+cupArr[1];
+		String season = cupArr[2];
 		List<MatchRecord> seasonMatches = matchService.getByCupAndSeason(season,cup,WEB_MODE);
 		if(seasonMatches.size()>0) 
 			return;
