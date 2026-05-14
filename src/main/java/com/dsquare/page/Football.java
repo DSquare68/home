@@ -91,7 +91,7 @@ public class Football extends Div{
 		footballView.setQueueMatches(queueMatches);
 		ComponentUtil.addListener(UI.getCurrent(),SeasonEvent.class,e->{
 			selectedSeason = e.getSource().getSelectedSeason();
-			queues = matchService.getQueuesOfCup(cups[0], FootballApi.WEB_MODE);
+			queues = matchService.getQueuesOfCup(selectedCup, FootballApi.WEB_MODE);
 			seasonAndQueueView.getSeasonDiv().setText("Season: "+selectedSeason);
 			footballView.setQueues(queues);
 			footballView.getQueueComboBox().setValue(queues.get(0));
